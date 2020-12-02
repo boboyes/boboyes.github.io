@@ -12,6 +12,7 @@
       
       
       
+      
       <style>
       /**
  * prism.js Github theme based on GitHub's theme.
@@ -266,11 +267,11 @@ pre[data-line] .line-highlight[data-end]:after {
 
 <p>&#x6982;&#x5FF5;&#xFF1A;&#x540C;&#x9762;&#x5411;&#x5BF9;&#x8C61;&#x5E76;&#x5217;&#xFF0C;&#x662F;&#x4E00;&#x79CD;&#x7F16;&#x7A0B;&#x601D;&#x7EF4;&#x3001;&#x8303;&#x5F0F;&#x3001;&#x98CE;&#x683C;&#x3002;&#x9700;&#x8981;&#x62BD;&#x8C61;&#x8FD0;&#x7B97;&#x8FC7;&#x7A0B;&#x3002;<br>
 &#x6CE8;&#x610F;&#xFF1A;&#x5E76;&#x4E0D;&#x4F1A;&#x63D0;&#x9AD8;&#x7A0B;&#x5E8F;&#x6027;&#x80FD;&#xFF0C;&#x56E0;&#x4E3A;&#x5176;&#x4E2D;&#x5927;&#x91CF;&#x4F7F;&#x7528;&#x95ED;&#x5305;</p>
-<pre data-role="codeBlock" data-info class="language-"><code>//&#x7B80;&#x5355;&#x7684;&#x51FD;&#x6570;&#x5F0F;
-function add(num1,num2){
-    return num1+num2;
-}
-</code></pre><h5 class="mume-header" id="%E4%B8%89%E4%B8%AA%E6%A6%82%E5%BF%B5">&#x4E09;&#x4E2A;&#x6982;&#x5FF5;&#xFF1A;</h5>
+<pre data-role="codeBlock" data-info="js" class="language-javascript"><span class="token comment">//&#x7B80;&#x5355;&#x7684;&#x51FD;&#x6570;&#x5F0F;</span>
+<span class="token keyword">function</span> <span class="token function">add</span><span class="token punctuation">(</span><span class="token parameter">num1<span class="token punctuation">,</span>num2</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+    <span class="token keyword">return</span> num1<span class="token operator">+</span>num2<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</pre><h5 class="mume-header" id="%E4%B8%89%E4%B8%AA%E6%A6%82%E5%BF%B5">&#x4E09;&#x4E2A;&#x6982;&#x5FF5;&#xFF1A;</h5>
 
 <p>1.&#x51FD;&#x6570;&#x662F;&#x4E00;&#x7B49;&#x516C;&#x6C11;&#xFF1A;&#x4ED6;&#x4E5F;&#x662F;&#x4E00;&#x4E2A;&#x666E;&#x901A;&#x7684;&#x5BF9;&#x8C61;</p>
 <ul>
@@ -284,30 +285,30 @@ function add(num1,num2){
 <li>&#x53EF;&#x4EE5;&#x628A;&#x51FD;&#x6570;&#x4F5C;&#x4E3A;&#x53E6;&#x4E00;&#x4E2A;&#x51FD;&#x6570;&#x7684;&#x8FD4;&#x56DE;&#x7ED3;&#x679C;&#xFF08;&#x6B64;&#x5904;&#x53EF;&#x80FD;&#x4EA7;&#x751F;&#x95ED;&#x5305;&#xFF09;</li>
 <li>&#x5E38;&#x7528;&#x7684;&#x9AD8;&#x9636;&#x51FD;&#x6570;&#xFF1A;&#x6570;&#x7EC4;&#x7684;&#x4E00;&#x7CFB;&#x5217;&#x65B9;&#x6CD5;&#xFF1A;forEach&#x3001;map&#x3001;filter&#x3001;every&#x3001;some&#x3001;find|findIndex&#x3001;reduce&#x3001;sort&#x3001;...</li>
 </ul>
-<pre data-role="codeBlock" data-info class="language-"><code>//&#x62BD;&#x8C61;&#x4E00;&#x4E2A;&#x53EA;&#x6267;&#x884C;&#x4E00;&#x6B21;&#x7684;&#x51FD;&#x6570;&#xFF0C;&#x53EF;&#x7528;&#x5728;&#x652F;&#x4ED8;&#x65F6;
-function once(fn){
-    let done = false
-    return function(){
-        if(!done){
-            done = true
-            return fn.apply(this,arguments)
-        }
-    }
-}
-</code></pre><p>3.&#x95ED;&#x5305;:&#x51FD;&#x6570;&#x548C;&#x5176;&#x5468;&#x56F4;&#x7684;&#x72B6;&#x6001;&#x5F15;&#x7528;&#x6346;&#x7ED1;&#x5728;&#x4E00;&#x8D77;&#x5F62;&#x6210;&#x95ED;&#x5305;</p>
+<pre data-role="codeBlock" data-info="js" class="language-javascript"><span class="token comment">//&#x62BD;&#x8C61;&#x4E00;&#x4E2A;&#x53EA;&#x6267;&#x884C;&#x4E00;&#x6B21;&#x7684;&#x51FD;&#x6570;&#xFF0C;&#x53EF;&#x7528;&#x5728;&#x652F;&#x4ED8;&#x65F6;</span>
+<span class="token keyword">function</span> <span class="token function">once</span><span class="token punctuation">(</span><span class="token parameter">fn</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+    <span class="token keyword">let</span> done <span class="token operator">=</span> <span class="token boolean">false</span>
+    <span class="token keyword">return</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+        <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token operator">!</span>done<span class="token punctuation">)</span><span class="token punctuation">{</span>
+            done <span class="token operator">=</span> <span class="token boolean">true</span>
+            <span class="token keyword">return</span> <span class="token function">fn</span><span class="token punctuation">.</span><span class="token function">apply</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">,</span>arguments<span class="token punctuation">)</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</pre><p>3.&#x95ED;&#x5305;:&#x51FD;&#x6570;&#x548C;&#x5176;&#x5468;&#x56F4;&#x7684;&#x72B6;&#x6001;&#x5F15;&#x7528;&#x6346;&#x7ED1;&#x5728;&#x4E00;&#x8D77;&#x5F62;&#x6210;&#x95ED;&#x5305;</p>
 <ul>
 <li>&#x53EF;&#x4EE5;&#x5728;&#x53E6;&#x4E00;&#x4E2A;&#x4F5C;&#x7528;&#x57DF;&#x4E2D;&#x8C03;&#x7528;&#x4E00;&#x4E2A;&#x51FD;&#x6570;&#x7684;&#x5185;&#x90E8;&#x51FD;&#x6570;&#x5E76;&#x8BBF;&#x95EE;&#x5230;&#x8BE5;&#x51FD;&#x6570;&#x7684;&#x4F5C;&#x7528;&#x57DF;&#x4E2D;&#x7684;&#x6210;&#x5458;</li>
 </ul>
-<pre data-role="codeBlock" data-info class="language-"><code>//&#x4F8B;&#x5B50;
-function makeFn(){
-    let msg = &apos;loved&apos;
-    return function(){//&#x8FD4;&#x56DE;&#x7684;&#x51FD;&#x6570;&#x4E2D;&#x5F15;&#x7528;&#x4E86;&#x5185;&#x90E8;&#x6210;&#x5458;&#x5219;&#x5F62;&#x6210;&#x95ED;&#x5305;
-        console.log(msg)
-    }
-}
-const fn = makeFn()
-fn()
-</code></pre><p>&#x603B;&#x7ED3;&#xFF1A;&#x56E0;&#x4E3A;&#x5185;&#x90E8;&#x51FD;&#x6570;&#x88AB;&#x5916;&#x90E8;&#x5F15;&#x7528;&#xFF0C;&#x5BFC;&#x81F4;&#x5185;&#x90E8;&#x4F5C;&#x7528;&#x57DF;&#x6210;&#x5458;&#x65E0;&#x6CD5;&#x91CA;&#x653E;&#xFF0C;&#x6240;&#x4EE5;&#x5F62;&#x6210;&#x95ED;&#x5305;</p>
+<pre data-role="codeBlock" data-info="js" class="language-javascript"><span class="token comment">//&#x4F8B;&#x5B50;</span>
+<span class="token keyword">function</span> <span class="token function">makeFn</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+    <span class="token keyword">let</span> msg <span class="token operator">=</span> <span class="token string">&apos;loved&apos;</span>
+    <span class="token keyword">return</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span><span class="token comment">//&#x8FD4;&#x56DE;&#x7684;&#x51FD;&#x6570;&#x4E2D;&#x5F15;&#x7528;&#x4E86;&#x5185;&#x90E8;&#x6210;&#x5458;&#x5219;&#x5F62;&#x6210;&#x95ED;&#x5305;</span>
+        console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>msg<span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+<span class="token keyword">const</span> fn <span class="token operator">=</span> <span class="token function">makeFn</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token function">fn</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+</pre><p>&#x603B;&#x7ED3;&#xFF1A;&#x56E0;&#x4E3A;&#x5185;&#x90E8;&#x51FD;&#x6570;&#x88AB;&#x5916;&#x90E8;&#x5F15;&#x7528;&#xFF0C;&#x5BFC;&#x81F4;&#x5185;&#x90E8;&#x4F5C;&#x7528;&#x57DF;&#x6210;&#x5458;&#x65E0;&#x6CD5;&#x91CA;&#x653E;&#xFF0C;&#x6240;&#x4EE5;&#x5F62;&#x6210;&#x95ED;&#x5305;</p>
 <h3 class="mume-header" id="%E4%BA%8C-%E7%BA%AF%E5%87%BD%E6%95%B0%E7%9B%B8%E5%90%8C%E7%9A%84%E8%BE%93%E5%85%A5%E4%B8%80%E5%AE%9A%E5%BE%97%E5%88%B0%E7%9B%B8%E5%90%8C%E7%9A%84%E8%BE%93%E5%87%BA%E6%B2%A1%E6%9C%89%E4%BB%BB%E4%BD%95%E5%8F%AF%E8%A7%82%E5%AF%9F%E7%9A%84%E5%89%AF%E4%BD%9C%E7%94%A8">&#x4E8C;&#x3001;&#x7EAF;&#x51FD;&#x6570;&#xFF1A;&#x76F8;&#x540C;&#x7684;&#x8F93;&#x5165;&#x4E00;&#x5B9A;&#x5F97;&#x5230;&#x76F8;&#x540C;&#x7684;&#x8F93;&#x51FA;&#xFF0C;&#x6CA1;&#x6709;&#x4EFB;&#x4F55;&#x53EF;&#x89C2;&#x5BDF;&#x7684;&#x526F;&#x4F5C;&#x7528;</h3>
 
 <ul>
@@ -324,16 +325,16 @@ fn()
 </ul>
 <h5 class="mume-header" id="%E5%8F%82%E7%85%A7lodash%E4%B8%AD-_memoize-%E6%A8%A1%E6%8B%9F%E8%AE%B0%E5%BF%86%E5%87%BD%E6%95%B0">&#x53C2;&#x7167;lodash&#x4E2D; _memoize &#x6A21;&#x62DF;&#x8BB0;&#x5FC6;&#x51FD;&#x6570;</h5>
 
-<pre data-role="codeBlock" data-info class="language-"><code>//&#x4F8B;&#x5B50;
-function memoize (f) {
-    let cache = {}
-    return function(){
-        let key = JSON.stringfy(arguments)
-        cache[key] = cache[key]||f.apply(f,arguments)
-        return cache[key]
-    }
-}
-</code></pre><h3 class="mume-header" id="%E4%B8%89-%E6%9F%AF%E9%87%8C%E5%8C%96">&#x4E09;&#x3001;&#x67EF;&#x91CC;&#x5316;&#xFF1A;</h3>
+<pre data-role="codeBlock" data-info="js" class="language-javascript"><span class="token comment">//&#x4F8B;&#x5B50;</span>
+<span class="token keyword">function</span> <span class="token function">memoize</span> <span class="token punctuation">(</span><span class="token parameter">f</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">let</span> cache <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token punctuation">}</span>
+    <span class="token keyword">return</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+        <span class="token keyword">let</span> key <span class="token operator">=</span> <span class="token constant">JSON</span><span class="token punctuation">.</span><span class="token function">stringfy</span><span class="token punctuation">(</span>arguments<span class="token punctuation">)</span>
+        cache<span class="token punctuation">[</span>key<span class="token punctuation">]</span> <span class="token operator">=</span> cache<span class="token punctuation">[</span>key<span class="token punctuation">]</span><span class="token operator">||</span><span class="token function">f</span><span class="token punctuation">.</span><span class="token function">apply</span><span class="token punctuation">(</span>f<span class="token punctuation">,</span>arguments<span class="token punctuation">)</span>
+        <span class="token keyword">return</span> cache<span class="token punctuation">[</span>key<span class="token punctuation">]</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</pre><h3 class="mume-header" id="%E4%B8%89-%E6%9F%AF%E9%87%8C%E5%8C%96">&#x4E09;&#x3001;&#x67EF;&#x91CC;&#x5316;&#xFF1A;</h3>
 
 <ul>
 <li>&#x5F53;&#x4E00;&#x4E2A;&#x51FD;&#x6570;&#x6709;&#x591A;&#x4E2A;&#x53C2;&#x6570;&#x7684;&#x65F6;&#x5019;&#x5148;&#x4F20;&#x9012;&#x4E00;&#x90E8;&#x5206;&#x53C2;&#x6570;&#x8C03;&#x7528;&#x5B83;&#xFF08;&#x8FD9;&#x90E8;&#x5206;&#x53C2;&#x6570;&#x4EE5;&#x540E;&#x6C38;&#x8FDC;&#x4E0D;&#x53D8;&#xFF09;</li>
@@ -341,49 +342,49 @@ function memoize (f) {
 </ul>
 <h5 class="mume-header" id="lodash%E4%B8%AD%E7%9A%84%E6%9F%AF%E9%87%8C%E5%8C%96%E5%87%BD%E6%95%B0%E5%8A%9F%E8%83%BD">lodash&#x4E2D;&#x7684;&#x67EF;&#x91CC;&#x5316;&#x51FD;&#x6570;&#x529F;&#x80FD;</h5>
 
-<pre data-role="codeBlock" data-info class="language-"><code>//&#x4F8B;&#x5B50;
-const _ = require(&apos;lodash&apos;) 
-// &#x8981;&#x67EF;&#x91CC;&#x5316;&#x7684;&#x51FD;&#x6570; 
-function getSum (a, b, c) { &#xA0;
-    return a + b + c 
-} 
-// &#x67EF;&#x91CC;&#x5316;&#x540E;&#x7684;&#x51FD;&#x6570; 
-let curried = _.curry(getSum) 
-// &#x6D4B;&#x8BD5; 
-curried(1, 2, 3) 
-curried(1)(2)(3) 
-curried(1, 2)(3)
-</code></pre><p>&#x4EE5;&#x4E0A;&#x4F8B;&#x5B50;&#x5F97;&#x51FA;&#x7ED3;&#x8BBA;&#xFF1A;&#x6211;&#x4EEC;&#x53EF;&#x4EE5;&#x63D0;&#x524D;&#x4F20;&#x5165;&#x4E00;&#x4E9B;&#x5E38;&#x7528;&#x53C2;&#x6570;&#x505A;&#x914D;&#x7F6E;&#x5F97;&#x5230;&#x4E00;&#x4E2A;&#x51FD;&#x6570;&#x3002;&#x6700;&#x540E;&#x4F20;&#x5165;&#x5269;&#x4F59;&#x53C2;&#x6570;&#x5F97;&#x5230;&#x7ED3;&#x679C;</p>
+<pre data-role="codeBlock" data-info="js" class="language-javascript"><span class="token comment">//&#x4F8B;&#x5B50;</span>
+<span class="token keyword">const</span> _ <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">&apos;lodash&apos;</span><span class="token punctuation">)</span> 
+<span class="token comment">// &#x8981;&#x67EF;&#x91CC;&#x5316;&#x7684;&#x51FD;&#x6570; </span>
+<span class="token keyword">function</span> <span class="token function">getSum</span> <span class="token punctuation">(</span><span class="token parameter">a<span class="token punctuation">,</span> b<span class="token punctuation">,</span> c</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>  
+    <span class="token keyword">return</span> a <span class="token operator">+</span> b <span class="token operator">+</span> c 
+<span class="token punctuation">}</span> 
+<span class="token comment">// &#x67EF;&#x91CC;&#x5316;&#x540E;&#x7684;&#x51FD;&#x6570; </span>
+<span class="token keyword">let</span> curried <span class="token operator">=</span> _<span class="token punctuation">.</span><span class="token function">curry</span><span class="token punctuation">(</span>getSum<span class="token punctuation">)</span> 
+<span class="token comment">// &#x6D4B;&#x8BD5; </span>
+<span class="token function">curried</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">)</span> 
+<span class="token function">curried</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">(</span><span class="token number">3</span><span class="token punctuation">)</span> 
+<span class="token function">curried</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">(</span><span class="token number">3</span><span class="token punctuation">)</span>
+</pre><p>&#x4EE5;&#x4E0A;&#x4F8B;&#x5B50;&#x5F97;&#x51FA;&#x7ED3;&#x8BBA;&#xFF1A;&#x6211;&#x4EEC;&#x53EF;&#x4EE5;&#x63D0;&#x524D;&#x4F20;&#x5165;&#x4E00;&#x4E9B;&#x5E38;&#x7528;&#x53C2;&#x6570;&#x505A;&#x914D;&#x7F6E;&#x5F97;&#x5230;&#x4E00;&#x4E2A;&#x51FD;&#x6570;&#x3002;&#x6700;&#x540E;&#x4F20;&#x5165;&#x5269;&#x4F59;&#x53C2;&#x6570;&#x5F97;&#x5230;&#x7ED3;&#x679C;</p>
 <h5 class="mume-header" id="%E6%A8%A1%E6%8B%9F-_curry-%E7%9A%84%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%86%E8%BF%94%E5%9B%9E%E4%B8%80%E4%B8%AA%E5%AD%98%E5%82%A8%E9%83%A8%E5%88%86%E5%8F%82%E6%95%B0%E7%9A%84%E5%87%BD%E6%95%B0%E7%9B%B4%E5%88%B0%E6%89%80%E6%9C%89%E5%8F%82%E6%95%B0%E7%9C%9F%E6%AD%A3%E4%BC%A0%E9%80%92%E5%AE%8C%E6%AF%95%E6%89%8D%E8%B0%83%E7%94%A8">&#x6A21;&#x62DF; _.curry &#x7684;&#x5B9E;&#x73B0;:&#x539F;&#x7406;&#xFF0C;&#x8FD4;&#x56DE;&#x4E00;&#x4E2A;&#x5B58;&#x50A8;&#x90E8;&#x5206;&#x53C2;&#x6570;&#x7684;&#x51FD;&#x6570;&#xFF0C;&#x76F4;&#x5230;&#x6240;&#x6709;&#x53C2;&#x6570;&#x771F;&#x6B63;&#x4F20;&#x9012;&#x5B8C;&#x6BD5;&#x624D;&#x8C03;&#x7528;</h5>
 
-<pre data-role="codeBlock" data-info class="language-"><code>//&#x4F8B;&#x5B50;
-es5
-function curry(func){
-    return curryFn(...args){
-        if(args.length&lt;func.length){
-            return function(){
-                return curryFn(...args.concat(Array.from(arguments)))
-            }
-        }
-        return func(...args)
-    }
-}
+<pre data-role="codeBlock" data-info="js" class="language-javascript"><span class="token comment">//&#x4F8B;&#x5B50;</span>
+<span class="token comment">//es5</span>
+<span class="token keyword">function</span> <span class="token function">curry</span><span class="token punctuation">(</span><span class="token parameter">func</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+    <span class="token keyword">return</span> <span class="token function">curryFn</span><span class="token punctuation">(</span><span class="token parameter"><span class="token operator">...</span>args</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+        <span class="token keyword">if</span><span class="token punctuation">(</span>args<span class="token punctuation">.</span>length<span class="token operator">&lt;</span>func<span class="token punctuation">.</span>length<span class="token punctuation">)</span><span class="token punctuation">{</span>
+            <span class="token keyword">return</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+                <span class="token keyword">return</span> <span class="token function">curryFn</span><span class="token punctuation">(</span><span class="token operator">...</span>args<span class="token punctuation">.</span><span class="token function">concat</span><span class="token punctuation">(</span>Array<span class="token punctuation">.</span><span class="token keyword">from</span><span class="token punctuation">(</span>arguments<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+            <span class="token punctuation">}</span>
+        <span class="token punctuation">}</span>
+        <span class="token keyword">return</span> <span class="token function">func</span><span class="token punctuation">(</span><span class="token operator">...</span>args<span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
 
-es6
-const curry = (func) =&gt; {
-    return curryFn = (...args){
-        if(args.length&lt;func.length){
-            return (...args2)=&gt;{
-                return curryFn(...args.concat(args2))
-            }
-        }
-    }
-}
-</code></pre><p>&#x603B;&#x7ED3;&#xFF1A;<br>
+<span class="token comment">//es6</span>
+<span class="token keyword">const</span> <span class="token function-variable function">curry</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token parameter">func</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+    <span class="token keyword">return</span> curryFn <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token operator">...</span>args<span class="token punctuation">)</span><span class="token punctuation">{</span>
+        <span class="token keyword">if</span><span class="token punctuation">(</span>args<span class="token punctuation">.</span>length<span class="token operator">&lt;</span>func<span class="token punctuation">.</span>length<span class="token punctuation">)</span><span class="token punctuation">{</span>
+            <span class="token keyword">return</span> <span class="token punctuation">(</span><span class="token parameter"><span class="token operator">...</span>args2</span><span class="token punctuation">)</span><span class="token operator">=&gt;</span><span class="token punctuation">{</span>
+                <span class="token keyword">return</span> <span class="token function">curryFn</span><span class="token punctuation">(</span><span class="token operator">...</span>args<span class="token punctuation">.</span><span class="token function">concat</span><span class="token punctuation">(</span>args2<span class="token punctuation">)</span><span class="token punctuation">)</span>
+            <span class="token punctuation">}</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</pre><p>&#x603B;&#x7ED3;&#xFF1A;<br>
 &#x67EF;&#x91CC;&#x5316;&#x53EF;&#x4EE5;&#x8BA9;&#x6211;&#x4EEC;&#x7ED9;&#x4E00;&#x4E2A;&#x51FD;&#x6570;&#x4F20;&#x9012;&#x8F83;&#x5C11;&#x7684;&#x53C2;&#x6570;&#x5F97;&#x5230;&#x4E00;&#x4E2A;&#x5DF2;&#x7ECF;&#x8BB0;&#x4F4F;&#x4E86;&#x67D0;&#x4E9B;&#x56FA;&#x5B9A;&#x53C2;&#x6570;&#x7684;&#x65B0;&#x51FD;&#x6570; &#x8FD9;&#x662F;&#x4E00;&#x79CD;&#x5BF9;&#x51FD;&#x6570;&#x53C2;&#x6570;&#x7684;&apos;&#x7F13;&#x5B58;&apos;<br>
 &#x8BA9;&#x51FD;&#x6570;&#x53D8;&#x7684;&#x66F4;&#x7075;&#x6D3B;&#xFF0C;&#x8BA9;&#x51FD;&#x6570;&#x7684;&#x7C92;&#x5EA6;&#x66F4;&#x5C0F;<br>
 &#x53EF;&#x4EE5;&#x628A;&#x591A;&#x5143;&#x51FD;&#x6570;&#x8F6C;&#x6362;&#x6210;&#x4E00;&#x5143;&#x51FD;&#x6570;&#xFF0C;&#x53EF;&#x4EE5;&#x7EC4;&#x5408;&#x4F7F;&#x7528;&#x51FD;&#x6570;&#x4EA7;&#x751F;&#x5F3A;&#x5927;&#x7684;&#x529F;&#x80FD;</p>
-<h3 class="mume-header" id="%E4%B8%89-%E5%87%BD%E6%95%B0%E7%BB%84%E5%90%88">&#x4E09;&#x3001;&#x51FD;&#x6570;&#x7EC4;&#x5408;&#xFF1A;</h3>
+<h3 class="mume-header" id="%E5%9B%9B-%E5%87%BD%E6%95%B0%E7%BB%84%E5%90%88">&#x56DB;&#x3001;&#x51FD;&#x6570;&#x7EC4;&#x5408;&#xFF1A;</h3>
 
 <h4 class="mume-header" id="what">what&#xFF1F;</h4>
 
@@ -412,52 +413,880 @@ const curry = (func) =&gt; {
 6.&#x5B9E;&#x73B0;&#x6D4B;&#x8BD5;&#x65B9;&#x6CD5;&#xFF0C;&#x51C6;&#x786E;&#x5B9A;&#x4F4D;&#x7BA1;&#x63A5;&#x5904;&#x9519;&#x8BEF;</li>
 <li>&#x6A21;&#x4EFF;fp.flowRight()&#x5B9E;&#x73B0;&#x51FD;&#x6570;&#x7EC4;&#x5408;</li>
 </ul>
-<pre data-role="codeBlock" data-info class="language-"><code>//&#x4F8B;&#x5B50;
-&#xFF08;1&#xFF09;&#x51FD;&#x6570;&#x7EC4;&#x5408;&#x5B9E;&#x73B0;
-es5
-function compose (...args){
-    return function(value){
-        return args.reverse().reduce(function(acc,fn){
-            return fn(acc)
-        },value)
-    }
-}
-es6 
-const compose = (...args) =&gt; value =&gt; args.reverse().reduce((acc,fn)=&gt;fn(acc),value)
- (2) &#x4F7F;&#x7528;fp&#x6A21;&#x5757;&#x7EC3;&#x4E60;
-const _ = require(&apos;lodash&apos;)
-const toUpper = s =&gt; s.toUpperCase() 
-const reverse = arr =&gt; arr.reverse() 
-const first = arr =&gt; arr[0]
-const f = _.flowRight(toUpper, first, reverse) 
-console.log(f([&apos;one&apos;, &apos;two&apos;, &apos;three&apos;]))
-//&#x4F7F;&#x7528;fp&#x6A21;&#x5757;&#x7684;&#x67EF;&#x91CC;&#x5316;&#x51FD;&#x6570;
-const f = fp.flowRight(fp.join(&apos;-&apos;), fp.map(_.toLower), fp.split(&apos; &apos;)) 
-console.log(f(&apos;NEVER SAY DIE&apos;))
+<pre data-role="codeBlock" data-info="js" class="language-javascript"><span class="token comment">//&#x4F8B;&#x5B50;</span>
+<span class="token comment">//&#xFF08;1&#xFF09;&#x51FD;&#x6570;&#x7EC4;&#x5408;&#x5B9E;&#x73B0;</span>
+<span class="token comment">//es5</span>
+<span class="token keyword">function</span> <span class="token function">compose</span> <span class="token punctuation">(</span><span class="token parameter"><span class="token operator">...</span>args</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+    <span class="token keyword">return</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token parameter">value</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+        <span class="token keyword">return</span> args<span class="token punctuation">.</span><span class="token function">reverse</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">reduce</span><span class="token punctuation">(</span><span class="token keyword">function</span><span class="token punctuation">(</span><span class="token parameter">acc<span class="token punctuation">,</span>fn</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+            <span class="token keyword">return</span> <span class="token function">fn</span><span class="token punctuation">(</span>acc<span class="token punctuation">)</span>
+        <span class="token punctuation">}</span><span class="token punctuation">,</span>value<span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+<span class="token comment">//es6 </span>
+<span class="token keyword">const</span> <span class="token function-variable function">compose</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token parameter"><span class="token operator">...</span>args</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token parameter">value</span> <span class="token operator">=&gt;</span> args<span class="token punctuation">.</span><span class="token function">reverse</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">reduce</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token parameter">acc<span class="token punctuation">,</span>fn</span><span class="token punctuation">)</span><span class="token operator">=&gt;</span><span class="token function">fn</span><span class="token punctuation">(</span>acc<span class="token punctuation">)</span><span class="token punctuation">,</span>value<span class="token punctuation">)</span>
+ <span class="token comment">//(2) &#x4F7F;&#x7528;fp&#x6A21;&#x5757;&#x7EC3;&#x4E60;</span>
+<span class="token keyword">const</span> _ <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">&apos;lodash&apos;</span><span class="token punctuation">)</span>
+<span class="token keyword">const</span> <span class="token function-variable function">toUpper</span> <span class="token operator">=</span> <span class="token parameter">s</span> <span class="token operator">=&gt;</span> s<span class="token punctuation">.</span><span class="token function">toUpperCase</span><span class="token punctuation">(</span><span class="token punctuation">)</span> 
+<span class="token keyword">const</span> <span class="token function-variable function">reverse</span> <span class="token operator">=</span> <span class="token parameter">arr</span> <span class="token operator">=&gt;</span> arr<span class="token punctuation">.</span><span class="token function">reverse</span><span class="token punctuation">(</span><span class="token punctuation">)</span> 
+<span class="token keyword">const</span> <span class="token function-variable function">first</span> <span class="token operator">=</span> <span class="token parameter">arr</span> <span class="token operator">=&gt;</span> arr<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span>
+<span class="token keyword">const</span> f <span class="token operator">=</span> _<span class="token punctuation">.</span><span class="token function">flowRight</span><span class="token punctuation">(</span>toUpper<span class="token punctuation">,</span> first<span class="token punctuation">,</span> reverse<span class="token punctuation">)</span> 
+console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token function">f</span><span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token string">&apos;one&apos;</span><span class="token punctuation">,</span> <span class="token string">&apos;two&apos;</span><span class="token punctuation">,</span> <span class="token string">&apos;three&apos;</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+<span class="token comment">//&#x4F7F;&#x7528;fp&#x6A21;&#x5757;&#x7684;&#x67EF;&#x91CC;&#x5316;&#x51FD;&#x6570;</span>
+<span class="token keyword">const</span> f <span class="token operator">=</span> fp<span class="token punctuation">.</span><span class="token function">flowRight</span><span class="token punctuation">(</span>fp<span class="token punctuation">.</span><span class="token function">join</span><span class="token punctuation">(</span><span class="token string">&apos;-&apos;</span><span class="token punctuation">)</span><span class="token punctuation">,</span> fp<span class="token punctuation">.</span><span class="token function">map</span><span class="token punctuation">(</span>_<span class="token punctuation">.</span>toLower<span class="token punctuation">)</span><span class="token punctuation">,</span> fp<span class="token punctuation">.</span><span class="token function">split</span><span class="token punctuation">(</span><span class="token string">&apos; &apos;</span><span class="token punctuation">)</span><span class="token punctuation">)</span> 
+console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token function">f</span><span class="token punctuation">(</span><span class="token string">&apos;NEVER SAY DIE&apos;</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
 
- (3) &#x6EE1;&#x8DB3;&#x7ED3;&#x5408;&#x5F8B;&#xFF08;associativity&#xFF09; 
- const _ = require(&apos;lodash&apos;)
-// const f = _.flowRight(_.toUpper, _.first, _.reverse) 
-// const f = _.flowRight(_.flowRight(_.toUpper, _.first), _.reverse) 
-const f = _.flowRight(_.toUpper, _.flowRight(_.first, _.reverse))
-console.log(f([&apos;one&apos;, &apos;two&apos;, &apos;three&apos;])) 
- (4) &#x5229;&#x7528;log&#x65B9;&#x6CD5;&#x7ED3;&#x5408;&#x67EF;&#x91CC;&#x5316;&#x5B9E;&#x73B0;&#x8C03;&#x8BD5;
- const _ = require(&apos;lodash&apos;)
- const trace = _.curry((tag, v) =&gt; { &#xA0;console.log(tag, v) &#xA0;return v })
- const split = _.curry((sep, str) =&gt; _.split(str, sep)) 
- const join = _.curry((sep, array) =&gt; _.join(array, sep)) 
- const map = _.curry((fn, array) =&gt; _.map(array, fn))
- const f = _.flowRight(join(&apos;-&apos;), trace(&apos;map &#x4E4B;&#x540E;&apos;), map(_.toLower), trace(&apos;split &#x4E4B;&#x540E;&apos;), split(&apos; &apos;)) 
- console.log(f(&apos;NEVER SAY DIE&apos;))
-</code></pre><h3 class="mume-header" id="point-free">Point Free</h3>
+ <span class="token comment">//(3) &#x6EE1;&#x8DB3;&#x7ED3;&#x5408;&#x5F8B;&#xFF08;associativity&#xFF09; </span>
+ <span class="token keyword">const</span> _ <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">&apos;lodash&apos;</span><span class="token punctuation">)</span>
+<span class="token comment">// const f = _.flowRight(_.toUpper, _.first, _.reverse) </span>
+<span class="token comment">// const f = _.flowRight(_.flowRight(_.toUpper, _.first), _.reverse) </span>
+<span class="token keyword">const</span> f <span class="token operator">=</span> _<span class="token punctuation">.</span><span class="token function">flowRight</span><span class="token punctuation">(</span>_<span class="token punctuation">.</span>toUpper<span class="token punctuation">,</span> _<span class="token punctuation">.</span><span class="token function">flowRight</span><span class="token punctuation">(</span>_<span class="token punctuation">.</span>first<span class="token punctuation">,</span> _<span class="token punctuation">.</span>reverse<span class="token punctuation">)</span><span class="token punctuation">)</span>
+console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token function">f</span><span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token string">&apos;one&apos;</span><span class="token punctuation">,</span> <span class="token string">&apos;two&apos;</span><span class="token punctuation">,</span> <span class="token string">&apos;three&apos;</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">)</span> 
+ <span class="token comment">//(4) &#x5229;&#x7528;log&#x65B9;&#x6CD5;&#x7ED3;&#x5408;&#x67EF;&#x91CC;&#x5316;&#x5B9E;&#x73B0;&#x8C03;&#x8BD5;</span>
+ <span class="token keyword">const</span> _ <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">&apos;lodash&apos;</span><span class="token punctuation">)</span>
+ <span class="token keyword">const</span> trace <span class="token operator">=</span> _<span class="token punctuation">.</span><span class="token function">curry</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token parameter">tag<span class="token punctuation">,</span> v</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>  console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>tag<span class="token punctuation">,</span> v<span class="token punctuation">)</span>  <span class="token keyword">return</span> v <span class="token punctuation">}</span><span class="token punctuation">)</span>
+ <span class="token keyword">const</span> split <span class="token operator">=</span> _<span class="token punctuation">.</span><span class="token function">curry</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token parameter">sep<span class="token punctuation">,</span> str</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> _<span class="token punctuation">.</span><span class="token function">split</span><span class="token punctuation">(</span>str<span class="token punctuation">,</span> sep<span class="token punctuation">)</span><span class="token punctuation">)</span> 
+ <span class="token keyword">const</span> join <span class="token operator">=</span> _<span class="token punctuation">.</span><span class="token function">curry</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token parameter">sep<span class="token punctuation">,</span> array</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> _<span class="token punctuation">.</span><span class="token function">join</span><span class="token punctuation">(</span>array<span class="token punctuation">,</span> sep<span class="token punctuation">)</span><span class="token punctuation">)</span> 
+ <span class="token keyword">const</span> map <span class="token operator">=</span> _<span class="token punctuation">.</span><span class="token function">curry</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token parameter">fn<span class="token punctuation">,</span> array</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> _<span class="token punctuation">.</span><span class="token function">map</span><span class="token punctuation">(</span>array<span class="token punctuation">,</span> fn<span class="token punctuation">)</span><span class="token punctuation">)</span>
+ <span class="token keyword">const</span> f <span class="token operator">=</span> _<span class="token punctuation">.</span><span class="token function">flowRight</span><span class="token punctuation">(</span><span class="token function">join</span><span class="token punctuation">(</span><span class="token string">&apos;-&apos;</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token function">trace</span><span class="token punctuation">(</span><span class="token string">&apos;map &#x4E4B;&#x540E;&apos;</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token function">map</span><span class="token punctuation">(</span>_<span class="token punctuation">.</span>toLower<span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token function">trace</span><span class="token punctuation">(</span><span class="token string">&apos;split &#x4E4B;&#x540E;&apos;</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token function">split</span><span class="token punctuation">(</span><span class="token string">&apos; &apos;</span><span class="token punctuation">)</span><span class="token punctuation">)</span> 
+ console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token function">f</span><span class="token punctuation">(</span><span class="token string">&apos;NEVER SAY DIE&apos;</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+</pre><h3 class="mume-header" id="point-free">Point Free</h3>
 
 <p>Point Free&#xFF1A;&#x6211;&#x4EEC;&#x53EF;&#x4EE5;&#x628A;&#x6570;&#x636E;&#x5904;&#x7406;&#x7684;&#x8FC7;&#x7A0B;&#x5B9A;&#x4E49;&#x6210;&#x4E0E;&#x6570;&#x636E;&#x65E0;&#x5173;&#x7684;&#x5408;&#x6210;&#x8FD0;&#x7B97;&#xFF0C;&#x4E0D;&#x9700;&#x8981;&#x7528;&#x5230;&#x4EE3;&#x8868;&#x6570;&#x636E;&#x7684;&#x90A3;&#x4E2A;&#x53C2; &#x6570;&#xFF0C;&#x53EA;&#x8981;&#x628A;&#x7B80;&#x5355;&#x7684;&#x8FD0;&#x7B97;&#x6B65;&#x9AA4;&#x5408;&#x6210;&#x5230;&#x4E00;&#x8D77;&#xFF0C;&#x5728;&#x4F7F;&#x7528;&#x8FD9;&#x79CD;&#x6A21;&#x5F0F;&#x4E4B;&#x524D;&#x6211;&#x4EEC;&#x9700;&#x8981;&#x5B9A;&#x4E49;&#x4E00;&#x4E9B;&#x8F85;&#x52A9;&#x7684;&#x57FA;&#x672C;&#x8FD0;&#x7B97;&#x51FD;&#x6570;&#x3002;<br>
 &#x5B9E;&#x9645;&#x4E0A;&#x524D;&#x9762;&#x6211;&#x4EEC;&#x4F7F;&#x7528;&#x7684;&#x67EF;&#x91CC;&#x5316;&#x51FD;&#x6570;&#x7ED3;&#x5408;&#x51FD;&#x6570;&#x7EC4;&#x5408;&#x4FBF;&#x662F;Point Free&#x6A21;&#x5F0F;</p>
-<h3 class="mume-header" id="%E5%9B%9B-%E5%87%BD%E5%AD%90">&#x56DB;&#x3001;&#x51FD;&#x5B50;&#xFF1A;</h3>
+<h3 class="mume-header" id="%E4%BA%94-%E5%87%BD%E5%AD%90">&#x4E94;&#x3001;&#x51FD;&#x5B50;&#xFF1A;</h3>
 
-<h2 class="mume-header" id="%E5%BE%85%E6%95%B4%E7%90%86%E4%B8%AD">&#x5F85;&#x6574;&#x7406;&#x4E2D;...</h2>
+<h5 class="mume-header" id="%E4%BD%9C%E7%94%A8%E5%9C%A8%E5%87%BD%E6%95%B0%E7%BC%96%E7%A8%8B%E4%B8%AD%E6%8E%A7%E5%88%B6%E5%89%AF%E4%BD%9C%E7%94%A8%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86%E5%BC%82%E5%B8%B8%E6%93%8D%E4%BD%9C">&#x4F5C;&#x7528;&#xFF1A;&#x5728;&#x51FD;&#x6570;&#x7F16;&#x7A0B;&#x4E2D;&#x63A7;&#x5236;&#x526F;&#x4F5C;&#x7528;&#xFF08;&#x5F02;&#x5E38;&#x5904;&#x7406;&#xFF0C;&#x5F02;&#x5E38;&#x64CD;&#x4F5C;&#xFF09;</h5>
 
+<ul>
+<li>&#x5BB9;&#x5668;&#xFF1A;&#x5305;&#x542B;&#x503C;&#x548C;&#x503C;&#x7684;&#x53D8;&#x5F62;&#x5173;&#x7CFB;&#xFF08;&#x8FD9;&#x4E2A;&#x53D8;&#x5F62;&#x5173;&#x7CFB;&#x5C31;&#x662F;&#x51FD;&#x6570;&#xFF09;</li>
+<li>&#x51FD;&#x5B50;&#xFF1A;&#x4E00;&#x4E2A;&#x7279;&#x6B8A;&#x5BB9;&#x5668;&#xFF0C;&#x901A;&#x8FC7;&#x666E;&#x901A;&#x5BF9;&#x8C61;&#x5B9E;&#x73B0;&#xFF0C;&#x5BF9;&#x8C61;&#x5177;&#x6709;map&#x65B9;&#x6CD5;&#xFF0C;map&#x65B9;&#x6CD5;&#x53EF;&#x4EE5;&#x8FD0;&#x884C;&#x4E00;&#x4E2A;&#x51FD;&#x6570;&#x5BF9;&#x503C;&#x8FDB;&#x884C;&#x5904;&#x7406;</li>
+<li>&#x57FA;&#x672C;&#x7ED3;&#x6784;&#x5982;&#x4E0B;&#xFF1A;</li>
+</ul>
+<pre data-role="codeBlock" data-info="js" class="language-javascript"><span class="token keyword">class</span> <span class="token class-name">Container</span><span class="token punctuation">{</span>
+    <span class="token function">conctructor</span><span class="token punctuation">(</span><span class="token parameter">value</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>_value <span class="token operator">=</span>value
+    <span class="token punctuation">}</span>
+    <span class="token function">map</span><span class="token punctuation">(</span><span class="token parameter">fn</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+        <span class="token keyword">return</span> <span class="token keyword">new</span> <span class="token class-name">Container</span><span class="token punctuation">(</span><span class="token function">fn</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span>_value<span class="token punctuation">)</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</pre><h5 class="mume-header" id="1%E5%AE%8C%E6%95%B4%E7%9A%84functor%E5%87%BD%E5%AD%90%E7%94%A8%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B%E6%80%9D%E6%83%B3%E4%B8%8D%E7%94%A8new%E6%96%B9%E6%B3%95">1.&#x5B8C;&#x6574;&#x7684;Functor&#x51FD;&#x5B50;&#xFF1A;&#x7528;&#x51FD;&#x6570;&#x5F0F;&#x7F16;&#x7A0B;&#x601D;&#x60F3;&#xFF0C;&#x4E0D;&#x7528;new&#x65B9;&#x6CD5;</h5>
 
+<pre data-role="codeBlock" data-info="js" class="language-javascript"><span class="token keyword">class</span> <span class="token class-name">Container</span><span class="token punctuation">{</span>
+    <span class="token keyword">static</span> <span class="token keyword">of</span><span class="token punctuation">(</span>value<span class="token punctuation">)</span><span class="token punctuation">{</span>
+        <span class="token keyword">return</span> <span class="token keyword">new</span> <span class="token class-name">Container</span><span class="token punctuation">(</span>value<span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+    <span class="token function">constructor</span><span class="token punctuation">(</span><span class="token parameter">value</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>_value <span class="token operator">=</span> value
+    <span class="token punctuation">}</span>
+    <span class="token function">map</span><span class="token punctuation">(</span><span class="token parameter">fn</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+        <span class="token keyword">return</span> Container<span class="token punctuation">.</span><span class="token keyword">of</span><span class="token punctuation">(</span><span class="token function">fn</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span>_value<span class="token punctuation">)</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</pre><p>&#x603B;&#x7ED3;&#xFF1A;</p>
+<ul>
+<li>&#x51FD;&#x6570;&#x5F0F;&#x7F16;&#x7A0B;&#x8FD0;&#x7B97;&#x4E0D;&#x76F4;&#x63A5;&#x64CD;&#x4F5C;&#x503C;&#xFF0C;&#x7531;&#x51FD;&#x5B50;&#x5B8C;&#x6210;</li>
+<li>&#x51FD;&#x5B50;&#x5C31;&#x662F;&#x5B9E;&#x73B0;&#x4E86;&#x4E00;&#x4E2A;map&#x5951;&#x7EA6;&#x7684;&#x5BF9;&#x8C61;</li>
+<li>&#x51FD;&#x5B50;&#x5C31;&#x662F;&#x4E00;&#x4E2A;&#x653E;&#x4E86;&#x503C;&#x7684;&#x76D2;&#x5B50;</li>
+<li>&#x76D2;&#x5B50;&#x66B4;&#x9732;&#x7684;&#x63A5;&#x53E3;&#x5373;map&#x65B9;&#x6CD5;&#x4F20;&#x9012;&#x5904;&#x7406;&#x503C;&#x7684;&#x51FD;&#x6570;&#xFF08;&#x6B64;&#x51FD;&#x6570;&#x4E3A;&#x7EAF;&#x51FD;&#x6570;&#xFF09;</li>
+<li>map&#x65B9;&#x6CD5;&#x8FD4;&#x56DE;&#x4E00;&#x4E2A;&#x5305;&#x542B;&#x65B0;&#x503C;&#x7684;&#x76D2;&#x5B50;&#xFF08;&#x51FD;&#x5B50;&#xFF09;&#xFF0C;&#x6EE1;&#x8DB3;&#x94FE;&#x5F0F;&#x8C03;&#x7528;</li>
+</ul>
+<h5 class="mume-header" id="2maybe%E5%87%BD%E5%AD%90%E5%A4%84%E7%90%86%E4%BC%A0%E9%80%92%E7%A9%BA%E5%80%BC%E7%9A%84%E6%83%85%E5%86%B5">2.MayBe&#x51FD;&#x5B50;&#xFF1A;&#x5904;&#x7406;&#x4F20;&#x9012;&#x7A7A;&#x503C;&#x7684;&#x60C5;&#x51B5;</h5>
+
+<pre data-role="codeBlock" data-info="js" class="language-javascript"><span class="token keyword">class</span> <span class="token class-name">MayBe</span><span class="token punctuation">{</span>
+    <span class="token keyword">static</span> <span class="token keyword">of</span><span class="token punctuation">(</span>value<span class="token punctuation">)</span><span class="token punctuation">{</span>
+        <span class="token keyword">return</span> <span class="token keyword">new</span> <span class="token class-name">Container</span><span class="token punctuation">(</span>value<span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+    <span class="token function">constructor</span><span class="token punctuation">(</span><span class="token parameter">value</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>_value <span class="token operator">=</span> value
+    <span class="token punctuation">}</span>
+    <span class="token function">map</span><span class="token punctuation">(</span><span class="token parameter">fn</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+        <span class="token keyword">return</span> <span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function">isNothing</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">?</span> MayBe<span class="token punctuation">.</span><span class="token keyword">of</span><span class="token punctuation">(</span><span class="token keyword">null</span><span class="token punctuation">)</span> <span class="token punctuation">:</span> MayBe<span class="token punctuation">.</span><span class="token keyword">of</span><span class="token punctuation">(</span><span class="token function">fn</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span>_value<span class="token punctuation">)</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+    <span class="token function">isNothing</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+        <span class="token keyword">return</span> <span class="token keyword">this</span><span class="token punctuation">.</span>_value <span class="token operator">===</span> <span class="token keyword">null</span> <span class="token operator">||</span> <span class="token keyword">this</span><span class="token punctuation">.</span>_value <span class="token operator">===</span> undefined
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</pre><h5 class="mume-header" id="3either%E5%87%BD%E5%AD%90%E5%A4%84%E7%90%86%E5%BC%82%E5%B8%B8%E9%94%99%E8%AF%AF">3.Either&#x51FD;&#x5B50;&#xFF1A;&#x5904;&#x7406;&#x5F02;&#x5E38;&#x9519;&#x8BEF;</h5>
+
+<pre data-role="codeBlock" data-info="js" class="language-javascript"><span class="token keyword">class</span> <span class="token class-name">Left</span><span class="token punctuation">{</span>
+    <span class="token keyword">static</span> <span class="token keyword">of</span><span class="token punctuation">(</span>value<span class="token punctuation">)</span><span class="token punctuation">{</span>
+        <span class="token keyword">return</span> <span class="token keyword">new</span> <span class="token class-name">Left</span><span class="token punctuation">(</span>value<span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+    <span class="token function">constructor</span><span class="token punctuation">(</span><span class="token parameter">value</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>_value <span class="token operator">=</span> value
+    <span class="token punctuation">}</span>
+    <span class="token function">map</span><span class="token punctuation">(</span><span class="token parameter">fn</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+        <span class="token keyword">return</span> <span class="token keyword">this</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+Class Right <span class="token punctuation">{</span>
+    <span class="token keyword">static</span> <span class="token keyword">of</span><span class="token punctuation">(</span>value<span class="token punctuation">)</span><span class="token punctuation">{</span>
+        <span class="token keyword">return</span> <span class="token keyword">new</span> <span class="token class-name">Right</span><span class="token punctuation">(</span>value<span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+    <span class="token function">constructor</span><span class="token punctuation">(</span><span class="token parameter">value</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>_value <span class="token operator">=</span> value
+    <span class="token punctuation">}</span>
+    <span class="token function">map</span><span class="token punctuation">(</span><span class="token parameter">fn</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+        <span class="token keyword">return</span> Right<span class="token punctuation">.</span><span class="token keyword">of</span><span class="token punctuation">(</span><span class="token function">fn</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span>_value<span class="token punctuation">)</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+&#x5904;&#x7406;&#x5F02;&#x5E38;
+<span class="token keyword">function</span> <span class="token function">ParseJSON</span><span class="token punctuation">(</span>str<span class="token punctuation">)</span><span class="token punctuation">{</span>
+    <span class="token keyword">try</span><span class="token punctuation">{</span>
+        <span class="token keyword">return</span> Right<span class="token punctuation">.</span><span class="token keyword">of</span><span class="token punctuation">(</span><span class="token constant">JSON</span><span class="token punctuation">.</span><span class="token function">parse</span><span class="token punctuation">(</span>str<span class="token punctuation">)</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span><span class="token keyword">catch</span><span class="token punctuation">(</span>e<span class="token punctuation">)</span><span class="token punctuation">{</span>
+        <span class="token keyword">return</span> Left<span class="token punctuation">.</span><span class="token keyword">of</span><span class="token punctuation">(</span><span class="token punctuation">{</span>error<span class="token punctuation">:</span>e<span class="token punctuation">.</span>message<span class="token punctuation">}</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+<span class="token function">ParseJSON</span><span class="token punctuation">(</span>str<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">map</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+</pre><h5 class="mume-header" id="4io%E5%87%BD%E5%AD%90%E6%AD%A4%E5%A4%84%E4%BC%A0%E5%85%A5%E7%9A%84value%E6%98%AF%E4%B8%80%E4%B8%AA%E5%87%BD%E6%95%B0">4.IO&#x51FD;&#x5B50;&#xFF1A;&#x6B64;&#x5904;&#x4F20;&#x5165;&#x7684;value&#x662F;&#x4E00;&#x4E2A;&#x51FD;&#x6570;</h5>
+
+<h6 class="mume-header" id="%E8%A6%81%E7%82%B9">&#x8981;&#x70B9;&#xFF1A;</h6>
+
+<ul>
+<li>_value &#x662F;&#x4E00;&#x4E2A;&#x51FD;&#x6570;</li>
+<li>map&#x63A5;&#x53E3;&#x8FD4;&#x56DE;&#x7684;&#x662F; &#x51FD;&#x5B50;&#x5305;&#x88F9;&#x7684;_value&#x548C;&#x4F20;&#x5165;&#x7684;fn&#x7684;&#x7EC4;&#x5408;&#x51FD;&#x6570;</li>
+<li>of&#x65B9;&#x6CD5;&#x8FD4;&#x56DE;&#x51FD;&#x5B50;&#x5305;&#x88F9;&#x7684;&#xFF08;&#x51FD;&#x6570;&#x5305;&#x88C5;&#x503C;&#xFF09;</li>
+</ul>
+<pre data-role="codeBlock" data-info="js" class="language-javascript"><span class="token keyword">class</span> <span class="token class-name">IO</span><span class="token punctuation">{</span>
+    <span class="token keyword">static</span> <span class="token keyword">of</span><span class="token punctuation">(</span>value<span class="token punctuation">)</span><span class="token punctuation">{</span>
+        <span class="token keyword">return</span> <span class="token keyword">new</span> <span class="token class-name">IO</span><span class="token punctuation">(</span><span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+            <span class="token keyword">return</span> value
+        <span class="token punctuation">}</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+    <span class="token function">constructor</span><span class="token punctuation">(</span><span class="token parameter">value</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>_value <span class="token operator">=</span> value
+    <span class="token punctuation">}</span>
+    <span class="token function">map</span><span class="token punctuation">(</span><span class="token parameter">fn</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+        <span class="token keyword">return</span> <span class="token keyword">new</span> <span class="token class-name">IO</span><span class="token punctuation">(</span>fp<span class="token punctuation">.</span><span class="token function">flowRight</span><span class="token punctuation">(</span>fn<span class="token punctuation">,</span><span class="token keyword">this</span><span class="token punctuation">.</span>_value<span class="token punctuation">)</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+<span class="token comment">//&#x6B64;&#x5904;&#x662F;&#x5728;node&#x73AF;&#x5883;&#x4E0B;</span>
+<span class="token keyword">let</span> r <span class="token operator">=</span> <span class="token constant">IO</span><span class="token punctuation">.</span><span class="token keyword">of</span><span class="token punctuation">(</span>process<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">map</span><span class="token punctuation">(</span><span class="token parameter">p</span><span class="token operator">=&gt;</span>p<span class="token punctuation">.</span>exexPath<span class="token punctuation">)</span>
+console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>r<span class="token punctuation">.</span><span class="token function">_value</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+</pre><h5 class="mume-header" id="5task%E5%87%BD%E5%AD%90">5.Task&#x51FD;&#x5B50;&#xFF1A;</h5>
+
+<h6 class="mume-header" id="%E8%A6%81%E7%82%B9-1">&#x8981;&#x70B9;&#xFF1A;</h6>
+
+<ul>
+<li>&#x8BB0;&#x4F4F;&#x4E00;&#x4E2A;&#x6807;&#x51C6;&#x51FD;&#x6570;&#x5F0F;&#x7F16;&#x7A0B;&#x5E93;&#xFF08;folktale&#xFF09;&#x53EA;&#x63D0;&#x4F9B;&#x51FD;&#x6570;&#x5F0F;&#x5904;&#x7406;&#x51FD;&#x6570;&#xFF0C;&#x5982;&#x7EC4;&#x5408;&#xFF0C;&#x67EF;&#x91CC;&#x5316;&#x7B49;</li>
+<li>node &#x9519;&#x8BEF;&#x4F18;&#x5148;&#x539F;&#x5219;</li>
+</ul>
+<pre data-role="codeBlock" data-info="js" class="language-javascript"><span class="token comment">//&#x6F14;&#x793A;&#x8BFB;&#x53D6;&#x6587;&#x4EF6;(&#x9700;&#x5F15;&#x5165;fs&#x6A21;&#x5757;)</span>
+<span class="token keyword">function</span> <span class="token function">readFile</span><span class="token punctuation">(</span><span class="token parameter">filename</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+    <span class="token keyword">return</span> <span class="token function-variable function">task</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token parameter">resolver</span><span class="token punctuation">)</span><span class="token operator">=&gt;</span><span class="token punctuation">{</span>
+        fs<span class="token punctuation">.</span><span class="token function">readFile</span><span class="token punctuation">(</span>filename<span class="token punctuation">,</span>&apos;utf<span class="token operator">-</span><span class="token number">8</span><span class="token punctuation">,</span><span class="token punctuation">(</span><span class="token parameter">err<span class="token punctuation">,</span>data</span><span class="token punctuation">)</span><span class="token operator">=&gt;</span><span class="token punctuation">[</span>
+            <span class="token keyword">if</span><span class="token punctuation">(</span>err<span class="token punctuation">)</span>resolver<span class="token punctuation">.</span><span class="token function">reject</span><span class="token punctuation">(</span>err<span class="token punctuation">)</span>
+            resolver<span class="token punctuation">.</span><span class="token function">resovle</span><span class="token punctuation">(</span>data<span class="token punctuation">)</span>
+        <span class="token punctuation">]</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token function">readFile</span><span class="token punctuation">(</span><span class="token string">&apos;&#x6587;&#x4EF6;&#x540D;&apos;</span><span class="token punctuation">)</span>
+    <span class="token punctuation">.</span><span class="token function">map</span><span class="token punctuation">(</span><span class="token function">split</span><span class="token punctuation">(</span><span class="token string">&apos;\n&apos;</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+    <span class="token punctuation">.</span><span class="token function">map</span><span class="token punctuation">(</span><span class="token function">find</span><span class="token punctuation">(</span><span class="token parameter">x</span><span class="token operator">=&gt;</span>x<span class="token punctuation">.</span><span class="token function">includes</span><span class="token punctuation">(</span>&apos;version<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+    <span class="token punctuation">.</span><span class="token function">run</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token comment">//&#x8FD0;&#x884C;</span>
+    <span class="token punctuation">.</span><span class="token function">listen</span><span class="token punctuation">(</span><span class="token punctuation">{</span>  <span class="token comment">//&#x76D1;&#x542C;&#x83B7;&#x53D6;&#x7ED3;&#x679C;</span>
+        <span class="token function-variable function">onRejected</span><span class="token punctuation">:</span><span class="token parameter">err</span><span class="token operator">=&gt;</span><span class="token punctuation">{</span>console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>err<span class="token punctuation">)</span><span class="token punctuation">}</span>
+        <span class="token function-variable function">onResolved</span><span class="token punctuation">:</span><span class="token parameter">value</span><span class="token operator">=&gt;</span><span class="token punctuation">{</span>console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>value<span class="token punctuation">)</span><span class="token punctuation">}</span>
+    <span class="token punctuation">}</span><span class="token punctuation">)</span>
+</pre><h5 class="mume-header" id="6pointed%E5%87%BD%E5%AD%90%E5%AE%9E%E7%8E%B0%E4%BA%86of%E9%9D%99%E6%80%81%E6%96%B9%E6%B3%95%E7%9A%84%E5%87%BD%E5%AD%90%E4%BB%A5%E4%B8%8A%E5%9D%87%E6%98%AF">6.Pointed&#x51FD;&#x5B50;&#xFF1A;&#x5B9E;&#x73B0;&#x4E86;of&#x9759;&#x6001;&#x65B9;&#x6CD5;&#x7684;&#x51FD;&#x5B50;&#xFF0C;&#x4EE5;&#x4E0A;&#x5747;&#x662F;</h5>
+
+<h6 class="mume-header" id="%E8%A6%81%E7%82%B9-2">&#x8981;&#x70B9;&#xFF1A;</h6>
+
+<ul>
+<li>&#x907F;&#x514D;&#x5916;&#x90E8;&#x4F7F;&#x7528;new&#x521B;&#x5EFA;&#x5BF9;&#x8C61;</li>
+<li>&#x7528;of&#x65B9;&#x6CD5;&#x628A;&#x503C;&#x653E;&#x5230;&#x4E0A;&#x4E0B;&#x6587;context(&#x5BB9;&#x5668;&#x4E2D;)&#xFF0C;&#x4EA4;&#x7531;map&#x5904;&#x7406;</li>
+</ul>
+<h5 class="mume-header" id="7monad%E5%87%BD%E5%AD%90%E5%85%B7%E6%9C%89join%E6%96%B9%E6%B3%95%E5%92%8Cflatmap%E6%96%B9%E6%B3%95">7.Monad&#x51FD;&#x5B50;&#xFF1A;&#x5177;&#x6709;join&#x65B9;&#x6CD5;&#x548C;flatMap&#x65B9;&#x6CD5;</h5>
+
+<h6 class="mume-header" id="%E8%A6%81%E7%82%B9-3">&#x8981;&#x70B9;&#xFF1A;</h6>
+
+<ul>
+<li>join&#x65B9;&#x6CD5;&#x7528;&#x4E8E;&#x8FD4;&#x56DE;&#x5F53;&#x524D;&#x51FD;&#x5B50;&#x5185;&#x90E8;&#x7684;_value</li>
+<li>&#x4F20;&#x5165;&#x7684;value&#x4E3A;&#x975E;&#x51FD;&#x5B50;&#x65F6;&#x4F7F;&#x7528;map&#x65B9;&#x6CD5;&#xFF0C;&#x56E0;&#x4E3A;&#x53EA;&#x6709;&#x5355;&#x5C42;&#x51FD;&#x5B50;IO(value)</li>
+<li>&#x4F20;&#x5165;&#x7684;value&#x4E3A;&#x51FD;&#x5B50;&#x65F6;&#x4F7F;&#x7528;flatMap&#x65B9;&#x6CD5;&#xFF0C;&#x5177;&#x6709;&#x51FD;&#x5B50;&#x5D4C;&#x5957;&#x7684;&#x51FD;&#x5B50;IO(IO(value))</li>
+</ul>
+<pre data-role="codeBlock" data-info="js" class="language-javascript"><span class="token keyword">class</span> <span class="token class-name">IO</span> <span class="token punctuation">{</span>
+    <span class="token keyword">static</span> <span class="token keyword">of</span><span class="token punctuation">(</span>value<span class="token punctuation">)</span><span class="token punctuation">{</span>
+        <span class="token keyword">return</span> <span class="token keyword">new</span> <span class="token class-name">IO</span><span class="token punctuation">(</span><span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+            <span class="token keyword">return</span> value
+        <span class="token punctuation">}</span><span class="token punctuation">)</span>
+        <span class="token function">constructor</span><span class="token punctuation">(</span><span class="token parameter">value</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+            <span class="token keyword">this</span><span class="token punctuation">.</span>_value <span class="token operator">=</span> value
+        <span class="token punctuation">}</span>
+        <span class="token function">map</span><span class="token punctuation">(</span><span class="token parameter">fn</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+            <span class="token keyword">return</span> <span class="token keyword">new</span> <span class="token class-name">IO</span><span class="token punctuation">(</span>fp<span class="token punctuation">.</span><span class="token function">flowRight</span><span class="token punctuation">(</span>fn<span class="token punctuation">,</span><span class="token keyword">this</span><span class="token punctuation">.</span>_value<span class="token punctuation">)</span><span class="token punctuation">)</span>
+        <span class="token punctuation">}</span>
+        <span class="token function">join</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+            <span class="token keyword">return</span> <span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function">_value</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+        <span class="token punctuation">}</span>
+        <span class="token function">flatMap</span><span class="token punctuation">(</span><span class="token parameter">fn</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+            <span class="token keyword">return</span> <span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function">map</span><span class="token punctuation">(</span>fn<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">join</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+&#x5F85;&#x8865;&#x5145;&#x4E00;&#x4E2A;&#x5B9E;&#x4F8B;&#x3002;&#x3002;&#x3002;
+
+</pre><h3 class="mume-header" id="%E5%85%AD-%E5%BC%82%E6%AD%A5%E7%BC%96%E7%A8%8B">&#x516D;&#x3001;&#x5F02;&#x6B65;&#x7F16;&#x7A0B;&#xFF1A;</h3>
+
+<ul>
+<li>JS&#x662F;&#x5355;&#x7EBF;&#x7A0B;&#xFF0C;&#x800C;&#x6D4F;&#x89C8;&#x5668;&#x4E0D;&#x662F;</li>
+<li>&#x540C;&#x6B65;&#xFF1A;&#x7A0B;&#x5E8F;&#x4E2D;&#x5B8F;&#x89C2;&#x81EA;&#x4E0A;&#x800C;&#x4E0B;&#x6267;&#x884C;&#x7684;&#x4EE3;&#x7801;</li>
+<li>&#x5F02;&#x6B65;&#xFF1A;&#x7A0B;&#x5E8F;&#x4E2D;&#x4E00;&#x4E9B;&#x8017;&#x65F6;&#x4EFB;&#x52A1;&#xFF0C;&#x4E8B;&#x4EF6;&#x76D1;&#x542C;&#xFF0C;&#x56DE;&#x8C03;&#x7B49;&#x5219;&#x662F;&#x5F02;&#x6B65;</li>
+<li>EventLoop &#x8C03;&#x7528;&#x6808; &#x5B8F;&#x4EFB;&#x52A1; &#x5FAE;&#x4EFB;&#x52A1;&#xFF1A;&#x638C;&#x63E1;&#x539F;&#x7406;</li>
+</ul>
+<h4 class="mume-header" id="%E4%BA%A7%E7%94%9F%E5%AE%8F%E4%BB%BB%E5%8A%A1%E7%9A%84%E6%96%B9%E5%BC%8F">&#x4EA7;&#x751F;&#x5B8F;&#x4EFB;&#x52A1;&#x7684;&#x65B9;&#x5F0F;</h4>
+
+<ul>
+<li>script &#x4E2D;&#x7684;&#x4EE3;&#x7801;&#x5757;</li>
+<li>setTimeout()</li>
+<li>setInterval()</li>
+<li>setImmediate() (&#x975E;&#x6807;&#x51C6;&#xFF0C;IE &#x548C; Node.js &#x4E2D;&#x652F;&#x6301;)</li>
+<li>&#x6CE8;&#x518C;&#x4E8B;&#x4EF6;</li>
+</ul>
+<h4 class="mume-header" id="%E4%BA%A7%E7%94%9F%E5%BE%AE%E4%BB%BB%E5%8A%A1%E7%9A%84%E6%96%B9%E5%BC%8F">&#x4EA7;&#x751F;&#x5FAE;&#x4EFB;&#x52A1;&#x7684;&#x65B9;&#x5F0F;</h4>
+
+<ul>
+<li>Promise</li>
+<li><a href="https://developer.mozilla.org/zh-CN/docs/Web/API/MutationObserver">MutationObserver</a></li>
+<li><a href="https://developer.mozilla.org/zh-CN/docs/Web/API/WindowOrWorkerGlobalScope/queueMicrotask">queueMicrotask</a>()</li>
+</ul>
+<pre data-role="codeBlock" data-info="js" class="language-javascript"><span class="token function">queueMicrotask</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+  console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">&apos;&#x5FAE;&#x4EFB;&#x52A1;&apos;</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span>
+</pre><h4 class="mume-header" id="%E5%BC%82%E6%AD%A5%E7%BC%96%E7%A8%8B%E7%9A%84%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88">&#x5F02;&#x6B65;&#x7F16;&#x7A0B;&#x7684;&#x89E3;&#x51B3;&#x65B9;&#x6848;</h4>
+
+<h5 class="mume-header" id="1%E5%9B%9E%E8%B0%83%E5%87%BD%E6%95%B0callback%E6%89%80%E6%9C%89%E5%BC%82%E6%AD%A5%E7%BC%96%E7%A8%8B%E6%96%B9%E6%A1%88%E7%9A%84%E6%A0%B9%E5%9F%BA">1.&#x56DE;&#x8C03;&#x51FD;&#x6570;callback&#xFF1A;&#x6240;&#x6709;&#x5F02;&#x6B65;&#x7F16;&#x7A0B;&#x65B9;&#x6848;&#x7684;&#x6839;&#x57FA;</h5>
+
+<ul>
+<li>&#x4F18;&#x70B9;&#xFF1A;&#x89E3;&#x51B3;&#x4E86;&#x5F02;&#x6B65;&#x7684;&#x95EE;&#x9898;&#x3002;&#x6240;&#x6709;&#x5F02;&#x6B65;&#x7F16;&#x7A0B;&#x65B9;&#x6848;&#x7684;&#x6839;&#x57FA;</li>
+<li>&#x7F3A;&#x70B9;: &#x56DE;&#x8C03;&#x5730;&#x72F1;&#x3002;</li>
+</ul>
+<pre data-role="codeBlock" data-info="js" class="language-javascript"><span class="token keyword">function</span><span class="token punctuation">(</span><span class="token parameter">callback</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+    <span class="token function">setTimeout</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">=&gt;</span><span class="token punctuation">{</span>
+        <span class="token function">callback</span><span class="token punctuation">(</span><span class="token string">&apos;&#x7B49;&#x5230;&#x4E86;&apos;</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span><span class="token punctuation">,</span><span class="token number">2000</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+</pre><h5 class="mume-header" id="2promise">2.Promise</h5>
+
+<ul>
+<li>&#x4F18;&#x70B9;&#xFF1A;&#x89E3;&#x51B3;&#x56DE;&#x8C03;&#x5730;&#x72F1;,&#x907F;&#x514D;&#x4E86;&#x8C03;&#x7528;&#x8005;&#x5199;&#x56DE;&#x8C03;</li>
+<li>&#x4E0D;&#x8DB3;&#xFF1A;&#x4ECD;&#x7136;&#x4F1A;&#x6709;&#x5C42;&#x5C42;&#x5D4C;&#x5957;&#x7684;&#x60C5;&#x51B5;</li>
+<li>&#x57FA;&#x672C;&#x8981;&#x70B9;&#xFF1A;&#x4E09;&#x79CD;&#x72B6;&#x6001;</li>
+</ul>
+<pre data-role="codeBlock" data-info="js" class="language-javascript"><span class="token keyword">var</span> promise <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Promise</span><span class="token punctuation">(</span><span class="token keyword">function</span><span class="token punctuation">(</span><span class="token parameter">resolve<span class="token punctuation">,</span>reject</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+    <span class="token function">resolve</span><span class="token punctuation">(</span><span class="token string">&apos;&#x6210;&#x529F;&apos;</span><span class="token punctuation">)</span>
+    <span class="token comment">// reject(&apos;&#x5931;&#x8D25;&apos;)</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span>
+promise<span class="token punctuation">.</span><span class="token function">then</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token parameter">value</span><span class="token punctuation">)</span><span class="token operator">=&gt;</span><span class="token punctuation">{</span>
+    console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>value<span class="token punctuation">)</span>
+<span class="token punctuation">}</span><span class="token punctuation">,</span><span class="token parameter">err</span><span class="token operator">=&gt;</span><span class="token punctuation">{</span>
+    console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>err<span class="token punctuation">)</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span>
+promise<span class="token punctuation">.</span><span class="token function">then</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token parameter">value</span><span class="token punctuation">)</span><span class="token operator">=&gt;</span><span class="token punctuation">{</span>
+    console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>value<span class="token punctuation">)</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">catch</span><span class="token punctuation">(</span><span class="token parameter">err</span><span class="token operator">=&gt;</span><span class="token punctuation">{</span>
+    console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>err<span class="token punctuation">)</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">finally</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">=&gt;</span><span class="token punctuation">{</span>
+    console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">&apos;Everything is ok&apos;</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span>
+Promise<span class="token punctuation">.</span><span class="token function">resolve</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+Promise<span class="token punctuation">.</span><span class="token function">all</span><span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+Promise<span class="token punctuation">.</span><span class="token function">reject</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+Promise<span class="token punctuation">.</span><span class="token function">race</span><span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+<span class="token comment">//&#x7528;promise&#x5C01;&#x88C5;ajax</span>
+<span class="token keyword">function</span> <span class="token function">ajax</span><span class="token punctuation">(</span><span class="token parameter">url</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+    <span class="token keyword">return</span> <span class="token keyword">new</span> <span class="token class-name">Promise</span><span class="token punctuation">(</span><span class="token keyword">function</span><span class="token punctuation">(</span><span class="token parameter">resolve<span class="token punctuation">,</span>reject</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+        <span class="token keyword">var</span> xhr <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">XMLHttpRequest</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+        xhr<span class="token punctuation">.</span><span class="token function">open</span><span class="token punctuation">(</span><span class="token string">&apos;GET&apos;</span><span class="token punctuation">,</span>url<span class="token punctuation">)</span>
+        xhr<span class="token punctuation">.</span>responseType <span class="token operator">=</span> <span class="token string">&apos;json&apos;</span>
+        xhr<span class="token punctuation">.</span><span class="token function-variable function">onload</span> <span class="token operator">=</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+            <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span>status <span class="token operator">===</span> <span class="token number">200</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+                <span class="token function">resolve</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span>response<span class="token punctuation">)</span>
+            <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
+                <span class="token function">reject</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">Error</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span>statusText<span class="token punctuation">)</span><span class="token punctuation">)</span>
+            <span class="token punctuation">}</span>
+        <span class="token punctuation">}</span>
+        xhr<span class="token punctuation">.</span><span class="token function">send</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+</pre><h5 class="mume-header" id="3generator-%E7%94%9F%E6%88%90%E5%99%A8">3.Generator &#x751F;&#x6210;&#x5668;</h5>
+
+<ul>
+<li>&#x4F18;&#x70B9;&#xFF1A;&#x66F4;&#x52A0;&#x6241;&#x5E73;&#x5316;&#x3002;&#x63A5;&#x8FD1;&#x4E0E;&#x540C;&#x6B65;&#x4EE3;&#x7801;&#x7684;&#x65B9;&#x5F0F;</li>
+<li>&#x7F3A;&#x70B9;: &#x6BCF;&#x6267;&#x884C;&#x4E00;&#x6B21;&#x90FD;&#x8981;&#x8C03;&#x7528;next()&#x65B9;&#x6CD5;</li>
+<li>&#x57FA;&#x672C;&#x8981;&#x70B9;&#xFF1A;<br>
+1.&#x4F7F;&#x7528;* &#x548C; yield&#x5173;&#x952E;&#x5B57;<br>
+2.&#x6BCF;&#x4E00;&#x4E2A;yield&#x9700;&#x8C03;&#x7528;&#x4E00;&#x6B21;next&#x65B9;&#x6CD5;<br>
+3.next&#x65B9;&#x6CD5;&#x8FD4;&#x56DE;&#x4E00;&#x4E2A;&#x5BF9;&#x8C61;{done:false,value},done&#x8868;&#x793A;&#x751F;&#x6210;&#x5668;&#x662F;&#x5426;&#x6267;&#x884C;&#x5B8C;&#x6210;&#xFF0C;value&#x8868;&#x793A;yield&#x8FD4;&#x56DE;&#x503C;<br>
+4.next&#x65B9;&#x6CD5;&#x53EF;&#x4EE5;&#x4F20;&#x5165;&#x53C2;&#x6570;&#xFF0C;&#x4F20;&#x5165;&#x5219;&#x628A;yield&#x8FD4;&#x56DE;&#x503C;&#x4FEE;&#x6539;&#x6210;&#x5F53;&#x524D;&#x53C2;&#x6570;</li>
+</ul>
+<pre data-role="codeBlock" data-info="js" class="language-javascript"><span class="token keyword">function</span> <span class="token operator">*</span> <span class="token function">gen</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+    <span class="token keyword">var</span> c <span class="token operator">=</span> <span class="token keyword">yield</span> <span class="token number">2</span> <span class="token operator">*</span> <span class="token number">2</span> 
+<span class="token punctuation">}</span>
+<span class="token keyword">var</span> g  <span class="token operator">=</span>  <span class="token function">gen</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token keyword">var</span> g1 <span class="token operator">=</span> g<span class="token punctuation">.</span><span class="token function">next</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+g<span class="token punctuation">.</span><span class="token keyword">throw</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">Error</span><span class="token punctuation">(</span><span class="token string">&apos;error&apos;</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>g1<span class="token punctuation">.</span>value<span class="token punctuation">,</span>g1<span class="token punctuation">.</span>done<span class="token punctuation">)</span>
+
+&#x7528;&#x751F;&#x6210;&#x5668;&#x5B9E;&#x73B0;<span class="token constant">CO</span>&#x7684;&#x5F02;&#x6B65;&#x65B9;&#x6848;
+<span class="token keyword">function</span> <span class="token operator">*</span> <span class="token function">main</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token keyword">try</span> <span class="token punctuation">{</span>
+    <span class="token keyword">const</span> users <span class="token operator">=</span> <span class="token keyword">yield</span> <span class="token function">ajax</span><span class="token punctuation">(</span><span class="token string">&apos;/api/users.json&apos;</span><span class="token punctuation">)</span>
+    console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>users<span class="token punctuation">)</span>
+
+    <span class="token keyword">const</span> posts <span class="token operator">=</span> <span class="token keyword">yield</span> <span class="token function">ajax</span><span class="token punctuation">(</span><span class="token string">&apos;/api/posts.json&apos;</span><span class="token punctuation">)</span>
+    console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>posts<span class="token punctuation">)</span>
+
+    <span class="token keyword">const</span> urls <span class="token operator">=</span> <span class="token keyword">yield</span> <span class="token function">ajax</span><span class="token punctuation">(</span><span class="token string">&apos;/api/urls11.json&apos;</span><span class="token punctuation">)</span>
+    console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>urls<span class="token punctuation">)</span>
+  <span class="token punctuation">}</span> <span class="token keyword">catch</span> <span class="token punctuation">(</span>e<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>e<span class="token punctuation">)</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+<span class="token keyword">function</span> <span class="token function">co</span> <span class="token punctuation">(</span><span class="token parameter">generator</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token keyword">const</span> g <span class="token operator">=</span> <span class="token function">generator</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+  <span class="token keyword">function</span> <span class="token function">handleResult</span> <span class="token punctuation">(</span><span class="token parameter">result</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>result<span class="token punctuation">.</span>done<span class="token punctuation">)</span> <span class="token keyword">return</span> <span class="token comment">// &#x751F;&#x6210;&#x5668;&#x51FD;&#x6570;&#x7ED3;&#x675F;</span>
+    result<span class="token punctuation">.</span>value<span class="token punctuation">.</span><span class="token function">then</span><span class="token punctuation">(</span><span class="token parameter">data</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+      <span class="token function">handleResult</span><span class="token punctuation">(</span>g<span class="token punctuation">.</span><span class="token function">next</span><span class="token punctuation">(</span>data<span class="token punctuation">)</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span><span class="token punctuation">,</span> <span class="token parameter">error</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+      g<span class="token punctuation">.</span><span class="token keyword">throw</span><span class="token punctuation">(</span>error<span class="token punctuation">)</span>
+    <span class="token punctuation">}</span><span class="token punctuation">)</span>
+  <span class="token punctuation">}</span>
+  <span class="token function">handleResult</span><span class="token punctuation">(</span>g<span class="token punctuation">.</span><span class="token function">next</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+
+<span class="token function">co</span><span class="token punctuation">(</span>main<span class="token punctuation">)</span>
+</pre><h5 class="mume-header" id="4asyncawait-%E7%94%9F%E6%88%90%E5%99%A8%E5%87%BD%E6%95%B0%E8%AF%AD%E6%B3%95%E7%B3%96">4.async/await (&#x751F;&#x6210;&#x5668;&#x51FD;&#x6570;&#x8BED;&#x6CD5;&#x7CD6;)</h5>
+
+<ul>
+<li>&#x57FA;&#x672C;&#x8981;&#x70B9;&#xFF1A;&#x751F;&#x6210;&#x5668;&#x51FD;&#x6570;&#x8BED;&#x6CD5;&#x7CD6;,&#x8BED;&#x8A00;&#x5C42;&#x9762;&#x7684;&#x5F02;&#x6B65;&#x7F16;&#x7A0B;&#x6807;&#x51C6;<br>
+1.async&#x8FD4;&#x56DE;&#x4E00;&#x4E2A;promise&#x5BF9;&#x8C61;<br>
+2.&#x76EE;&#x524D;await&#x53EA;&#x80FD;&#x5199;&#x5728;async&#x5185;&#x90E8;</li>
+</ul>
+<pre data-role="codeBlock" data-info="js" class="language-javascript"><span class="token keyword">async</span> <span class="token keyword">function</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+    <span class="token keyword">const</span> users1 <span class="token operator">=</span> <span class="token keyword">await</span> <span class="token function">ajax</span><span class="token punctuation">(</span><span class="token string">&apos;&apos;</span><span class="token punctuation">)</span>
+    <span class="token keyword">const</span> users2 <span class="token operator">=</span> <span class="token keyword">await</span> <span class="token function">ajax</span><span class="token punctuation">(</span><span class="token string">&apos;&apos;</span><span class="token punctuation">)</span>
+    <span class="token keyword">const</span> users3 <span class="token operator">=</span> <span class="token keyword">await</span> <span class="token function">ajax</span><span class="token punctuation">(</span><span class="token string">&apos;&apos;</span><span class="token punctuation">)</span>
+    <span class="token keyword">const</span> users4 <span class="token operator">=</span> <span class="token keyword">await</span> <span class="token function">ajax</span><span class="token punctuation">(</span><span class="token string">&apos;&apos;</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+<span class="token keyword">const</span> promise <span class="token operator">=</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+promise<span class="token punctuation">.</span><span class="token function">then</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">=&gt;</span><span class="token punctuation">{</span>
+    console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">&apos;&#x5B8C;&#x6210;&apos;</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span>
+</pre><h3 class="mume-header" id="%E4%B8%83-%E6%89%8B%E5%86%99promise">&#x4E03;&#x3001;&#x624B;&#x5199;Promise&#xFF1A;</h3>
+
+<h4 class="mume-header" id="%E5%9F%BA%E6%9C%AC%E8%A6%81%E7%82%B9">&#x57FA;&#x672C;&#x8981;&#x70B9;&#xFF1A;</h4>
+
+<p>1.Promise&#x6709;&#x4E09;&#x79CD;&#x72B6;&#x6001;&#xFF0C;PENDING(&#x7B49;&#x5F85;)&#x3001;FULLFILED(&#x6210;&#x529F;)&#x3001;REJECTED(&#x5931;&#x8D25;)&#xFF0C;&#x72B6;&#x6001;&#x4E00;&#x65E6;&#x6539;&#x53D8;&#x5219;&#x4E0D;&#x53EF;&#x66F4;&#x6539;<br>
+2.Promise&#x63A5;&#x53D7;&#x4E00;&#x4E2A;&#x51FD;&#x6570;&#xFF0C;&#x8FD9;&#x4E2A;&#x51FD;&#x6570;(excutor)&#x4F1A;&#x5728;Promise&#x5185;&#x90E8;&#x7ACB;&#x5373;&#x6267;&#x884C;,&#x5E76;&#x4E14;&#x63A5;&#x53D7;&#x4E24;&#x4E2A;&#x6539;&#x53D8;&#x72B6;&#x6001;&#x7684;&#x53C2;&#x6570;resolve,reject,&#x540C;&#x65F6;&#x8FDB;&#x884C;&#x503C;&#x7684;&#x5B58;&#x50A8;&#x4EE5;&#x4FBF;&#x4F20;&#x9012;<br>
+3.Promise&#x5177;&#x6709;&#x4E00;&#x4E2A;then&#x65B9;&#x6CD5;&#xFF0C;&#x8BE5;&#x65B9;&#x6CD5;&#x63A5;&#x53D7;&#x6210;&#x529F;&#x548C;&#x5931;&#x8D25;&#x7684;&#x56DE;&#x8C03;&#x51FD;&#x6570;&#xFF1A;<br>
+&#xFF08;1&#xFF09;then&#x65B9;&#x6CD5;&#x7684;&#x8FD4;&#x56DE;&#x503C;&#x4ECD;&#x7136;&#x662F;promise&#x4EE5;&#x4FBF;&#x4E0E;&#x540E;&#x7EED;&#x94FE;&#x5F0F;&#x8C03;&#x7528;&#xFF0C;<br>
+&#xFF08;2&#xFF09;then&#x65B9;&#x6CD5;&#x4E2D;&#x4F1A;&#x5904;&#x7406;&#x56DE;&#x8C03;&#x51FD;&#x6570;&#x7684;&#x8FD4;&#x56DE;&#x503C;&#x4EE5;&#x4FBF;&#x4E0E;&#x4F20;&#x9012;&#x7ED9;&#x4E0B;&#x4E00;&#x4E2A;then&#x65B9;&#x6CD5;<br>
+&#xFF08;3&#xFF09;promise&#x4E2D;&#x4F1A;&#x5BF9;then&#x65B9;&#x6CD5;&#x4E2D;&#x56DE;&#x8C03;&#x51FD;&#x6570;&#x7684;&#x8FD4;&#x56DE;&#x503C;&#x8FDB;&#x884C;&#x9A8C;&#x8BC1;&#xFF0C;&#x9700;&#x8981;&#x628A;&#x4EFB;&#x4F55;&#x503C;&#x90FD;&#x6700;&#x7EC8;&#x5904;&#x7406;&#x6210;&#x666E;&#x901A;&#x503C;&#x901A;&#x8FC7;promise&#x5411;&#x4E0B;&#x4F20;&#x9012;<br>
+&#xFF08;4&#xFF09;&#x5982;&#x679C;then&#x65B9;&#x6CD5;&#x56DE;&#x8C03;&#x51FD;&#x6570;&#x4E2D;&#x8FD4;&#x56DE;&#x503C;&#x662F;&#x5F53;&#x524D;promise&#x5B9E;&#x4F8B;&#xFF0C;&#x5219;&#x629B;&#x51FA;&#x9519;&#x8BEF;<br>
+4.&#x5982;&#x679C;&#x662F;&#x5EF6;&#x65F6;&#x4EFB;&#x52A1;&#xFF0C;&#x8C03;&#x7528;then&#x65B9;&#x6CD5;&#x65F6;&#x72B6;&#x6001;&#x8FD8;&#x672A;&#x6539;&#x53D8;&#xFF0C;&#x90A3;&#x4E48;Promise&#x5185;&#x90E8;&#x4F1A;&#x5B58;&#x50A8;then&#x65B9;&#x6CD5;&#x7684;&#x56DE;&#x8C03;&#x51FD;&#x6570;&#xFF0C;&#x4EE5;&#x4FBF;&#x4E8E;&#x72B6;&#x6001;&#x6539;&#x53D8;&#x65F6;&#x8C03;&#x7528;<br>
+5.promise&#x53EF;&#x4EE5;&#x591A;&#x6B21;&#x8C03;&#x7528;then&#x65B9;&#x6CD5;&#xFF0C;&#x54EA;&#x6015;&#x5176;&#x4E2D;&#x6709;&#x5F02;&#x6B65;&#x4EFB;&#x52A1;&#xFF0C;&#x901A;&#x8FC7;&#x6570;&#x7EC4;&#x5B58;&#x50A8;&#x6240;&#x6709;then&#x4E2D;&#x4F20;&#x5165;&#x7684;&#x56DE;&#x8C03;&#x51FD;&#x6570;&#xFF1B;<br>
+6.&#x9700;&#x8981;&#x5BF9;excutor&#x548C;then&#x505A;&#x9519;&#x8BEF;&#x5904;&#x7406;<br>
+7.&#x5176;&#x4ED6;&#x8981;&#x70B9;&#x6709;&#x5173;promise&#x7684;&#x5176;&#x4ED6;&#x5B9E;&#x4F8B;&#x65B9;&#x6CD5;&#x548C;&#x9759;&#x6001;&#x65B9;&#x6CD5;&#xFF0C;&#x5747;&#x5728;&#x5B8C;&#x6574;&#x4EE3;&#x7801;&#x4E2D;&#xFF0C;&#x4E0D;&#x505A;&#x8D58;&#x8FF0;</p>
+<h4 class="mume-header" id="%E5%AE%8C%E6%95%B4%E4%BB%A3%E7%A0%81">&#x5B8C;&#x6574;&#x4EE3;&#x7801;&#xFF1A;</h4>
+
+<pre data-role="codeBlock" data-info="js" class="language-javascript"><span class="token comment">// 1.&#x5B9A;&#x4E49;promise&#x7684;&#x4E09;&#x79CD;&#x72B6;&#x6001;PENDING,FULLFILLED,REJECTED</span>
+<span class="token keyword">const</span> <span class="token constant">PENDING</span> <span class="token operator">=</span> <span class="token string">&apos;PENDING&apos;</span><span class="token punctuation">;</span>
+<span class="token keyword">const</span> <span class="token constant">FULLFILLED</span> <span class="token operator">=</span> <span class="token string">&apos;FULLFILLED&apos;</span>
+<span class="token keyword">const</span> <span class="token constant">REJECTED</span> <span class="token operator">=</span> <span class="token string">&apos;REJECTED&apos;</span>
+<span class="token keyword">class</span> <span class="token class-name">MyPromise</span> <span class="token punctuation">{</span>
+    <span class="token function">constructor</span><span class="token punctuation">(</span><span class="token parameter">excutor</span><span class="token punctuation">)</span> <span class="token punctuation">{</span><span class="token comment">//2.&#x9996;&#x5148;promise&#x63A5;&#x6536;&#x4E00;&#x4E2A;&#x7ACB;&#x5373;&#x6267;&#x884C;&#x51FD;&#x6570;&#x4F5C;&#x4E3A;&#x53C2;&#x6570;</span>
+        <span class="token keyword">try</span> <span class="token punctuation">{</span><span class="token comment">//20.&#x6267;&#x884C;&#x5668;&#x5F02;&#x5E38;&#x5904;&#x7406;</span>
+            <span class="token function">excutor</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span>resolve<span class="token punctuation">,</span> <span class="token keyword">this</span><span class="token punctuation">.</span>reject<span class="token punctuation">)</span> <span class="token comment">//3.&#x8BE5;&#x51FD;&#x6570;&#x63A5;&#x53D7;&#x4E24;&#x4E2A;&#x53C2;&#x6570;&#x7528;&#x4E8E;&#x6539;&#x53D8;&#x72B6;&#x6001;</span>
+        <span class="token punctuation">}</span> <span class="token keyword">catch</span> <span class="token punctuation">(</span>e<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function">reject</span><span class="token punctuation">(</span>e<span class="token punctuation">)</span>
+        <span class="token punctuation">}</span>
+
+    <span class="token punctuation">}</span>
+    status <span class="token operator">=</span> <span class="token constant">PENDING</span><span class="token punctuation">;</span><span class="token comment">//4.&#x5B9A;&#x4E49;&#x521D;&#x59CB;&#x72B6;&#x6001;</span>
+    value <span class="token operator">=</span> undefined<span class="token punctuation">;</span> <span class="token comment">//7.&#x5B9A;&#x4E49;&#x503C;&#x7684;&#x5B58;&#x50A8;&#xFF0C;&#x4EE5;&#x4FBF;&#x4F20;&#x9012;&#x5411;then</span>
+    reason <span class="token operator">=</span> undefined<span class="token punctuation">;</span>
+    successCallback <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">;</span> <span class="token comment">//11.&#x5B58;&#x50A8;&#x56DE;&#x8C03;</span>
+    failCallback <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
+    <span class="token function-variable function">resolve</span> <span class="token operator">=</span> <span class="token parameter">value</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span><span class="token comment">//5.&#x6539;&#x53D8;&#x72B6;&#x6001;</span>
+        <span class="token keyword">if</span><span class="token punctuation">(</span>value <span class="token keyword">instanceof</span> <span class="token class-name">MyPromise</span><span class="token punctuation">)</span><span class="token punctuation">{</span><span class="token comment">//30.&#x5982;&#x679C;resolve&#x503C;&#x662F;promise,&#x90A3;&#x4E48;&#x9012;&#x5F52;&#x8C03;&#x7528;&#x4EE5;&#x5F97;&#x5230;&#x666E;&#x901A;&#x503C;</span>
+            value<span class="token punctuation">.</span><span class="token function">then</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span>resolve<span class="token punctuation">,</span><span class="token keyword">this</span><span class="token punctuation">.</span>reject<span class="token punctuation">)</span>
+        <span class="token punctuation">}</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span>status <span class="token operator">!==</span> <span class="token constant">PENDING</span><span class="token punctuation">)</span> <span class="token keyword">return</span> <span class="token comment">//6.&#x72B6;&#x6001;&#x4E00;&#x65E6;&#x66F4;&#x6539;&#x4FBF;&#x65E0;&#x6CD5;&#x518D;&#x6B21;&#x6539;&#x53D8;</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>value <span class="token operator">=</span> value  <span class="token comment">//8.&#x83B7;&#x53D6;&#x72B6;&#x6001;&#x6539;&#x53D8;&#x65F6;&#x4F20;&#x5165;&#x7684;&#x53C2;&#x6570;&#x5B58;&#x50A8;&#x4EE5;&#x4FBF;&#x4E8E;&#x5411;&#x540E;&#x4F20;&#x9012;</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>status <span class="token operator">=</span> <span class="token constant">FULLFILLED</span>
+        <span class="token comment">// this.successCallback&amp;&amp;this.successCallback(this.value) //12.&#x7B49;&#x5230;&#x72B6;&#x6001;&#x6539;&#x53D8;&#x65F6;&#x518D;&#x6267;&#x884C;&#x56DE;&#x8C03;</span>
+        <span class="token keyword">while</span> <span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span>successCallback<span class="token punctuation">.</span>length<span class="token punctuation">)</span> <span class="token punctuation">{</span>  <span class="token comment">//14.&#x4F9D;&#x6B21;&#x6267;&#x884C;&#x591A;&#x6B21;&#x8C03;&#x7528;then&#x65B9;&#x6CD5;&#x7684;&#x51FD;&#x6570;</span>
+            <span class="token comment">// this.successCallback.unshift()(this.value)  </span>
+            <span class="token keyword">this</span><span class="token punctuation">.</span>successCallback<span class="token punctuation">.</span><span class="token function">unshift</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">(</span><span class="token punctuation">)</span>  <span class="token comment">//23.&#x5B58;&#x503C;&#x662F;&#x5DF2;&#x7ECF;&#x4F20;&#x9012;&#x4E86;&#x53C2;&#x6570;&#xFF0C;&#x5E76;&#x4E14;&#x6211;&#x4EEC;&#x8C03;&#x7528;&#x7684;&#x662F;&#x5916;&#x5C42;&#x51FD;&#x6570;&#xFF0C;&#x56E0;&#x6B64;&#x4E0D;&#x7528;&#x518D;&#x4F20;&#x503C;</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+    <span class="token function-variable function">reject</span> <span class="token operator">=</span> <span class="token parameter">reason</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span>status <span class="token operator">!==</span> <span class="token constant">PENDING</span><span class="token punctuation">)</span> <span class="token keyword">return</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>reason <span class="token operator">=</span> reason
+        <span class="token keyword">this</span><span class="token punctuation">.</span>status <span class="token operator">=</span> <span class="token constant">REJECTED</span>
+        <span class="token comment">// this.failCallback&amp;&amp;this.failCallback(this.value)</span>
+        <span class="token keyword">while</span> <span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span>failCallback<span class="token punctuation">.</span>length<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token keyword">this</span><span class="token punctuation">.</span>failCallback<span class="token punctuation">.</span><span class="token function">unshift</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+    <span class="token function">then</span><span class="token punctuation">(</span><span class="token parameter">successCallback<span class="token punctuation">,</span> failCallback</span><span class="token punctuation">)</span> <span class="token punctuation">{</span><span class="token comment">//9.&#x5B9E;&#x73B0;then&#x65B9;&#x6CD5;&#xFF0C;&#x63A5;&#x53D7;&#x4E24;&#x4E2A;&#x56DE;&#x8C03;&#x53C2;&#x6570;&#x6210;&#x529F;&#x548C;&#x5931;&#x8D25;</span>
+        <span class="token keyword">let</span> promise2 <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Promise</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token parameter">resolve<span class="token punctuation">,</span> reject</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+            <span class="token comment">// 24.&#x5904;&#x7406;then&#x65B9;&#x6CD5;&#x4E2D;&#x4F20;&#x9012;&#x53C2;&#x6570;&#x4E3A;&#x7A7A;&#x6216;&#x4E0D;&#x4F20;&#x65F6;&#xFF0C;&#x4E0D;&#x505A;&#x5904;&#x7406;&#x628A;value&#x6216;reason&#x5411;&#x4E0B;&#x4F20;&#x9012;</span>
+            successCallback <span class="token operator">=</span> successCallback <span class="token operator">?</span> <span class="token function-variable function">successCallback</span> <span class="token punctuation">:</span> <span class="token parameter">value</span> <span class="token operator">=&gt;</span> value
+            failCallback <span class="token operator">=</span> failCallback <span class="token operator">?</span> <span class="token function-variable function">failCallback</span> <span class="token punctuation">:</span> <span class="token parameter">reason</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span> <span class="token keyword">throw</span> reason <span class="token punctuation">}</span>
+            <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span>status <span class="token operator">===</span> <span class="token constant">FULLFILLED</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                <span class="token function">setTimeout</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+                    <span class="token keyword">try</span> <span class="token punctuation">{</span> <span class="token comment">//21.then&#x65B9;&#x6CD5;&#x5F02;&#x5E38;&#x5904;&#x7406;</span>
+                        <span class="token comment">// successCallback(this.value) </span>
+                        <span class="token keyword">let</span> x <span class="token operator">=</span> <span class="token function">successCallback</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span>value<span class="token punctuation">)</span> <span class="token comment">//16.&#x5B58;&#x50A8;&#x56DE;&#x8C03;&#x53C2;&#x6570;&#x7684;&#x8FD4;&#x56DE;&#x503C;&#x4EE5;&#x4FBF;&#x5411;&#x540E;&#x4F20;&#x9012;.&#x6CE8;&#xFF1A;&#x5982;&#x4F55;&#x5411;&#x540E;&#x4F20;&#x9012;&#xFF0C;&#x8003;&#x8651;&#x7528;then&#x8FD4;&#x56DE;&#x7684;promise&#x5BF9;&#x8C61;&#x53BB;&#x628A;&#x8FD4;&#x56DE;&#x503C;&#x5411;&#x4E0B;&#x4F20;&#x9012;&#x3002;&#x8003;&#x8651;&#x628A;&#x6574;&#x5757;&#x4EE3;&#x7801;&#x79FB;&#x5165;promise&#x5BF9;&#x8C61;&#x4E2D;&#xFF0C;&#x65E2;&#x80FD;&#x540C;&#x6B65;&#x6267;&#x884C;&#x4EE3;&#x7801;&#xFF0C;&#x53C8;&#x53EF;&#x4EE5;&#x62FF;&#x5230;resolve&#x65B9;&#x6CD5;&#x4EE5;&#x4FBF;&#x4E8E;&#x4F20;&#x9012;&#x8FD4;&#x56DE;&#x503C;&#x3002;</span>
+                        <span class="token comment">// resolve(x) </span>
+                        <span class="token comment">//resolvePromise(x,resolve,reject)  //17.&#x7531;&#x4E8E;x&#x503C;&#x6709;&#x53EF;&#x80FD;&#x4E3A;&#x666E;&#x901A;&#x503C;  &#x4E5F;&#x6709;&#x53EF;&#x80FD;&#x4E3A;promise&#x5BF9;&#x8C61;&#xFF0C;&#x56E0;&#x6B64;&#x505A;&#x5224;&#x65AD;&#x540E;&#x518D;&#x4F20;&#x9012;</span>
+                        <span class="token function">resolvePromise</span><span class="token punctuation">(</span>promise2<span class="token punctuation">,</span> x<span class="token punctuation">,</span> resolve<span class="token punctuation">,</span> reject<span class="token punctuation">)</span>  <span class="token comment">//18.promise&#x4E0D;&#x5141;&#x8BB8;then&#x65B9;&#x6CD5;&#x8FD4;&#x56DE;&#x81EA;&#x8EAB;&#x5B9E;&#x4F8B;&#xFF0C;&#x56E0;&#x6B64;&#x8BE5;&#x4F20;&#x5165;promise2&#x505A;&#x5224;&#x65AD;</span>
+                        <span class="token comment">//19.&#x6B64;&#x5904;&#x65E0;&#x6CD5;&#x83B7;&#x53D6;promise2&#x5B9E;&#x4F8B;&#xFF0C;&#x5DE7;&#x5999;&#x5229;&#x7528;setTimeout&#x89E3;&#x51B3;&#x95EE;&#x9898;</span>
+                    <span class="token punctuation">}</span> <span class="token keyword">catch</span> <span class="token punctuation">(</span>e<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                        <span class="token function">reject</span><span class="token punctuation">(</span>e<span class="token punctuation">)</span>
+                    <span class="token punctuation">}</span>
+                <span class="token punctuation">}</span><span class="token punctuation">)</span>
+            <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span>status <span class="token operator">===</span> <span class="token constant">REJECTED</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                <span class="token function">setTimeout</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+                    <span class="token keyword">try</span> <span class="token punctuation">{</span>
+                        <span class="token keyword">let</span> x <span class="token operator">=</span> <span class="token function">failCallback</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span>reason<span class="token punctuation">)</span>
+                        <span class="token function">resolvePromise</span><span class="token punctuation">(</span>promise2<span class="token punctuation">,</span> x<span class="token punctuation">,</span> resolve<span class="token punctuation">,</span> reject<span class="token punctuation">)</span>
+                    <span class="token punctuation">}</span> <span class="token keyword">catch</span> <span class="token punctuation">(</span>e<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                        <span class="token function">reject</span><span class="token punctuation">(</span>e<span class="token punctuation">)</span>
+                    <span class="token punctuation">}</span>
+                <span class="token punctuation">}</span><span class="token punctuation">)</span>
+            <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span><span class="token comment">//10.&#x5904;&#x7406;&#x5F02;&#x6B65;&#x60C5;&#x51B5;,&#x8C03;&#x7528;then&#x65B9;&#x6CD5;&#x65F6;&#x88C5;&#x6001;&#x8FD8;&#x672A;&#x66F4;&#x6539;&#xFF0C;&#x5219;&#x5B58;&#x50A8;&#x56DE;&#x8C03;&#x51FD;&#x6570;&#xFF0C;&#x53BB;resolve&#x4E2D;&#x72B6;&#x6001;&#x66F4;&#x6539;&#x65F6;&#x89E6;&#x53D1;</span>
+                <span class="token comment">// this.successCallback = successCallback  </span>
+                <span class="token comment">// this.failCallback = failCallback</span>
+                <span class="token comment">// this.successCallback.push(successCallback)   //13.&#x7531;&#x4E8E;&#x51FD;&#x6570;&#x4E2D;&#x53EF;&#x4EE5;&#x591A;&#x6B21;&#x8C03;&#x7528;then&#x3002;&#x6539;&#x8FDB;</span>
+                <span class="token comment">// this.failCallback.push(failCallback)</span>
+                <span class="token keyword">this</span><span class="token punctuation">.</span>successCallback<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span><span class="token comment">//22.&#x5F02;&#x6B65;&#x7684;&#x4E5F;&#x9700;&#x8981;&#x5982;&#x4E0A;value&#x64CD;&#x4F5C;&#xFF0C;&#x628A;&#x56DE;&#x8C03;&#x51FD;&#x6570;&#x7528;&#x51FD;&#x6570;&#x5305;&#x88F9;&#x518D;&#x5B58;&#x50A8;</span>
+                    <span class="token function">setTimeout</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+                        <span class="token keyword">try</span> <span class="token punctuation">{</span>
+                            <span class="token keyword">let</span> x <span class="token operator">=</span> <span class="token function">successCallback</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span>value<span class="token punctuation">)</span>
+                            <span class="token function">resolvePromise</span><span class="token punctuation">(</span>promise2<span class="token punctuation">,</span> x<span class="token punctuation">,</span> resolve<span class="token punctuation">,</span> reject<span class="token punctuation">)</span>
+                        <span class="token punctuation">}</span> <span class="token keyword">catch</span> <span class="token punctuation">(</span>e<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                            <span class="token function">reject</span><span class="token punctuation">(</span>e<span class="token punctuation">)</span>
+                        <span class="token punctuation">}</span>
+                    <span class="token punctuation">}</span><span class="token punctuation">)</span>
+                <span class="token punctuation">}</span><span class="token punctuation">)</span>
+                <span class="token keyword">this</span><span class="token punctuation">.</span>failCallback<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+                    <span class="token function">setTimeout</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+                        <span class="token keyword">try</span> <span class="token punctuation">{</span>
+                            <span class="token keyword">let</span> x <span class="token operator">=</span> <span class="token function">failCallback</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span>reason<span class="token punctuation">)</span>
+                            <span class="token function">resolvePromise</span><span class="token punctuation">(</span>promise2<span class="token punctuation">,</span> x<span class="token punctuation">,</span> resolve<span class="token punctuation">,</span> reject<span class="token punctuation">)</span>
+                        <span class="token punctuation">}</span> <span class="token keyword">catch</span> <span class="token punctuation">(</span>e<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                            <span class="token function">reject</span><span class="token punctuation">(</span>e<span class="token punctuation">)</span>
+                        <span class="token punctuation">}</span>
+                    <span class="token punctuation">}</span><span class="token punctuation">)</span>
+                <span class="token punctuation">}</span><span class="token punctuation">)</span>
+            <span class="token punctuation">}</span>
+        <span class="token punctuation">}</span><span class="token punctuation">)</span>
+
+        <span class="token keyword">return</span> promise2  <span class="token comment">//15.then&#x65B9;&#x6CD5;&#x4F1A;&#x8FD4;&#x56DE;&#x4E00;&#x4E2A;&#x5168;&#x65B0;&#x7684;promise&#x4EE5;&#x5B9E;&#x73B0;&#x94FE;&#x5F0F;&#x8C03;&#x7528;then</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">static</span> <span class="token function">all</span> <span class="token punctuation">(</span><span class="token parameter">array</span><span class="token punctuation">)</span> <span class="token punctuation">{</span><span class="token comment">//25.&#x6DFB;&#x52A0;&#x9759;&#x6001;&#x65B9;&#x6CD5;all</span>
+        <span class="token keyword">return</span> <span class="token function">MyPromise</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token parameter">resolve<span class="token punctuation">,</span> reject</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span><span class="token comment">//26.&#x6B64;&#x65B9;&#x6CD5;&#x8FD4;&#x56DE;&#x4E00;&#x4E2A;promise</span>
+            <span class="token keyword">let</span> result <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
+            <span class="token keyword">let</span> index <span class="token operator">=</span> <span class="token number">0</span>
+            <span class="token keyword">function</span> <span class="token function">addResult</span><span class="token punctuation">(</span><span class="token parameter">i<span class="token punctuation">,</span> current</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                result<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">=</span> current
+                index<span class="token operator">++</span><span class="token punctuation">;</span><span class="token comment">//27&#x8D4B;&#x503C;&#x4E00;&#x6B21;&#x7ED3;&#x679C;+1&#xFF0C;&#x76F4;&#x5230;&#x8D4B;&#x503C;&#x7ED3;&#x679C;&#x6B21;&#x6570;===&#x4F20;&#x5165;promise&#x6570;&#x7EC4;&#x957F;&#x5EA6;</span>
+                <span class="token keyword">if</span> <span class="token punctuation">(</span>index <span class="token operator">===</span> array<span class="token punctuation">.</span>length<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                    <span class="token function">resolve</span><span class="token punctuation">(</span>result<span class="token punctuation">)</span>
+                <span class="token punctuation">}</span>
+            <span class="token punctuation">}</span>
+            <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">let</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> array<span class="token punctuation">.</span>length<span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                <span class="token keyword">let</span> current <span class="token operator">=</span> args<span class="token punctuation">[</span>i<span class="token punctuation">]</span>
+                <span class="token keyword">if</span> <span class="token punctuation">(</span>current <span class="token keyword">instanceof</span> <span class="token class-name">MyPromise</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                    current<span class="token punctuation">.</span><span class="token function">then</span><span class="token punctuation">(</span><span class="token parameter">value</span> <span class="token operator">=&gt;</span> <span class="token function">addResult</span><span class="token punctuation">(</span>i<span class="token punctuation">,</span> value<span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token parameter">reason</span><span class="token operator">=&gt;</span><span class="token function">reject</span><span class="token punctuation">(</span>reason<span class="token punctuation">)</span><span class="token punctuation">)</span>
+                <span class="token punctuation">}</span><span class="token keyword">else</span><span class="token punctuation">{</span>
+                    <span class="token function">addResult</span><span class="token punctuation">(</span>i<span class="token punctuation">,</span> current<span class="token punctuation">)</span>
+                <span class="token punctuation">}</span>
+            <span class="token punctuation">}</span>
+        <span class="token punctuation">}</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">static</span> <span class="token function">resolve</span> <span class="token punctuation">(</span><span class="token parameter">value</span><span class="token punctuation">)</span><span class="token punctuation">{</span><span class="token comment">//28.&#x5982;&#x679C;&#x662F;promise&#x76F4;&#x63A5;&#x8FD4;&#x56DE;&#xFF0C;&#x5982;&#x679C;&#x662F;&#x666E;&#x901A;&#x503C;&#x5219;&#x8F6C;&#x6362;&#x4E3A;promise&#x8FD4;&#x56DE;</span>
+        <span class="token comment">// if(value instanceof MyPromise)return value  //&#x6B64;&#x5904;&#x4E0D;&#x505A;&#x5224;&#x65AD;&#xFF0C;&#x901A;&#x8FC7;&#x5BF9;then&#x65B9;&#x6CD5;&#x505A;&#x9012;&#x5F52;&#x6C42;&#x503C; &#x76F4;&#x5230;&#x8FD4;&#x56DE;&#x503C;&#x4E0D;&#x4E3A;promise</span>
+        <span class="token keyword">return</span> <span class="token keyword">new</span> <span class="token class-name">MyPromise</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token parameter">resolve</span><span class="token punctuation">)</span><span class="token operator">=&gt;</span><span class="token function">resolve</span><span class="token punctuation">(</span>value<span class="token punctuation">)</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">finally</span><span class="token punctuation">(</span>callback<span class="token punctuation">)</span><span class="token punctuation">{</span><span class="token comment">//31. [1].&#x65E0;&#x8BBA;&#x6210;&#x529F;&#x6216;&#x5931;&#x8D25;&#xFF0C;callback&#x90FD;&#x53EF;&#x6267;&#x884C; [2].&#x628A;&#x5F53;&#x524D;&#x7684;value&#x6216;reason&#x5411;&#x4E0B;&#x4F20;&#x9012;  [3].&#x8FD4;&#x56DE;&#x4E00;&#x4E2A;promise&#x5BF9;&#x8C61;  [4].callback&#x8FD4;&#x56DE;&#x503C;&#x53EF;&#x4EE5;&#x662F;promise&#xFF0C;&#x5E76;&#x4E14;&#x4F1A;&#x7B49;&#x5F85;&#x8FD9;&#x4E2A;promise&#x7ED3;&#x675F;&#x540E;&#x518D;&#x5411;&#x540E;&#x6267;&#x884C;</span>
+        <span class="token comment">//32.&#x8003;&#x8651;&#x5982;&#x4F55;&#x83B7;&#x53D6;&#x5F53;&#x524D;promise&#x7684;&#x72B6;&#x6001;&#xFF0C;&#x8C03;&#x7528;this.then()&#x65B9;&#x6CD5;</span>
+        <span class="token keyword">return</span> <span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function">then</span><span class="token punctuation">(</span><span class="token parameter">value</span><span class="token operator">=&gt;</span><span class="token punctuation">{</span>
+            <span class="token comment">// callback()   //&#x6B64;&#x65F6; &#x5982;&#x679C;callback&#x662F;&#x4E00;&#x4E2A;promise,&#x65E0;&#x6CD5;&#x7B49;&#x5F85;.</span>
+            <span class="token comment">// return value</span>
+            <span class="token keyword">return</span> Promise<span class="token punctuation">.</span><span class="token function">resolve</span><span class="token punctuation">(</span><span class="token function">callback</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">then</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">=&gt;</span>value<span class="token punctuation">)</span>
+        <span class="token punctuation">}</span><span class="token punctuation">,</span><span class="token parameter">err</span><span class="token operator">=&gt;</span><span class="token punctuation">{</span>
+            <span class="token comment">// callback()</span>
+            <span class="token comment">// throw err </span>
+            <span class="token keyword">return</span> Promise<span class="token punctuation">.</span><span class="token function">resolve</span><span class="token punctuation">(</span><span class="token function">callback</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">then</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">=&gt;</span><span class="token punctuation">{</span><span class="token keyword">throw</span> err<span class="token punctuation">}</span><span class="token punctuation">)</span>
+        <span class="token punctuation">}</span><span class="token punctuation">)</span>
+
+    <span class="token punctuation">}</span>
+    <span class="token keyword">catch</span><span class="token punctuation">(</span>failCallback<span class="token punctuation">)</span><span class="token punctuation">{</span><span class="token comment">//29.&#x501F;&#x7528;then&#x65B9;&#x6CD5;&#x5B9E;&#x73B0;catch</span>
+        <span class="token keyword">return</span> <span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function">then</span><span class="token punctuation">(</span>undefined<span class="token punctuation">,</span>failCallback<span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+<span class="token keyword">const</span> <span class="token function-variable function">resolvePromise</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token parameter">promise2<span class="token punctuation">,</span> x<span class="token punctuation">,</span> resolve<span class="token punctuation">,</span> reject</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>promise2 <span class="token operator">===</span> x<span class="token punctuation">)</span> <span class="token punctuation">{</span> <span class="token keyword">return</span> <span class="token function">TypeError</span><span class="token punctuation">(</span><span class="token string">&apos;XXX&apos;</span><span class="token punctuation">)</span> <span class="token punctuation">}</span><span class="token comment">//&#x4EFF;&#x7167;promise&#x4F20;&#x51FA;&#x9519;&#x8BEF;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>x <span class="token keyword">instanceof</span> <span class="token class-name">MyPromise</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        x<span class="token punctuation">.</span><span class="token function">then</span><span class="token punctuation">(</span>resolve<span class="token punctuation">,</span> reject<span class="token punctuation">)</span>
+    <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
+        <span class="token function">resolve</span><span class="token punctuation">(</span>x<span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</pre><h4 class="mume-header" id="%E5%88%86%E6%AD%A5%E5%AE%8C%E6%88%90promise%E6%BA%90%E7%A0%81%E6%89%8B%E5%86%99">&#x5206;&#x6B65;&#x5B8C;&#x6210;promise&#x6E90;&#x7801;&#x624B;&#x5199;&#xFF1A;</h4>
+
+<pre data-role="codeBlock" data-info="js" class="language-javascript"><span class="token comment">//&#x7B2C;&#x4E00;&#x6B65; &#x57FA;&#x672C;</span>
+<span class="token keyword">const</span> <span class="token constant">PENDING</span> <span class="token operator">=</span> <span class="token string">&apos;pending&apos;</span>
+<span class="token keyword">const</span> <span class="token constant">FULFILLED</span> <span class="token operator">=</span> <span class="token string">&apos;fulfilled&apos;</span>
+<span class="token keyword">const</span> <span class="token constant">REJECTED</span> <span class="token operator">=</span> <span class="token string">&apos;rejected&apos;</span>
+<span class="token keyword">class</span> <span class="token class-name">MyPromise</span><span class="token punctuation">{</span>
+    <span class="token function">constructor</span><span class="token punctuation">(</span><span class="token parameter">excutor</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+        <span class="token function">excutor</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span>resolve<span class="token punctuation">,</span><span class="token keyword">this</span><span class="token punctuation">.</span>reject<span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+    status <span class="token operator">=</span> <span class="token constant">PENDING</span><span class="token punctuation">;</span>
+    value <span class="token operator">=</span> undefined<span class="token punctuation">;</span>
+    reason <span class="token operator">=</span> undefined<span class="token punctuation">;</span>
+    <span class="token function-variable function">resolve</span> <span class="token operator">=</span> <span class="token parameter">value</span> <span class="token operator">=&gt;</span><span class="token punctuation">{</span>
+        <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span>status<span class="token operator">!==</span><span class="token constant">PENDING</span><span class="token punctuation">)</span><span class="token keyword">return</span><span class="token punctuation">;</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>status <span class="token operator">=</span> <span class="token constant">FULFILLED</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>value <span class="token operator">=</span> value
+    <span class="token punctuation">}</span>
+    <span class="token function-variable function">reject</span> <span class="token operator">=</span> <span class="token parameter">reason</span> <span class="token operator">=&gt;</span><span class="token punctuation">{</span>
+        <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span>status<span class="token operator">!==</span><span class="token constant">PENDING</span><span class="token punctuation">)</span><span class="token keyword">return</span><span class="token punctuation">;</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>status <span class="token operator">=</span> <span class="token constant">REJECTED</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>reason <span class="token operator">=</span> reason
+    <span class="token punctuation">}</span>
+    <span class="token function">then</span><span class="token punctuation">(</span><span class="token parameter">fulfilledCallback<span class="token punctuation">,</span>rejectedCallback</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+        <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span>status <span class="token operator">===</span> <span class="token constant">FULFILLED</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+            <span class="token function">fulfilledCallback</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span>value<span class="token punctuation">)</span>
+        <span class="token punctuation">}</span><span class="token keyword">else</span> <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span>status <span class="token operator">===</span> <span class="token constant">REJECTED</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+            <span class="token function">rejectedCallback</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span>reason<span class="token punctuation">)</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</pre><pre data-role="codeBlock" data-info="js" class="language-javascript"><span class="token comment">//&#x7B2C;&#x4E8C;&#x6B65; &#x5F02;&#x6B65;&#x5904;&#x7406;(&#x5EF6;&#x65F6;&#x8FD4;&#x56DE;&#x72B6;&#x6001;)</span>
+<span class="token keyword">class</span> <span class="token class-name">MyPromise</span><span class="token punctuation">{</span>
+    <span class="token function">constructor</span><span class="token punctuation">(</span><span class="token parameter">excutor</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+        <span class="token function">excutor</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span>resolve<span class="token punctuation">,</span><span class="token keyword">this</span><span class="token punctuation">.</span>reject<span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+    status <span class="token operator">=</span> <span class="token constant">PENDING</span><span class="token punctuation">;</span>
+    value <span class="token operator">=</span> undefined<span class="token punctuation">;</span>
+    reason <span class="token operator">=</span> undefined<span class="token punctuation">;</span>
+    fulfilledCallback <span class="token operator">=</span> undefined<span class="token punctuation">;</span>
+    rejectedCallback <span class="token operator">=</span> undefined
+    <span class="token function-variable function">resolve</span> <span class="token operator">=</span> <span class="token parameter">value</span> <span class="token operator">=&gt;</span><span class="token punctuation">{</span>
+        <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span>status<span class="token operator">!==</span><span class="token constant">PENDING</span><span class="token punctuation">)</span><span class="token keyword">return</span><span class="token punctuation">;</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>status <span class="token operator">=</span> <span class="token constant">FULFILLED</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>value <span class="token operator">=</span> value
+        <span class="token comment">//&#x7B49;&#x5230;&#x72B6;&#x6001;&#x6539;&#x53D8;&#x65F6;&#x6267;&#x884C;&#x50A8;&#x5B58;&#x7684;&#x51FD;&#x6570;</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>fulfilledCallback <span class="token operator">&amp;&amp;</span> <span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function">fulfilledCallback</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span>value<span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+    <span class="token function-variable function">reject</span> <span class="token operator">=</span> <span class="token parameter">reason</span> <span class="token operator">=&gt;</span><span class="token punctuation">{</span>
+        <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span>status<span class="token operator">!==</span><span class="token constant">PENDING</span><span class="token punctuation">)</span><span class="token keyword">return</span><span class="token punctuation">;</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>status <span class="token operator">=</span> <span class="token constant">REJECTED</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>reason <span class="token operator">=</span> reason
+         <span class="token comment">//&#x7B49;&#x5230;&#x72B6;&#x6001;&#x6539;&#x53D8;&#x65F6;&#x6267;&#x884C;&#x50A8;&#x5B58;&#x7684;&#x51FD;&#x6570;</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>rejectedCallback <span class="token operator">&amp;&amp;</span> <span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function">rejectedCallback</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span>reason<span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+    <span class="token function">then</span><span class="token punctuation">(</span><span class="token parameter">fulfilledCallback<span class="token punctuation">,</span>rejectedCallback</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+        <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span>status <span class="token operator">===</span> <span class="token constant">FULFILLED</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+            <span class="token function">fulfilledCallback</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span>value<span class="token punctuation">)</span>
+        <span class="token punctuation">}</span><span class="token keyword">else</span> <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span>status <span class="token operator">===</span> <span class="token constant">REJECTED</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+            <span class="token function">rejectedCallback</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span>reason<span class="token punctuation">)</span>
+        <span class="token punctuation">}</span><span class="token keyword">else</span><span class="token punctuation">{</span><span class="token comment">//&#x5982;&#x679C;&#x5E94;&#x4E3A;&#x5EF6;&#x65F6;&#x4EFB;&#x52A1;&#x72B6;&#x6001;&#x8FD8;&#x672A;&#x6539;&#x53D8;,&#x90A3;&#x4E48;&#x5B58;&#x50A8;&#x51FD;&#x6570;,&#x4EE5;&#x4FBF;&#x89E6;&#x53D1;&#x65F6;&#x8C03;&#x7528;</span>
+            <span class="token keyword">this</span><span class="token punctuation">.</span>fulfilledCallback <span class="token operator">=</span> fulfilledCallback
+            <span class="token keyword">this</span><span class="token punctuation">.</span>rejectedCallback <span class="token operator">=</span> rejectedCallback
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</pre><pre data-role="codeBlock" data-info="js" class="language-javascript"><span class="token comment">//&#x7B2C;&#x4E09;&#x6B65; promise.then()&#x591A;&#x6B21;&#x8C03;&#x7528;&#x5904;&#x7406;</span>
+<span class="token keyword">class</span> <span class="token class-name">MyPromise</span><span class="token punctuation">{</span>
+    <span class="token function">constructor</span><span class="token punctuation">(</span><span class="token parameter">excutor</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+        <span class="token function">excutor</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span>resolve<span class="token punctuation">,</span><span class="token keyword">this</span><span class="token punctuation">.</span>reject<span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+    status <span class="token operator">=</span> <span class="token constant">PENDING</span><span class="token punctuation">;</span>
+    value <span class="token operator">=</span> undefined<span class="token punctuation">;</span>
+    reason <span class="token operator">=</span> undefined<span class="token punctuation">;</span>
+    fulfilledCallback <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+    rejectedCallback <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+    <span class="token function-variable function">resolve</span> <span class="token operator">=</span> <span class="token parameter">value</span> <span class="token operator">=&gt;</span><span class="token punctuation">{</span>
+        <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span>status<span class="token operator">!==</span><span class="token constant">PENDING</span><span class="token punctuation">)</span><span class="token keyword">return</span><span class="token punctuation">;</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>status <span class="token operator">=</span> <span class="token constant">FULFILLED</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>value <span class="token operator">=</span> value
+        <span class="token comment">//&#x7B49;&#x5230;&#x72B6;&#x6001;&#x6539;&#x53D8;&#x65F6;&#x6267;&#x884C;&#x50A8;&#x5B58;&#x7684;&#x51FD;&#x6570;</span>
+        <span class="token comment">// this.fulfilledCallback &amp;&amp; this.fulfilledCallback(this.value)</span>
+        <span class="token keyword">while</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span>fulfilledCallback<span class="token punctuation">.</span>length<span class="token punctuation">)</span><span class="token punctuation">{</span> <span class="token comment">//&#x4E00;&#x4E2A;&#x7591;&#x95EE;  &#x591A;&#x4E2A;&#x5F02;&#x6B65;&#x4EFB;&#x52A1;&#x662F;&#x5982;&#x4F55;&#x4FDD;&#x6301;&#x987A;&#x5E8F;&#x7684;</span>
+            <span class="token keyword">this</span><span class="token punctuation">.</span>fulfilledCallback<span class="token punctuation">.</span><span class="token function">shift</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span>value<span class="token punctuation">)</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+    <span class="token function-variable function">reject</span> <span class="token operator">=</span> <span class="token parameter">reason</span> <span class="token operator">=&gt;</span><span class="token punctuation">{</span>
+        <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span>status<span class="token operator">!==</span><span class="token constant">PENDING</span><span class="token punctuation">)</span><span class="token keyword">return</span><span class="token punctuation">;</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>status <span class="token operator">=</span> <span class="token constant">REJECTED</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>reason <span class="token operator">=</span> reason
+         <span class="token comment">//&#x7B49;&#x5230;&#x72B6;&#x6001;&#x6539;&#x53D8;&#x65F6;&#x6267;&#x884C;&#x50A8;&#x5B58;&#x7684;&#x51FD;&#x6570;</span>
+        <span class="token comment">// this.rejectedCallback &amp;&amp; this.rejectedCallback(this.reason)</span>
+        <span class="token keyword">while</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span>rejectedCallback<span class="token punctuation">.</span>length<span class="token punctuation">)</span><span class="token punctuation">{</span>   <span class="token comment">//&#x4E00;&#x4E2A;&#x7591;&#x95EE;  &#x591A;&#x4E2A;&#x5F02;&#x6B65;&#x4EFB;&#x52A1;&#x662F;&#x5982;&#x4F55;&#x4FDD;&#x6301;&#x987A;&#x5E8F;&#x7684;</span>
+            <span class="token keyword">this</span><span class="token punctuation">.</span>rejectedCallback<span class="token punctuation">.</span><span class="token function">shift</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span>reason<span class="token punctuation">)</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+    <span class="token function">then</span><span class="token punctuation">(</span><span class="token parameter">fulfilledCallback<span class="token punctuation">,</span>rejectedCallback</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+        <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span>status <span class="token operator">===</span> <span class="token constant">FULFILLED</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+            <span class="token function">fulfilledCallback</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span>value<span class="token punctuation">)</span>
+        <span class="token punctuation">}</span><span class="token keyword">else</span> <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span>status <span class="token operator">===</span> <span class="token constant">REJECTED</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+            <span class="token function">rejectedCallback</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span>reason<span class="token punctuation">)</span>
+        <span class="token punctuation">}</span><span class="token keyword">else</span><span class="token punctuation">{</span><span class="token comment">//&#x5982;&#x679C;&#x5E94;&#x4E3A;&#x5EF6;&#x65F6;&#x4EFB;&#x52A1;&#x72B6;&#x6001;&#x8FD8;&#x672A;&#x6539;&#x53D8;,&#x90A3;&#x4E48;&#x5B58;&#x50A8;&#x51FD;&#x6570;,&#x4EE5;&#x4FBF;&#x89E6;&#x53D1;&#x65F6;&#x8C03;&#x7528;</span>
+            <span class="token keyword">this</span><span class="token punctuation">.</span>fulfilledCallback<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>fulfilledCallback<span class="token punctuation">)</span>
+            <span class="token keyword">this</span><span class="token punctuation">.</span>rejectedCallback<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>rejectedCallback<span class="token punctuation">)</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</pre><pre data-role="codeBlock" data-info="js" class="language-javascript"><span class="token comment">// &#x7B2C;&#x56DB;&#x6B65; &#x5B9E;&#x73B0;&#x94FE;&#x5F0F;&#x8C03;&#x7528;(&#x8FD4;&#x56DE;&#x4E00;&#x4E2A;&#x65B0;&#x7684;promise),&#x5E76;&#x5F80;&#x4E0B;&#x4F20;&#x503C;</span>
+<span class="token keyword">class</span> <span class="token class-name">MyPromise</span><span class="token punctuation">{</span>
+    <span class="token function">constructor</span><span class="token punctuation">(</span><span class="token parameter">excutor</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+        <span class="token function">excutor</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span>resolve<span class="token punctuation">,</span><span class="token keyword">this</span><span class="token punctuation">.</span>reject<span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+    status <span class="token operator">=</span> <span class="token constant">PENDING</span><span class="token punctuation">;</span>
+    value <span class="token operator">=</span> undefined<span class="token punctuation">;</span>
+    reason <span class="token operator">=</span> undefined<span class="token punctuation">;</span>
+    fulfilledCallback <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+    rejectedCallback <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
+    <span class="token function-variable function">resolve</span> <span class="token operator">=</span> <span class="token parameter">value</span> <span class="token operator">=&gt;</span><span class="token punctuation">{</span>
+        <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span>status<span class="token operator">!==</span><span class="token constant">PENDING</span><span class="token punctuation">)</span><span class="token keyword">return</span><span class="token punctuation">;</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>status <span class="token operator">=</span> <span class="token constant">FULFILLED</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>value <span class="token operator">=</span> value
+        <span class="token comment">// this.fulfilledCallback &amp;&amp; this.fulfilledCallback(this.value)</span>
+        <span class="token keyword">while</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span>fulfilledCallback<span class="token punctuation">.</span>length<span class="token punctuation">)</span><span class="token punctuation">{</span>
+            <span class="token keyword">this</span><span class="token punctuation">.</span>fulfilledCallback<span class="token punctuation">.</span><span class="token function">shift</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span>value<span class="token punctuation">)</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+    <span class="token function-variable function">reject</span> <span class="token operator">=</span> <span class="token parameter">reason</span> <span class="token operator">=&gt;</span><span class="token punctuation">{</span>
+        <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span>status<span class="token operator">!==</span><span class="token constant">PENDING</span><span class="token punctuation">)</span><span class="token keyword">return</span><span class="token punctuation">;</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>status <span class="token operator">=</span> <span class="token constant">REJECTED</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>reason <span class="token operator">=</span> reason
+        <span class="token comment">// this.rejectedCallback &amp;&amp; this.rejectedCallback(this.value)</span>
+        <span class="token keyword">while</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span>rejectedCallback<span class="token punctuation">.</span>length<span class="token punctuation">)</span><span class="token punctuation">{</span>
+            <span class="token keyword">this</span><span class="token punctuation">.</span>rejectedCallback<span class="token punctuation">.</span><span class="token function">shift</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span>reason<span class="token punctuation">)</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+    <span class="token function">then</span><span class="token punctuation">(</span><span class="token parameter">fulfilledCallback<span class="token punctuation">,</span>rejectedCallback</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+        <span class="token comment">// let promise2 = new Promise()//&#x5B9E;&#x73B0;&#x94FE;&#x5F0F;&#x8C03;&#x7528;</span>
+        <span class="token comment">// if(this.status === FULFILLED){</span>
+        <span class="token comment">//     let x = fulfilledCallback(this.value)  //1.&#x6B64;&#x5904;&#x63A5;&#x6536;then&#x65B9;&#x6CD5;&#x6210;&#x529F;&#x51FD;&#x6570;&#x7684;&#x8FD4;&#x56DE;&#x503C;,&#x4EE5;&#x4FBF;&#x4F20;&#x9012;&#x7ED9;&#x4E0B;&#x4E00;&#x4E2A;then&#x65B9;&#x6CD5;</span>
+        <span class="token comment">// }else if(this.status === REJECTED){</span>
+        <span class="token comment">//     rejectedCallback(this.reason)</span>
+        <span class="token comment">// }else{//&#x5982;&#x679C;&#x5E94;&#x4E3A;&#x5EF6;&#x65F6;&#x4EFB;&#x52A1;&#x72B6;&#x6001;&#x8FD8;&#x672A;&#x6539;&#x53D8;,&#x90A3;&#x4E48;&#x5B58;&#x50A8;&#x51FD;&#x6570;,&#x4EE5;&#x4FBF;&#x89E6;&#x53D1;&#x65F6;&#x8C03;&#x7528;</span>
+        <span class="token comment">//     this.fulfilledCallback.push(fulfilledCallback)</span>
+        <span class="token comment">//     this.rejectedCallback.push(rejectedCallback)</span>
+        <span class="token comment">// }</span>
+        <span class="token comment">// &#x7531;&#x4E8E;&#x6B64;&#x5904;&#x9700;&#x8981;&#x628A;x&#x4F20;&#x9012;&#x7ED9;&#x4E0B;&#x4E00;&#x4E2A;then&#x65B9;&#x6CD5;,&#x4E0D;&#x59A8;&#x5DE7;&#x5999;&#x7684;&#x628A;&#x5904;&#x7406;&#x51FD;&#x6570;&#x653E;&#x5165;&#x8FD4;&#x56DE;&#x7684;promise&#x5BF9;&#x8C61;&#x7684;&#x7ACB;&#x5373;&#x6267;&#x884C;&#x51FD;&#x6570;&#x4E2D;,</span>
+        <span class="token comment">// &#x65E2;&#x4E0D;&#x4F1A;&#x5F71;&#x54CD;&#x4E4B;&#x524D;&#x4EE3;&#x7801;&#x7684;&#x6267;&#x884C;&#x987A;&#x5E8F;,&#x8FD8;&#x53EF;&#x4EE5;&#x628A;&#x8FD4;&#x56DE;&#x503C;x&#x901A;&#x8FC7;resolve&#x4F20;&#x9012;&#x7ED9;&#x4E0B;&#x4E00;&#x4E2A;then&#x65B9;&#x6CD5;</span>
+        <span class="token keyword">let</span> promise2 <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Promise</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token parameter">resolve<span class="token punctuation">,</span>reject</span><span class="token punctuation">)</span><span class="token operator">=&gt;</span><span class="token punctuation">{</span>
+            <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span>status <span class="token operator">===</span> <span class="token constant">FULFILLED</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+                <span class="token keyword">let</span> x <span class="token operator">=</span> <span class="token function">fulfilledCallback</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span>value<span class="token punctuation">)</span>  <span class="token comment">//1.&#x6B64;&#x5904;&#x63A5;&#x6536;then&#x65B9;&#x6CD5;&#x6210;&#x529F;&#x51FD;&#x6570;&#x7684;&#x8FD4;&#x56DE;&#x503C;,&#x4EE5;&#x4FBF;&#x4F20;&#x9012;&#x7ED9;&#x4E0B;&#x4E00;&#x4E2A;then&#x65B9;&#x6CD5;</span>
+                <span class="token function">resolve</span><span class="token punctuation">(</span>x<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span><span class="token keyword">else</span> <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span>status <span class="token operator">===</span> <span class="token constant">REJECTED</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+                <span class="token function">rejectedCallback</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span>reason<span class="token punctuation">)</span>
+            <span class="token punctuation">}</span><span class="token keyword">else</span><span class="token punctuation">{</span><span class="token comment">//&#x5982;&#x679C;&#x5E94;&#x4E3A;&#x5EF6;&#x65F6;&#x4EFB;&#x52A1;&#x72B6;&#x6001;&#x8FD8;&#x672A;&#x6539;&#x53D8;,&#x90A3;&#x4E48;&#x5B58;&#x50A8;&#x51FD;&#x6570;,&#x4EE5;&#x4FBF;&#x89E6;&#x53D1;&#x65F6;&#x8C03;&#x7528;</span>
+                <span class="token keyword">this</span><span class="token punctuation">.</span>fulfilledCallback<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>fulfilledCallback<span class="token punctuation">)</span>
+                <span class="token keyword">this</span><span class="token punctuation">.</span>rejectedCallback<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>rejectedCallback<span class="token punctuation">)</span>
+            <span class="token punctuation">}</span>
+        <span class="token punctuation">}</span><span class="token punctuation">)</span>
+        
+        <span class="token keyword">return</span> promise2<span class="token punctuation">;</span><span class="token comment">//&#x5B9E;&#x73B0;&#x94FE;&#x5F0F;&#x8C03;&#x7528;&#x8FD4;&#x56DE;&#x4E00;&#x4E2A;&#x65B0;&#x7684;promise</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</pre><pre data-role="codeBlock" data-info="js" class="language-javascript"><span class="token comment">// &#x7B2C;&#x4E94;&#x6B65; &#x5224;&#x65AD;&#x503C;&#x7684;&#x7C7B;&#x578B;</span>
+<span class="token keyword">class</span> <span class="token class-name">MyPromise</span><span class="token punctuation">{</span>
+    <span class="token function">constructor</span><span class="token punctuation">(</span><span class="token parameter">excutor</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+        <span class="token function">excutor</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span>resolve<span class="token punctuation">,</span><span class="token keyword">this</span><span class="token punctuation">.</span>reject<span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+    status <span class="token operator">=</span> <span class="token constant">PENDING</span><span class="token punctuation">;</span>
+    value <span class="token operator">=</span> undefined<span class="token punctuation">;</span>
+    reason <span class="token operator">=</span> undefined<span class="token punctuation">;</span>
+    fulfilledCallback <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+    rejectedCallback <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
+    <span class="token function-variable function">resolve</span> <span class="token operator">=</span> <span class="token parameter">value</span> <span class="token operator">=&gt;</span><span class="token punctuation">{</span>
+        <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span>status<span class="token operator">!==</span><span class="token constant">PENDING</span><span class="token punctuation">)</span><span class="token keyword">return</span><span class="token punctuation">;</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>status <span class="token operator">=</span> <span class="token constant">FULFILLED</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>value <span class="token operator">=</span> value
+        <span class="token comment">// this.fulfilledCallback &amp;&amp; this.fulfilledCallback(this.value)</span>
+        <span class="token keyword">while</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span>fulfilledCallback<span class="token punctuation">.</span>length<span class="token punctuation">)</span><span class="token punctuation">{</span>
+            <span class="token keyword">this</span><span class="token punctuation">.</span>fulfilledCallback<span class="token punctuation">.</span><span class="token function">shift</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span>value<span class="token punctuation">)</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+    <span class="token function-variable function">reject</span> <span class="token operator">=</span> <span class="token parameter">reason</span> <span class="token operator">=&gt;</span><span class="token punctuation">{</span>
+        <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span>status<span class="token operator">!==</span><span class="token constant">PENDING</span><span class="token punctuation">)</span><span class="token keyword">return</span><span class="token punctuation">;</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>status <span class="token operator">=</span> <span class="token constant">REJECTED</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>reason <span class="token operator">=</span> reason
+        <span class="token comment">// this.rejectedCallback &amp;&amp; this.rejectedCallback(this.value)</span>
+        <span class="token keyword">while</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span>rejectedCallback<span class="token punctuation">.</span>length<span class="token punctuation">)</span><span class="token punctuation">{</span>
+            <span class="token keyword">this</span><span class="token punctuation">.</span>rejectedCallback<span class="token punctuation">.</span><span class="token function">shift</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span>reason<span class="token punctuation">)</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+    <span class="token function">then</span><span class="token punctuation">(</span><span class="token parameter">fulfilledCallback<span class="token punctuation">,</span>rejectedCallback</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+        <span class="token keyword">let</span> promise2 <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Promise</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token parameter">resolve<span class="token punctuation">,</span>reject</span><span class="token punctuation">)</span><span class="token operator">=&gt;</span><span class="token punctuation">{</span>
+            <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span>status <span class="token operator">===</span> <span class="token constant">FULFILLED</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+                <span class="token keyword">let</span> x <span class="token operator">=</span> <span class="token function">fulfilledCallback</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span>value<span class="token punctuation">)</span>  <span class="token comment">//1.&#x6B64;&#x5904;&#x63A5;&#x6536;then&#x65B9;&#x6CD5;&#x6210;&#x529F;&#x51FD;&#x6570;&#x7684;&#x8FD4;&#x56DE;&#x503C;,&#x4EE5;&#x4FBF;&#x4F20;&#x9012;&#x7ED9;&#x4E0B;&#x4E00;&#x4E2A;then&#x65B9;&#x6CD5;</span>
+                <span class="token comment">// resolve(x);   //&#x6B64;&#x5904;&#x5E94;&#x5224;&#x65AD;x&#x503C;&#x7684;&#x7C7B;&#x578B;&#x540E;&#x518D;&#x505A;&#x4F20;&#x9012;&#x3002;&#x5355;&#x72EC;&#x62BD;&#x8C61;&#x4E00;&#x4E2A;&#x65B9;&#x6CD5;</span>
+                <span class="token function">resolvePromise</span><span class="token punctuation">(</span>x<span class="token punctuation">,</span>resolve<span class="token punctuation">,</span>reject<span class="token punctuation">)</span>
+            <span class="token punctuation">}</span><span class="token keyword">else</span> <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span>status <span class="token operator">===</span> <span class="token constant">REJECTED</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+                <span class="token function">rejectedCallback</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span>reason<span class="token punctuation">)</span>
+            <span class="token punctuation">}</span><span class="token keyword">else</span><span class="token punctuation">{</span><span class="token comment">//&#x5982;&#x679C;&#x5E94;&#x4E3A;&#x5EF6;&#x65F6;&#x4EFB;&#x52A1;&#x72B6;&#x6001;&#x8FD8;&#x672A;&#x6539;&#x53D8;,&#x90A3;&#x4E48;&#x5B58;&#x50A8;&#x51FD;&#x6570;,&#x4EE5;&#x4FBF;&#x89E6;&#x53D1;&#x65F6;&#x8C03;&#x7528;</span>
+                <span class="token keyword">this</span><span class="token punctuation">.</span>fulfilledCallback<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>fulfilledCallback<span class="token punctuation">)</span>
+                <span class="token keyword">this</span><span class="token punctuation">.</span>rejectedCallback<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>rejectedCallback<span class="token punctuation">)</span>
+            <span class="token punctuation">}</span>
+        <span class="token punctuation">}</span><span class="token punctuation">)</span>
+        
+        <span class="token keyword">return</span> promise2<span class="token punctuation">;</span><span class="token comment">//&#x5B9E;&#x73B0;&#x94FE;&#x5F0F;&#x8C03;&#x7528;&#x8FD4;&#x56DE;&#x4E00;&#x4E2A;&#x65B0;&#x7684;promise</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+<span class="token comment">//&#x5224;&#x65AD;x&#x503C;&#x7C7B;&#x578B;&#x7684;&#x51FD;&#x6570;</span>
+<span class="token keyword">function</span> <span class="token function">resolvePromise</span><span class="token punctuation">(</span><span class="token parameter">x<span class="token punctuation">,</span>resolve<span class="token punctuation">,</span>reject</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+    <span class="token keyword">if</span><span class="token punctuation">(</span>x <span class="token keyword">instanceof</span> <span class="token class-name">Promise</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+        x<span class="token punctuation">.</span><span class="token function">then</span><span class="token punctuation">(</span>resolve<span class="token punctuation">,</span>reject<span class="token punctuation">)</span>
+    <span class="token punctuation">}</span><span class="token keyword">else</span><span class="token punctuation">{</span>
+        <span class="token function">resolve</span><span class="token punctuation">(</span>x<span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</pre><pre data-role="codeBlock" data-info="js" class="language-javascript"><span class="token comment">// &#x7B2C;&#x516D;&#x6B65;  &#x4F18;&#x5316;&#x7C7B;&#x578B;&#x5224;&#x65AD;&#xFF0C;&#x907F;&#x514D;then&#x65B9;&#x6CD5;&#x8FD4;&#x56DE;&#x81EA;&#x8EAB;promise</span>
+
+<span class="token keyword">class</span> <span class="token class-name">MyPromise</span><span class="token punctuation">{</span>
+    <span class="token function">constructor</span><span class="token punctuation">(</span><span class="token parameter">excutor</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+        <span class="token function">excutor</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span>resolve<span class="token punctuation">,</span><span class="token keyword">this</span><span class="token punctuation">.</span>reject<span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+    status <span class="token operator">=</span> <span class="token constant">PENDING</span><span class="token punctuation">;</span>
+    value <span class="token operator">=</span> undefined<span class="token punctuation">;</span>
+    reason <span class="token operator">=</span> undefined<span class="token punctuation">;</span>
+    fulfilledCallback <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+    rejectedCallback <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
+    <span class="token function-variable function">resolve</span> <span class="token operator">=</span> <span class="token parameter">value</span> <span class="token operator">=&gt;</span><span class="token punctuation">{</span>
+        <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span>status<span class="token operator">!==</span><span class="token constant">PENDING</span><span class="token punctuation">)</span><span class="token keyword">return</span><span class="token punctuation">;</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>status <span class="token operator">=</span> <span class="token constant">FULFILLED</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>value <span class="token operator">=</span> value
+        <span class="token comment">// this.fulfilledCallback &amp;&amp; this.fulfilledCallback(this.value)</span>
+        <span class="token keyword">while</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span>fulfilledCallback<span class="token punctuation">.</span>length<span class="token punctuation">)</span><span class="token punctuation">{</span>
+            <span class="token keyword">this</span><span class="token punctuation">.</span>fulfilledCallback<span class="token punctuation">.</span><span class="token function">shift</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span>value<span class="token punctuation">)</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+    <span class="token function-variable function">reject</span> <span class="token operator">=</span> <span class="token parameter">reason</span> <span class="token operator">=&gt;</span><span class="token punctuation">{</span>
+        <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span>status<span class="token operator">!==</span><span class="token constant">PENDING</span><span class="token punctuation">)</span><span class="token keyword">return</span><span class="token punctuation">;</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>status <span class="token operator">=</span> <span class="token constant">REJECTED</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>reason <span class="token operator">=</span> reason
+        <span class="token comment">// this.rejectedCallback &amp;&amp; this.rejectedCallback(this.value)</span>
+        <span class="token keyword">while</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span>rejectedCallback<span class="token punctuation">.</span>length<span class="token punctuation">)</span><span class="token punctuation">{</span>
+            <span class="token keyword">this</span><span class="token punctuation">.</span>rejectedCallback<span class="token punctuation">.</span><span class="token function">shift</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span>reason<span class="token punctuation">)</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+    <span class="token function">then</span><span class="token punctuation">(</span><span class="token parameter">fulfilledCallback<span class="token punctuation">,</span>rejectedCallback</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+        <span class="token keyword">let</span> promise2 <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Promise</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token parameter">resolve<span class="token punctuation">,</span>reject</span><span class="token punctuation">)</span><span class="token operator">=&gt;</span><span class="token punctuation">{</span>
+            <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span>status <span class="token operator">===</span> <span class="token constant">FULFILLED</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+                <span class="token function">setTimeout</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">=&gt;</span><span class="token punctuation">{</span> <span class="token comment">//&#x89E3;&#x51B3;&#x65E0;&#x6CD5;&#x83B7;&#x53D6;promise2&#x7684;&#x95EE;&#x9898;</span>
+                    <span class="token keyword">let</span> x <span class="token operator">=</span> <span class="token function">fulfilledCallback</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span>value<span class="token punctuation">)</span>  
+                    <span class="token comment">// resolve(x);  </span>
+                    <span class="token function">resolvePromise</span><span class="token punctuation">(</span>promise2<span class="token punctuation">,</span>x<span class="token punctuation">,</span>resolve<span class="token punctuation">,</span>reject<span class="token punctuation">)</span>   <span class="token comment">//&#x7531;&#x4E8E;&#x5728;&#x6B64;&#x5904;&#x51FD;&#x6570;&#x5185;&#x90E8;&#x6267;&#x884C;&#x65F6;&#x65E0;&#x6CD5;&#x83B7;&#x53D6;&#x5230;&#x5916;&#x90E8;&#x5B9E;&#x4F8B;&#x5316;&#x53D8;&#x91CF;&#xFF0C;&#x56E0;&#x6B64;&#x4F7F;&#x7528;setTimeout&#x5F02;&#x6B65;&#x6765;&#x89E3;&#x51B3;&#x95EE;&#x9898;</span>
+                <span class="token punctuation">}</span><span class="token punctuation">,</span><span class="token number">0</span><span class="token punctuation">)</span>   
+            <span class="token punctuation">}</span><span class="token keyword">else</span> <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span>status <span class="token operator">===</span> <span class="token constant">REJECTED</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+                <span class="token function">rejectedCallback</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span>reason<span class="token punctuation">)</span>
+            <span class="token punctuation">}</span><span class="token keyword">else</span><span class="token punctuation">{</span>
+                <span class="token keyword">this</span><span class="token punctuation">.</span>fulfilledCallback<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>fulfilledCallback<span class="token punctuation">)</span>
+                <span class="token keyword">this</span><span class="token punctuation">.</span>rejectedCallback<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>rejectedCallback<span class="token punctuation">)</span>
+            <span class="token punctuation">}</span>
+        <span class="token punctuation">}</span><span class="token punctuation">)</span>
+        
+        <span class="token keyword">return</span> promise2<span class="token punctuation">;</span><span class="token comment">//&#x5B9E;&#x73B0;&#x94FE;&#x5F0F;&#x8C03;&#x7528;&#x8FD4;&#x56DE;&#x4E00;&#x4E2A;&#x65B0;&#x7684;promise</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+<span class="token comment">//&#x5224;&#x65AD;x&#x503C;&#x7C7B;&#x578B;&#x7684;&#x51FD;&#x6570;,&#x5224;&#x65AD;&#x52A0;&#x6599;</span>
+<span class="token keyword">function</span> <span class="token function">resolvePromise</span><span class="token punctuation">(</span><span class="token parameter">promise2<span class="token punctuation">,</span>x<span class="token punctuation">,</span>resolve<span class="token punctuation">,</span>reject</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+    <span class="token keyword">if</span><span class="token punctuation">(</span>promise2 <span class="token operator">===</span> x<span class="token punctuation">)</span><span class="token punctuation">{</span>
+        <span class="token keyword">return</span> <span class="token function">reject</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">TypeError</span><span class="token punctuation">(</span><span class="token string">&apos;&apos;</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">if</span><span class="token punctuation">(</span>x <span class="token keyword">instanceof</span> <span class="token class-name">Promise</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+        x<span class="token punctuation">.</span><span class="token function">then</span><span class="token punctuation">(</span>resolve<span class="token punctuation">,</span>reject<span class="token punctuation">)</span>
+    <span class="token punctuation">}</span><span class="token keyword">else</span><span class="token punctuation">{</span>
+        <span class="token function">resolve</span><span class="token punctuation">(</span>x<span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</pre><pre data-role="codeBlock" data-info="js" class="language-javascript"><span class="token comment">// &#x7B2C;&#x4E03;&#x90E8;  &#x9519;&#x8BEF;&#x6355;&#x83B7;&#x53CA;&#x629B;&#x51FA; &#x3002;1.&#x5728;&#x6267;&#x884C;&#x5668;&#x6267;&#x884C;&#x65F6;&#x51FA;&#x9519;&#x65F6;&#x629B;&#x9519;  2.&#x5728;&#x6267;&#x884C;then&#x56DE;&#x8C03;&#x65F6;&#x6355;&#x83B7;&#x9519;&#x8BEF;</span>
+
+<span class="token keyword">class</span> <span class="token class-name">MyPromise</span><span class="token punctuation">{</span>
+    <span class="token function">constructor</span><span class="token punctuation">(</span><span class="token parameter">excutor</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+        <span class="token keyword">try</span> <span class="token punctuation">{</span><span class="token comment">//&#x629B;&#x9519;&#x5904;&#x7406;</span>
+            <span class="token function">excutor</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span>resolve<span class="token punctuation">,</span><span class="token keyword">this</span><span class="token punctuation">.</span>reject<span class="token punctuation">)</span>
+        <span class="token punctuation">}</span><span class="token keyword">catch</span> <span class="token punctuation">(</span>e<span class="token punctuation">)</span><span class="token punctuation">{</span>
+            <span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function">reject</span><span class="token punctuation">(</span>e<span class="token punctuation">)</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+    status <span class="token operator">=</span> <span class="token constant">PENDING</span><span class="token punctuation">;</span>
+    value <span class="token operator">=</span> undefined<span class="token punctuation">;</span>
+    reason <span class="token operator">=</span> undefined<span class="token punctuation">;</span>
+    fulfilledCallback <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+    rejectedCallback <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
+    <span class="token function-variable function">resolve</span> <span class="token operator">=</span> <span class="token parameter">value</span> <span class="token operator">=&gt;</span><span class="token punctuation">{</span>
+        <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span>status<span class="token operator">!==</span><span class="token constant">PENDING</span><span class="token punctuation">)</span><span class="token keyword">return</span><span class="token punctuation">;</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>status <span class="token operator">=</span> <span class="token constant">FULFILLED</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>value <span class="token operator">=</span> value
+        <span class="token comment">// this.fulfilledCallback &amp;&amp; this.fulfilledCallback(this.value)</span>
+        <span class="token keyword">while</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span>fulfilledCallback<span class="token punctuation">.</span>length<span class="token punctuation">)</span><span class="token punctuation">{</span>
+            <span class="token keyword">this</span><span class="token punctuation">.</span>fulfilledCallback<span class="token punctuation">.</span><span class="token function">shift</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span>value<span class="token punctuation">)</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+    <span class="token function-variable function">reject</span> <span class="token operator">=</span> <span class="token parameter">reason</span> <span class="token operator">=&gt;</span><span class="token punctuation">{</span>
+        <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span>status<span class="token operator">!==</span><span class="token constant">PENDING</span><span class="token punctuation">)</span><span class="token keyword">return</span><span class="token punctuation">;</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>status <span class="token operator">=</span> <span class="token constant">REJECTED</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>reason <span class="token operator">=</span> reason
+        <span class="token comment">// this.rejectedCallback &amp;&amp; this.rejectedCallback(this.value)</span>
+        <span class="token keyword">while</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span>rejectedCallback<span class="token punctuation">.</span>length<span class="token punctuation">)</span><span class="token punctuation">{</span>
+            <span class="token keyword">this</span><span class="token punctuation">.</span>rejectedCallback<span class="token punctuation">.</span><span class="token function">shift</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span>reason<span class="token punctuation">)</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+    <span class="token function">then</span><span class="token punctuation">(</span><span class="token parameter">fulfilledCallback<span class="token punctuation">,</span>rejectedCallback</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+        <span class="token keyword">let</span> promise2 <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Promise</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token parameter">resolve<span class="token punctuation">,</span>reject</span><span class="token punctuation">)</span><span class="token operator">=&gt;</span><span class="token punctuation">{</span>
+            <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span>status <span class="token operator">===</span> <span class="token constant">FULFILLED</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+                <span class="token function">setTimeout</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">=&gt;</span><span class="token punctuation">{</span> 
+                   <span class="token keyword">try</span> <span class="token punctuation">{</span>  <span class="token comment">//&#x8DD1;&#x9519;&#x5904;&#x7406;</span>
+                        <span class="token keyword">let</span> x <span class="token operator">=</span> <span class="token function">fulfilledCallback</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span>value<span class="token punctuation">)</span>  
+                        <span class="token comment">// resolve(x);  </span>
+                        <span class="token function">resolvePromise</span><span class="token punctuation">(</span>promise2<span class="token punctuation">,</span>x<span class="token punctuation">,</span>resolve<span class="token punctuation">,</span>reject<span class="token punctuation">)</span> 
+                   <span class="token punctuation">}</span> <span class="token keyword">catch</span> <span class="token punctuation">(</span>e<span class="token punctuation">)</span><span class="token punctuation">{</span>
+                       <span class="token function">reject</span><span class="token punctuation">(</span>e<span class="token punctuation">)</span>
+                   <span class="token punctuation">}</span>
+                <span class="token punctuation">}</span><span class="token punctuation">,</span><span class="token number">0</span><span class="token punctuation">)</span>   
+            <span class="token punctuation">}</span><span class="token keyword">else</span> <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span>status <span class="token operator">===</span> <span class="token constant">REJECTED</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+                <span class="token function">rejectedCallback</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span>reason<span class="token punctuation">)</span>
+            <span class="token punctuation">}</span><span class="token keyword">else</span><span class="token punctuation">{</span>
+                <span class="token keyword">this</span><span class="token punctuation">.</span>fulfilledCallback<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>fulfilledCallback<span class="token punctuation">)</span>
+                <span class="token keyword">this</span><span class="token punctuation">.</span>rejectedCallback<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>rejectedCallback<span class="token punctuation">)</span>
+            <span class="token punctuation">}</span>
+        <span class="token punctuation">}</span><span class="token punctuation">)</span>
+        
+        <span class="token keyword">return</span> promise2<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+<span class="token comment">//&#x5224;&#x65AD;x&#x503C;&#x7C7B;&#x578B;&#x7684;&#x51FD;&#x6570;,&#x5224;&#x65AD;&#x52A0;&#x6599;</span>
+<span class="token keyword">function</span> <span class="token function">resolvePromise</span><span class="token punctuation">(</span><span class="token parameter">promise2<span class="token punctuation">,</span>x<span class="token punctuation">,</span>resolve<span class="token punctuation">,</span>reject</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+    <span class="token keyword">if</span><span class="token punctuation">(</span>promise2 <span class="token operator">===</span> x<span class="token punctuation">)</span><span class="token punctuation">{</span>
+        <span class="token keyword">return</span> <span class="token function">reject</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">TypeError</span><span class="token punctuation">(</span><span class="token string">&apos;&apos;</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">if</span><span class="token punctuation">(</span>x <span class="token keyword">instanceof</span> <span class="token class-name">Promise</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+        x<span class="token punctuation">.</span><span class="token function">then</span><span class="token punctuation">(</span>resolve<span class="token punctuation">,</span>reject<span class="token punctuation">)</span>
+    <span class="token punctuation">}</span><span class="token keyword">else</span><span class="token punctuation">{</span>
+        <span class="token function">resolve</span><span class="token punctuation">(</span>x<span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</pre><pre data-role="codeBlock" data-info="js" class="language-javascript"><span class="token comment">// &#x7B2C;&#x516B;&#x6B65;  &#x8865;&#x5145;&#x5B8C;&#x6574;&#x5176;&#x4F59;&#x72B6;&#x6001;&#x7684;&#x5904;&#x7406;</span>
+<span class="token comment">//&#x5728;&#x5B8C;&#x6574;&#x4EE3;&#x7801;&#x4E2D;&#x5DF2;&#x6709;&#x8BE6;&#x7EC6;&#x793A;&#x4F8B;&#xFF0C;&#x4E0D;&#x518D;&#x4E66;&#x5199;</span>
+</pre>
       </div>
       
       

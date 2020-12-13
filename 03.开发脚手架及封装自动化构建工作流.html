@@ -1,0 +1,1189 @@
+<!DOCTYPE html><html><head>
+      <title>03.开发脚手架及封装自动化构建工作流</title>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.css">
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      <style>
+      /**
+ * prism.js Github theme based on GitHub's theme.
+ * @author Sam Clarke
+ */
+code[class*="language-"],
+pre[class*="language-"] {
+  color: #333;
+  background: none;
+  font-family: Consolas, "Liberation Mono", Menlo, Courier, monospace;
+  text-align: left;
+  white-space: pre;
+  word-spacing: normal;
+  word-break: normal;
+  word-wrap: normal;
+  line-height: 1.4;
+
+  -moz-tab-size: 8;
+  -o-tab-size: 8;
+  tab-size: 8;
+
+  -webkit-hyphens: none;
+  -moz-hyphens: none;
+  -ms-hyphens: none;
+  hyphens: none;
+}
+
+/* Code blocks */
+pre[class*="language-"] {
+  padding: .8em;
+  overflow: auto;
+  /* border: 1px solid #ddd; */
+  border-radius: 3px;
+  /* background: #fff; */
+  background: #f5f5f5;
+}
+
+/* Inline code */
+:not(pre) > code[class*="language-"] {
+  padding: .1em;
+  border-radius: .3em;
+  white-space: normal;
+  background: #f5f5f5;
+}
+
+.token.comment,
+.token.blockquote {
+  color: #969896;
+}
+
+.token.cdata {
+  color: #183691;
+}
+
+.token.doctype,
+.token.punctuation,
+.token.variable,
+.token.macro.property {
+  color: #333;
+}
+
+.token.operator,
+.token.important,
+.token.keyword,
+.token.rule,
+.token.builtin {
+  color: #a71d5d;
+}
+
+.token.string,
+.token.url,
+.token.regex,
+.token.attr-value {
+  color: #183691;
+}
+
+.token.property,
+.token.number,
+.token.boolean,
+.token.entity,
+.token.atrule,
+.token.constant,
+.token.symbol,
+.token.command,
+.token.code {
+  color: #0086b3;
+}
+
+.token.tag,
+.token.selector,
+.token.prolog {
+  color: #63a35c;
+}
+
+.token.function,
+.token.namespace,
+.token.pseudo-element,
+.token.class,
+.token.class-name,
+.token.pseudo-class,
+.token.id,
+.token.url-reference .token.variable,
+.token.attr-name {
+  color: #795da3;
+}
+
+.token.entity {
+  cursor: help;
+}
+
+.token.title,
+.token.title .token.punctuation {
+  font-weight: bold;
+  color: #1d3e81;
+}
+
+.token.list {
+  color: #ed6a43;
+}
+
+.token.inserted {
+  background-color: #eaffea;
+  color: #55a532;
+}
+
+.token.deleted {
+  background-color: #ffecec;
+  color: #bd2c00;
+}
+
+.token.bold {
+  font-weight: bold;
+}
+
+.token.italic {
+  font-style: italic;
+}
+
+
+/* JSON */
+.language-json .token.property {
+  color: #183691;
+}
+
+.language-markup .token.tag .token.punctuation {
+  color: #333;
+}
+
+/* CSS */
+code.language-css,
+.language-css .token.function {
+  color: #0086b3;
+}
+
+/* YAML */
+.language-yaml .token.atrule {
+  color: #63a35c;
+}
+
+code.language-yaml {
+  color: #183691;
+}
+
+/* Ruby */
+.language-ruby .token.function {
+  color: #333;
+}
+
+/* Markdown */
+.language-markdown .token.url {
+  color: #795da3;
+}
+
+/* Makefile */
+.language-makefile .token.symbol {
+  color: #795da3;
+}
+
+.language-makefile .token.variable {
+  color: #183691;
+}
+
+.language-makefile .token.builtin {
+  color: #0086b3;
+}
+
+/* Bash */
+.language-bash .token.keyword {
+  color: #0086b3;
+}
+
+/* highlight */
+pre[data-line] {
+  position: relative;
+  padding: 1em 0 1em 3em;
+}
+pre[data-line] .line-highlight-wrapper {
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: transparent;
+  display: block;
+  width: 100%;
+}
+
+pre[data-line] .line-highlight {
+  position: absolute;
+  left: 0;
+  right: 0;
+  padding: inherit 0;
+  margin-top: 1em;
+  background: hsla(24, 20%, 50%,.08);
+  background: linear-gradient(to right, hsla(24, 20%, 50%,.1) 70%, hsla(24, 20%, 50%,0));
+  pointer-events: none;
+  line-height: inherit;
+  white-space: pre;
+}
+
+pre[data-line] .line-highlight:before, 
+pre[data-line] .line-highlight[data-end]:after {
+  content: attr(data-start);
+  position: absolute;
+  top: .4em;
+  left: .6em;
+  min-width: 1em;
+  padding: 0 .5em;
+  background-color: hsla(24, 20%, 50%,.4);
+  color: hsl(24, 20%, 95%);
+  font: bold 65%/1.5 sans-serif;
+  text-align: center;
+  vertical-align: .3em;
+  border-radius: 999px;
+  text-shadow: none;
+  box-shadow: 0 1px white;
+}
+
+pre[data-line] .line-highlight[data-end]:after {
+  content: attr(data-end);
+  top: auto;
+  bottom: .4em;
+}html body{font-family:"Helvetica Neue",Helvetica,"Segoe UI",Arial,freesans,sans-serif;font-size:16px;line-height:1.6;color:#333;background-color:#fff;overflow:initial;box-sizing:border-box;word-wrap:break-word}html body>:first-child{margin-top:0}html body h1,html body h2,html body h3,html body h4,html body h5,html body h6{line-height:1.2;margin-top:1em;margin-bottom:16px;color:#000}html body h1{font-size:2.25em;font-weight:300;padding-bottom:.3em}html body h2{font-size:1.75em;font-weight:400;padding-bottom:.3em}html body h3{font-size:1.5em;font-weight:500}html body h4{font-size:1.25em;font-weight:600}html body h5{font-size:1.1em;font-weight:600}html body h6{font-size:1em;font-weight:600}html body h1,html body h2,html body h3,html body h4,html body h5{font-weight:600}html body h5{font-size:1em}html body h6{color:#5c5c5c}html body strong{color:#000}html body del{color:#5c5c5c}html body a:not([href]){color:inherit;text-decoration:none}html body a{color:#08c;text-decoration:none}html body a:hover{color:#00a3f5;text-decoration:none}html body img{max-width:100%}html body>p{margin-top:0;margin-bottom:16px;word-wrap:break-word}html body>ul,html body>ol{margin-bottom:16px}html body ul,html body ol{padding-left:2em}html body ul.no-list,html body ol.no-list{padding:0;list-style-type:none}html body ul ul,html body ul ol,html body ol ol,html body ol ul{margin-top:0;margin-bottom:0}html body li{margin-bottom:0}html body li.task-list-item{list-style:none}html body li>p{margin-top:0;margin-bottom:0}html body .task-list-item-checkbox{margin:0 .2em .25em -1.8em;vertical-align:middle}html body .task-list-item-checkbox:hover{cursor:pointer}html body blockquote{margin:16px 0;font-size:inherit;padding:0 15px;color:#5c5c5c;background-color:#f0f0f0;border-left:4px solid #d6d6d6}html body blockquote>:first-child{margin-top:0}html body blockquote>:last-child{margin-bottom:0}html body hr{height:4px;margin:32px 0;background-color:#d6d6d6;border:0 none}html body table{margin:10px 0 15px 0;border-collapse:collapse;border-spacing:0;display:block;width:100%;overflow:auto;word-break:normal;word-break:keep-all}html body table th{font-weight:bold;color:#000}html body table td,html body table th{border:1px solid #d6d6d6;padding:6px 13px}html body dl{padding:0}html body dl dt{padding:0;margin-top:16px;font-size:1em;font-style:italic;font-weight:bold}html body dl dd{padding:0 16px;margin-bottom:16px}html body code{font-family:Menlo,Monaco,Consolas,'Courier New',monospace;font-size:.85em !important;color:#000;background-color:#f0f0f0;border-radius:3px;padding:.2em 0}html body code::before,html body code::after{letter-spacing:-0.2em;content:"\00a0"}html body pre>code{padding:0;margin:0;font-size:.85em !important;word-break:normal;white-space:pre;background:transparent;border:0}html body .highlight{margin-bottom:16px}html body .highlight pre,html body pre{padding:1em;overflow:auto;font-size:.85em !important;line-height:1.45;border:#d6d6d6;border-radius:3px}html body .highlight pre{margin-bottom:0;word-break:normal}html body pre code,html body pre tt{display:inline;max-width:initial;padding:0;margin:0;overflow:initial;line-height:inherit;word-wrap:normal;background-color:transparent;border:0}html body pre code:before,html body pre tt:before,html body pre code:after,html body pre tt:after{content:normal}html body p,html body blockquote,html body ul,html body ol,html body dl,html body pre{margin-top:0;margin-bottom:16px}html body kbd{color:#000;border:1px solid #d6d6d6;border-bottom:2px solid #c7c7c7;padding:2px 4px;background-color:#f0f0f0;border-radius:3px}@media print{html body{background-color:#fff}html body h1,html body h2,html body h3,html body h4,html body h5,html body h6{color:#000;page-break-after:avoid}html body blockquote{color:#5c5c5c}html body pre{page-break-inside:avoid}html body table{display:table}html body img{display:block;max-width:100%;max-height:100%}html body pre,html body code{word-wrap:break-word;white-space:pre}}.markdown-preview{width:100%;height:100%;box-sizing:border-box}.markdown-preview .pagebreak,.markdown-preview .newpage{page-break-before:always}.markdown-preview pre.line-numbers{position:relative;padding-left:3.8em;counter-reset:linenumber}.markdown-preview pre.line-numbers>code{position:relative}.markdown-preview pre.line-numbers .line-numbers-rows{position:absolute;pointer-events:none;top:1em;font-size:100%;left:0;width:3em;letter-spacing:-1px;border-right:1px solid #999;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}.markdown-preview pre.line-numbers .line-numbers-rows>span{pointer-events:none;display:block;counter-increment:linenumber}.markdown-preview pre.line-numbers .line-numbers-rows>span:before{content:counter(linenumber);color:#999;display:block;padding-right:.8em;text-align:right}.markdown-preview .mathjax-exps .MathJax_Display{text-align:center !important}.markdown-preview:not([for="preview"]) .code-chunk .btn-group{display:none}.markdown-preview:not([for="preview"]) .code-chunk .status{display:none}.markdown-preview:not([for="preview"]) .code-chunk .output-div{margin-bottom:16px}.scrollbar-style::-webkit-scrollbar{width:8px}.scrollbar-style::-webkit-scrollbar-track{border-radius:10px;background-color:transparent}.scrollbar-style::-webkit-scrollbar-thumb{border-radius:5px;background-color:rgba(150,150,150,0.66);border:4px solid rgba(150,150,150,0.66);background-clip:content-box}html body[for="html-export"]:not([data-presentation-mode]){position:relative;width:100%;height:100%;top:0;left:0;margin:0;padding:0;overflow:auto}html body[for="html-export"]:not([data-presentation-mode]) .markdown-preview{position:relative;top:0}@media screen and (min-width:914px){html body[for="html-export"]:not([data-presentation-mode]) .markdown-preview{padding:2em calc(50% - 457px + 2em)}}@media screen and (max-width:914px){html body[for="html-export"]:not([data-presentation-mode]) .markdown-preview{padding:2em}}@media screen and (max-width:450px){html body[for="html-export"]:not([data-presentation-mode]) .markdown-preview{font-size:14px !important;padding:1em}}@media print{html body[for="html-export"]:not([data-presentation-mode]) #sidebar-toc-btn{display:none}}html body[for="html-export"]:not([data-presentation-mode]) #sidebar-toc-btn{position:fixed;bottom:8px;left:8px;font-size:28px;cursor:pointer;color:inherit;z-index:99;width:32px;text-align:center;opacity:.4}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] #sidebar-toc-btn{opacity:1}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc{position:fixed;top:0;left:0;width:300px;height:100%;padding:32px 0 48px 0;font-size:14px;box-shadow:0 0 4px rgba(150,150,150,0.33);box-sizing:border-box;overflow:auto;background-color:inherit}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc::-webkit-scrollbar{width:8px}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc::-webkit-scrollbar-track{border-radius:10px;background-color:transparent}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc::-webkit-scrollbar-thumb{border-radius:5px;background-color:rgba(150,150,150,0.66);border:4px solid rgba(150,150,150,0.66);background-clip:content-box}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc a{text-decoration:none}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc ul{padding:0 1.6em;margin-top:.8em}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc li{margin-bottom:.8em}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc ul{list-style-type:none}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .markdown-preview{left:300px;width:calc(100% -  300px);padding:2em calc(50% - 457px -  150px);margin:0;box-sizing:border-box}@media screen and (max-width:1274px){html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .markdown-preview{padding:2em}}@media screen and (max-width:450px){html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .markdown-preview{width:100%}}html body[for="html-export"]:not([data-presentation-mode]):not([html-show-sidebar-toc]) .markdown-preview{left:50%;transform:translateX(-50%)}html body[for="html-export"]:not([data-presentation-mode]):not([html-show-sidebar-toc]) .md-sidebar-toc{display:none}
+/* Please visit the URL below for more information: */
+/*   https://shd101wyy.github.io/markdown-preview-enhanced/#/customize-css */
+
+      </style>
+    </head>
+    <body for="html-export">
+      <div class="mume markdown-preview  ">
+      <h3 class="mume-header" id="%E5%BC%80%E5%8F%91%E8%84%9A%E6%89%8B%E6%9E%B6%E5%8F%8A%E5%B0%81%E8%A3%85%E8%87%AA%E5%8A%A8%E5%8C%96%E6%9E%84%E5%BB%BA%E5%B7%A5%E4%BD%9C%E6%B5%81">&#x5F00;&#x53D1;&#x811A;&#x624B;&#x67B6;&#x53CA;&#x5C01;&#x88C5;&#x81EA;&#x52A8;&#x5316;&#x6784;&#x5EFA;&#x5DE5;&#x4F5C;&#x6D41;</h3>
+
+<h4 class="mume-header" id="%E4%B8%80-%E5%B7%A5%E7%A8%8B%E5%8C%96%E6%A6%82%E8%BF%B0">&#x4E00;. &#x5DE5;&#x7A0B;&#x5316;&#x6982;&#x8FF0;</h4>
+
+<h5 class="mume-header" id="1-%E8%A7%A3%E5%86%B3%E7%9A%84%E9%97%AE%E9%A2%98">1. &#x89E3;&#x51B3;&#x7684;&#x95EE;&#x9898;</h5>
+
+<ul>
+<li>&#x4F7F;&#x7528;ES6+&#x65F6;&#x7684;&#x517C;&#x5BB9;&#x6027;&#x95EE;&#x9898;</li>
+<li>&#x4F7F;&#x7528;Less/Sass/PostCSS&#x589E;&#x5F3A;CSS&#x7684;&#x7F16;&#x7A0B;&#x6027;&#xFF0C;&#x4F46;&#x8FD0;&#x884C;&#x73AF;&#x5883;&#x65E0;&#x6CD5;&#x76F4;&#x63A5;&#x652F;&#x6301;</li>
+<li>&#x4F7F;&#x7528;&#x6A21;&#x5757;&#x5316;&#x7684;&#x65B9;&#x5F0F;&#x63D0;&#x9AD8;&#x9879;&#x76EE;&#x7684;&#x53EF;&#x7EF4;&#x62A4;&#x6027;&#xFF0C;&#x4F46;&#x8FD0;&#x884C;&#x73AF;&#x5883;&#x65E0;&#x6CD5;&#x76F4;&#x63A5;&#x652F;&#x6301;</li>
+<li>&#x91CD;&#x590D;&#x6027;&#x5DE5;&#x4F5C;&#xFF1A;&#x90E8;&#x7F72;&#x4E0A;&#x7EBF;&#x524D;&#x624B;&#x52A8;&#x538B;&#x7F29;&#x4EE3;&#x7801;&#x53CA;&#x8D44;&#x6E90;&#x6587;&#x4EF6;&#xFF0C;&#x90E8;&#x7F72;&#x8FC7;&#x7A0B;&#x9700;&#x624B;&#x52A8;&#x4E0A;&#x4F20;&#x4EE3;&#x7801;</li>
+<li>&#x591A;&#x4EBA;&#x534F;&#x540C;&#x5F00;&#x53D1;&#xFF0C;&#x65E0;&#x6CD5;&#x786C;&#x6027;&#x7EDF;&#x4E00;&#x5927;&#x5BB6;&#x7684;&#x4EE3;&#x7801;&#x98CE;&#x683C;&#xFF0C;pull&#x56DE;&#x6765;&#x7684;&#x4EE3;&#x7801;&#x8D28;&#x91CF;&#x65E0;&#x6CD5;&#x4FDD;&#x8BC1;</li>
+<li>&#x90E8;&#x5206;&#x529F;&#x80FD;&#x9700;&#x8981;&#x7B49;&#x5F85;&#x540E;&#x7AEF;&#x63A5;&#x53E3;&#x670D;&#x52A1;</li>
+<li>&#x6574;&#x4F53;&#x4F9D;&#x8D56;&#x540E;&#x7AEF;&#x9879;&#x76EE;</li>
+</ul>
+<h5 class="mume-header" id="2%E8%A1%A8%E7%8E%B0">2.&#x8868;&#x73B0;</h5>
+
+<ul>
+<li>&#x521B;&#x5EFA;&#x9879;&#x76EE;-&gt;&#x7F16;&#x7801;-&gt;&#x9884;&#x89C8;/&#x6D4B;&#x8BD5;-&gt;&#x63D0;&#x4EA4;-&gt;&#x90E8;&#x7F72;</li>
+</ul>
+<h5 class="mume-header" id="3%E5%B7%A5%E7%A8%8B%E5%8C%96%E6%9F%90%E4%B8%AA%E5%B7%A5%E5%85%B7">3.&#x5DE5;&#x7A0B;&#x5316;!==&#x67D0;&#x4E2A;&#x5DE5;&#x5177;</h5>
+
+<ul>
+<li>&#x89C4;&#x5212;&#x9879;&#x76EE;&#x7684;&#x6574;&#x4F53;&#x7ED3;&#x6784;</li>
+<li>&#x4E00;&#x4E9B;&#x811A;&#x624B;&#x67B6;&#x76F8;&#x5F53;&#x4E8E;&#x7279;&#x5B9A;&#x7C7B;&#x578B;&#x7684;&#x9879;&#x76EE;&#x5B98;&#x65B9;&#x7ED9;&#x51FA;&#x7684;&#x96C6;&#x6210;&#x5F0F;&#x5DE5;&#x7A0B;&#x5316;&#x65B9;&#x6848;</li>
+</ul>
+<h5 class="mume-header" id="4%E5%B7%A5%E7%A8%8B%E5%8C%96%E7%A6%BB%E4%B8%8D%E5%BC%80nodejs">4.&#x5DE5;&#x7A0B;&#x5316;&#x79BB;&#x4E0D;&#x5F00;Nodejs</h5>
+
+<ul>
+<li>&#x524D;&#x7AEF;&#x5DE5;&#x7A0B;&#x5316;&#x7531;nodejs&#x63D0;&#x4F9B;</li>
+</ul>
+<h4 class="mume-header" id="%E4%BA%8C-%E8%84%9A%E6%89%8B%E6%9E%B6%E5%B7%A5%E5%85%B7">&#x4E8C;. &#x811A;&#x624B;&#x67B6;&#x5DE5;&#x5177;</h4>
+
+<ul>
+<li>&#x672C;&#x8D28;&#x4F5C;&#x7528;&#xFF1A;&#x521B;&#x5EFA;&#x9879;&#x76EE;&#x57FA;&#x7840;&#x7ED3;&#x6784;&#x3001;&#x63D0;&#x4F9B;&#x9879;&#x76EE;&#x89C4;&#x8303;&#x548C;&#x7EA6;&#x5B9A;</li>
+<li>&#x76F8;&#x540C;&#x7684;&#x7EC4;&#x7EC7;&#x7ED3;&#x6784;&#x3001;&#x5F00;&#x53D1;&#x8303;&#x5F0F;&#x3001;&#x6A21;&#x5757;&#x4F9D;&#x8D56;&#x3001;&#x5DE5;&#x5177;&#x914D;&#x7F6E;&#x3001;&#x57FA;&#x7840;&#x4EE3;&#x7801;</li>
+<li>&#x524D;&#x7AEF;&#x811A;&#x624B;&#x67B6;&#xFF1A;&#x4EE5;&#x72EC;&#x7ACB;&#x7684;&#x5DE5;&#x5177;&#x5B58;&#x5728;</li>
+</ul>
+<h5 class="mume-header" id="1yeoman-%E7%8E%B0%E4%BB%A3%E5%8C%96web%E5%BA%94%E7%94%A8%E7%9A%84%E8%84%9A%E6%89%8B%E6%9E%B6%E5%B7%A5%E5%85%B7">1.Yeoman: &#x73B0;&#x4EE3;&#x5316;web&#x5E94;&#x7528;&#x7684;&#x811A;&#x624B;&#x67B6;&#x5DE5;&#x5177;</h5>
+
+<ul>
+<li>
+<p>&#x57FA;&#x4E8E;nodejs&#x5F00;&#x53D1;&#x7684;&#x901A;&#x7528;&#x811A;&#x624B;&#x67B6;&#x5DE5;&#x5177;</p>
+</li>
+<li>
+<p>&#x5B89;&#x88C5;&#xFF1A;yarn global add yo</p>
+</li>
+<li>
+<p>&#x7531;&#x4E8E;yeoman&#x81EA;&#x8EAB;&#x529F;&#x80FD;&#x6BD4;&#x8F83;&#x5355;&#x4E00;&#xFF0C;&#x9700;&#x8981;&#x914D;&#x5408;&#x5176;&#x4ED6;&#x6A21;&#x5757;&#x4F7F;&#x7528;&#xFF0C;&#x5982;&#xFF1A;generator-node</p>
+</li>
+<li>
+<p>&#x4E0B;&#x9762;&#x6F14;&#x793A;&#x751F;&#x6210;node&#x9879;&#x76EE;&#x7684;&#x5B8C;&#x6574;&#x6D41;&#x7A0B;</p>
+<ol>
+<li>yarn global add yo  &#x5168;&#x5C40;&#x5B89;&#x88C5;yeoman&#x5DE5;&#x5177;</li>
+<li>yarn global add generator-node  &#x5168;&#x5C40;&#x5B89;&#x88C5;&#x751F;&#x6210;node&#x9879;&#x76EE;&#x6240;&#x9700;&#x6A21;&#x5757;</li>
+<li>mkdir my-module &#x5728;&#x60F3;&#x8981;&#x7684;&#x8DEF;&#x5F84;&#x4E0B;&#x521B;&#x5EFA;&#x4E00;&#x4E2A;&#x5BB9;&#x7EB3;&#x9879;&#x76EE;&#x7684;&#x6587;&#x4EF6;&#x5939;</li>
+<li>yo node &#x521B;&#x5EFA;node&#x9879;&#x76EE;</li>
+<li>&#x6839;&#x636E;&#x63D0;&#x793A;&#x8F93;&#x5165;&#x76F8;&#x5173;&#x4FE1;&#x606F;&#xFF0C;&#x751F;&#x6210;&#x5B8C;&#x6709;&#x4E00;&#x4E2A;&#x73AF;&#x8282;&#x4F1A;&#x5361;&#x6B7B;&#xFF0C;&#x53EF;ctrl+c&#x76F4;&#x63A5;&#x9000;&#x51FA;</li>
+</ol>
+</li>
+<li>
+<p>&#x7ED9;&#x5DF2;&#x6709;&#x7684;&#x9879;&#x76EE;&#x521B;&#x5EFA;&#x4E00;&#x4E9B;&#x7279;&#x5B9A;&#x7C7B;&#x578B;&#x7684;&#x6587;&#x4EF6;&#xFF1A;&#x4F7F;&#x7528;yeoman&#x7684;Sub Generator :&#x5B50;&#x96C6;&#x751F;&#x6210;&#x5668;</p>
+<ol>
+<li>yo node:cli</li>
+<li>&#x63D0;&#x793A;&#x91CD;&#x5199;package.json &#x9009;&#x62E9;yes,&#x4EE5;&#x4FBF;&#x4E8E;cli&#x6DFB;&#x52A0;&#x65B0;&#x7684;&#x6A21;&#x5757;</li>
+<li>&#x901A;&#x8FC7;&#x6B64;&#x53EF;&#x4EE5;&#x5F53;&#x4F5C;&#x5168;&#x5C40;&#x7684;&#x547D;&#x4EE4;&#x884C;&#x6A21;&#x5757;&#x4F7F;&#x7528;</li>
+<li>yarn link &#x5230;&#x5168;&#x5C40;&#x8303;&#x56F4;</li>
+<li>yarn &#x5B89;&#x88C5;&#x4F9D;&#x8D56;</li>
+<li>&#x8FD0;&#x884C; my-module &#x8FD0;&#x884C;cli&#x5E94;&#x7528;<br>
+&#x6CE8;&#x610F;&#xFF1A;&#x4E0D;&#x662F;&#x6BCF;&#x4E00;&#x4E2A;&#x751F;&#x6210;&#x5668;&#x90FD;&#x63D0;&#x4F9B;&#x5B50;&#x96C6;&#x751F;&#x6210;&#x5668;</li>
+</ol>
+</li>
+<li>
+<p>&#x4F7F;&#x7528;yeoman&#x7684;&#x6B65;&#x9AA4;</p>
+<ol>
+<li>&#x660E;&#x786E;&#x9700;&#x6C42;</li>
+<li>&#x627E;&#x5230;&#x9002;&#x5408;&#x9879;&#x76EE;&#x7684;Generator&#xFF08;yeoman&#x5B98;&#x7F51;&#xFF09;</li>
+<li>&#x5168;&#x5C40;&#x8303;&#x56F4;&#x5B89;&#x88C5;&#x8BE5;Generator</li>
+<li>&#x901A;&#x8FC7;yo&#x547D;&#x4EE4;&#x8FD0;&#x884C;&#x5BF9;&#x5E94;&#x7684;Generator</li>
+<li>&#x901A;&#x8FC7;&#x547D;&#x4EE4;&#x884C;&#x4EA4;&#x4E92;&#x586B;&#x5199;&#x9009;&#x9879;</li>
+<li>&#x751F;&#x6210;&#x6240;&#x9700;&#x8981;&#x7684;&#x9879;&#x76EE;&#x7ED3;&#x6784;<br>
+<img src="./sourse/%E9%95%9C%E5%83%8F%E6%BA%90%E9%85%8D%E7%BD%AE.png" alt="&#x955C;&#x50CF;&#x6E90;&#x914D;&#x7F6E;"></li>
+</ol>
+</li>
+<li>
+<p>&#x57FA;&#x4E8E;Yeoman&#x642D;&#x5EFA;&#x81EA;&#x5DF1;&#x7684;Generator</p>
+<ol>
+<li>&#x521B;&#x5EFA;Generator&#x5B9E;&#x9645;&#x4E0A;&#x662F;&#x521B;&#x5EFA;&#x4E00;&#x4E2A;npm&#x6A21;&#x5757;</li>
+<li>Generator&#x7279;&#x5B9A;&#x7684;&#x6A21;&#x5757;&#x7ED3;&#x6784;&#xFF1A;<br>
+<img src="./sourse/Generator%E6%A8%A1%E5%9D%97%E7%BB%93%E6%9E%84.png" alt="Generator&#x6A21;&#x5757;&#x7ED3;&#x6784;"></li>
+<li>Generator&#x6A21;&#x5757;&#x540D;&#x79F0;&#x5FC5;&#x987B;&#x662F;generator-name<br>
+<em>1</em>. &#x521B;&#x5EFA;&#x4E00;&#x4E2A;&#x751F;&#x6210;&#x5668;&#x6A21;&#x5757;&#x76EE;&#x5F55;  mkdir generator-test<br>
+<em>2</em>. &#x521D;&#x59CB;&#x5316;package.json  yarn init<br>
+<em>3</em>. &#x5B89;&#x88C5;&#x751F;&#x6210;&#x5668;&#x6A21;&#x5757;&#x57FA;&#x7C7B;(&#x4E00;&#x4E9B;&#x5DE5;&#x5177;&#x51FD;&#x6570;):  yarn add yeoman-generator<br>
+<em>4</em>. &#x6309;&#x7167;&#x4E0A;&#x9762;&#x7684;&#x4E00;&#x5F20;&#x56FE;&#x521B;&#x5EFA;&#x9879;&#x76EE;&#x7ED3;&#x6784;&#x6587;&#x4EF6;&#x5939;&#xFF1A;&#x9879;&#x76EE;&#x6587;&#x4EF6;&#x5939;-&gt;generators&#x6587;&#x4EF6;&#x5939;-&gt;app&#x6587;&#x4EF6;&#x5939;-&gt;index.js<br>
+<em>5</em>. index.js&#x6587;&#x4EF6;&#x4F5C;&#x4E3A;Generator&#x7684;&#x6838;&#x5FC3;&#x5165;&#x53E3;&#x6587;&#x4EF6;&#xFF0C;&#x9700;&#x8981;&#x5BFC;&#x51FA;&#x4E00;&#x4E2A;&#x7EE7;&#x627F;&#x81EA;Yeoman Generator&#x7684;&#x6838;&#x5FC3;&#x7C7B;&#x578B;&#xFF0C;&#x5B83;&#x4F1A;&#x81EA;&#x52A8;&#x8C03;&#x7528;&#x6211;&#x4EEC;&#x5728;&#x6B64;&#x7C7B;&#x578B;&#x4E2D;&#x5B9A;&#x4E49;&#x7684;&#x4E00;&#x4E9B;&#x751F;&#x547D;&#x5468;&#x671F;&#x65B9;&#x6CD5;&#xFF0C;&#x6211;&#x4EEC;&#x53EF;&#x4EE5;&#x8C03;&#x7528;&#x7236;&#x7C7B;&#x63D0;&#x4F9B;&#x7684;&#x4E00;&#x4E9B;&#x5DE5;&#x5177;&#x65B9;&#x6CD5;&#x5B9E;&#x73B0;&#x4E00;&#x4E9B;&#x529F;&#x80FD;&#xFF0C;&#x5982;&#x6587;&#x4EF6;&#x5199;&#x5165;<br>
+<em>6</em>. &#x5177;&#x4F53;&#x64CD;&#x4F5C;&#x8BF7;&#x67E5;&#x770B;code&#x4E0B;&#x7684;generator-test&#x6587;&#x4EF6;&#x5939;<br>
+<em>7</em>. &#x6587;&#x4EF6;&#x5373;&#x4EE3;&#x7801;&#x51C6;&#x5907;&#x5B8C;&#x6210;&#x540E;&#x4F7F;&#x7528;yarn link&#x547D;&#x4EE4;&#x628A;&#x5F53;&#x524D;&#x6A21;&#x5757;&#x94FE;&#x63A5;&#x5230;&#x5168;&#x5C40;&#x8303;&#x56F4;&#xFF0C;&#x4F7F;&#x4E4B;&#x6210;&#x4E3A;&#x4E00;&#x4E2A;&#x5168;&#x5C40;&#x6A21;&#x5757;&#x5305;&#xFF0C;yeoman&#x5728;&#x5DE5;&#x4F5C;&#x65F6;&#x4FBF;&#x53EF;&#x81EA;&#x52A8;&#x627E;&#x5230;<br>
+<em>8</em>. &#x65B0;&#x5EFA;&#x4E00;&#x4E2A;&#x6587;&#x4EF6;&#x5939;&#x5728;&#x6B64;&#x8DEF;&#x5F84;&#x4E0B;&#x8FD0;&#x884C;yo test, &#x4FBF;&#x53EF;&#x6839;&#x636E;generator-test&#x4E2D;&#x7684;index.js&#x751F;&#x6210;&#x6587;&#x4EF6;</li>
+<li>&#x6839;&#x636E;&#x6A21;&#x677F;&#x521B;&#x5EFA;&#x6587;&#x4EF6;<br>
+<em>1</em>. &#x6CBF;&#x7528; generator-test &#x9879;&#x76EE;&#xFF1A;&#x5728;app&#x6587;&#x4EF6;&#x5939;&#x4E0B;&#x65B0;&#x5EFA;templates&#x6587;&#x4EF6;&#x5939;-&gt;&#x521B;&#x5EFA;&#x6A21;&#x677F;&#x6587;&#x4EF6;temp.txt<br>
+<em>2</em>. &#x521B;&#x5EFA;&#x5185;&#x5BB9;&#x5177;&#x4F53;&#x67E5;&#x770B;code&#x4E0B;&#x7684;generator-test&#x6587;&#x4EF6;&#x5939;<br>
+<em>3</em>. &#x5728;&#x60F3;&#x8981;&#x8F93;&#x51FA;&#x7684;&#x6587;&#x4EF6;&#x5939;&#x8FD0;&#x884C;yo test</li>
+<li>&#x63A5;&#x6536;&#x7528;&#x6237;&#x8F93;&#x5165;<br>
+<em>1</em>. &#x4F7F;&#x7528;&#x7528;&#x6237;&#x8F93;&#x5165;&#xFF0C;&#x751F;&#x6210;&#x6A21;&#x677F;&#x4E0A;&#x4E0B;&#x6587;&#xFF0C;&#x5177;&#x4F53;&#x67E5;&#x770B;generator-test &#x9879;&#x76EE;</li>
+<li>&#x521B;&#x5EFA;&#x4E00;&#x4E2A;vue&#x9879;&#x76EE;&#x751F;&#x6210;&#x5668;<br>
+<em>1</em> mkdir generator-vueTest<br>
+<em>2</em> &#x521B;&#x5EFA;generator&#x6240;&#x9700;&#x8981;&#x7684;&#x6587;&#x4EF6;&#x8DEF;&#x5F84;&#xFF0C;&#x62F7;&#x8D1D;&#x4E00;&#x4E2A;&#x9879;&#x76EE;&#x4F5C;&#x4E3A;&#x6A21;&#x677F;&#xFF0C;&#x5728;&#x67D0;&#x4E9B;&#x9700;&#x8981;&#x52A8;&#x6001;&#x7684;&#x5730;&#x65B9;&#x4F7F;&#x7528;ejs&#x8BED;&#x6CD5;<br>
+<em>3</em> &#x5982;&#x679C;&#x9700;&#x8981;&#x539F;&#x5C01;&#x4E0D;&#x52A8;&#x7684;&#x8F93;&#x51FA;&#xFF0C;&#x9700;&#x8981;&#x5199;&#x6210;&lt;%%= BASE_URL %&gt; &#xFF1B;&#x6CE8;&#x610F;&#x4E24;&#x4E2A;%&#x53F7;<br>
+<em>4</em> &#x5177;&#x4F53;&#x4EE3;&#x7801;&#x67E5;&#x770B;generator-vueTest<br>
+<em>5</em> yarn link<br>
+<em>6</em> mkdir -&gt; yo vueTest -&gt; &#x8F93;&#x5165;&#x5185;&#x5BB9; -&gt; &#x56DE;&#x8F66;&#x751F;&#x6210;&#x9879;&#x76EE;</li>
+<li>&#x53D1;&#x5E03;Generator<br>
+<em>1</em> &#x521B;&#x5EFA;.gitignore&#x5FFD;&#x7565;&#x6587;&#x4EF6;<br>
+<em>1</em> git init &#x521D;&#x59CB;&#x5316;&#x672C;&#x5730;&#x4ED3;&#x5E93;<br>
+<em>1</em> git status &#x67E5;&#x770B;&#x672C;&#x5730;&#x6587;&#x4EF6;&#x72B6;&#x6001;<br>
+<em>1</em> git add . &#x5C06;&#x672A;&#x52A0;&#x5165;&#x4ED3;&#x5E93;&#x7BA1;&#x7406;&#x7684;&#x672C;&#x5730;&#x6587;&#x4EF6;&#x52A0;&#x5165;&#x7BA1;&#x7406;<br>
+<em>1</em> git commit -m &apos;&#x63D0;&#x4EA4;&#x4FE1;&#x606F;&apos;  &#x63D0;&#x4EA4;&#x672C;&#x5730;&#x4ED3;&#x5E93;<br>
+<em>1</em> github&#x5B98;&#x7F51;&#x65B0;&#x5EFA;&#x8FDC;&#x7A0B;git&#x4ED3;&#x5E93;<br>
+<em>1</em> git remote add origin &#x4ED3;&#x5E93;&#x5730;&#x5740;    &#x5EFA;&#x7ACB;&#x94FE;&#x63A5;<br>
+<em>1</em> git push -u origin  master    //&#x6620;&#x5C04;&#x5206;&#x652F;<br>
+<em>1</em> git push    //&#x63A8;&#x5165;&#x8FDC;&#x7A0B;&#x4ED3;&#x5E93;<br>
+<em>1</em> npm publish  //&#x53D1;&#x5E03;&#x4EE3;&#x7801;&#x6CE8;&#x610F;&#x628A;&#x955C;&#x50CF;&#x5730;&#x5740;&#x6362;&#x4F4D;npm &#x5B98;&#x65B9;&#x5730;&#x5740;  //npm publish --registry-https:&#x5730;&#x5740;<br>
+<em>1</em> &#x4E3A;&#x53D1;&#x5E03;&#x9879;&#x76EE;&#x6DFB;&#x52A0;yeoman-generator&#x5173;&#x952E;&#x8BCD;&#x4F7F;&#x5176;&#x51FA;&#x73B0;&#x5728;&#x5B98;&#x65B9;&#x5305;</li>
+</ol>
+</li>
+<li>
+<p>&#x4E00;&#x4E2A;&#x5C0F;&#x800C;&#x7F8E;&#x7684;&#x811A;&#x624B;&#x67B6;&#x5DE5;&#x5177;Plop&#xFF1A;&#x521B;&#x5EFA;&#x9879;&#x76EE;&#x4E2D;&#x7279;&#x5B9A;&#x7C7B;&#x578B;&#x6587;&#x4EF6;</p>
+<ol>
+<li>&#x4F8B;&#x5982;&#x5728;react&#x9879;&#x76EE;&#x4E2D;&#x4E00;&#x4E2A;&#x7EC4;&#x4EF6;&#x5305;&#x542B;&#x4E09;&#x79CD;&#x7C7B;&#x578B;&#x6587;&#x4EF6;&#xFF1A;js,css,test.js&#xFF0C;&#x5E76;&#x4E14;&#x5305;&#x542B;&#x4E00;&#x4E9B;&#x57FA;&#x7840;&#x4EE3;&#x7801;&#x3002;</li>
+<li>&#x4F7F;&#x7528;Plop&#x4F1A;&#x65B9;&#x4FBF;&#x81EA;&#x52A8;&#x5316;&#x521B;&#x5EFA;&#x4E00;&#x4E2A;react&#x7EC4;&#x4EF6;&#x7ED3;&#x6784;</li>
+<li>&#x5728;&#x9879;&#x76EE;&#x4E2D;&#x52A0;&#x5165;Plop&#x96C6;&#x6210;
+<ul>
+<li>&#x65B0;&#x5EFA;&#x4E00;&#x4E2A;react&#x9879;&#x76EE;</li>
+<li>yarn add plop --dev &#x5B89;&#x88C5;plop&#x4F5C;&#x4E3A;&#x5F00;&#x53D1;&#x4F9D;&#x8D56;</li>
+<li>&#x5728;&#x9879;&#x76EE;&#x6839;&#x76EE;&#x5F55;&#x4E0B;&#x521B;&#x5EFA;plopfile.js&#x6587;&#x4EF6;&#xFF08;plop&#x5165;&#x53E3;&#x6587;&#x4EF6;&#xFF09;</li>
+</ul>
+<pre data-role="codeBlock" data-info="js" class="language-javascript">    <span class="token comment">//Plop&#x5165;&#x53E3;&#x6587;&#x4EF6;&#xFF0C;&#x9700;&#x8981;&#x5BFC;&#x51FA;&#x4E00;&#x4E2A;&#x51FD;&#x6570;</span>
+    <span class="token comment">//&#x6B64;&#x51FD;&#x6570;&#x63A5;&#x53D7;&#x4E00;&#x4E2A;plop &#x5BF9;&#x8C61;&#xFF0C;&#x7528;&#x4E8E;&#x521B;&#x5EFA;&#x751F;&#x6210;&#x5668;&#x4EFB;&#x52A1;</span>
+
+    module<span class="token punctuation">.</span><span class="token function-variable function">exports</span> <span class="token operator">=</span> <span class="token parameter">plop</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+        plop<span class="token punctuation">.</span><span class="token function">setGenerator</span><span class="token punctuation">(</span><span class="token string">&apos;component&apos;</span><span class="token punctuation">,</span><span class="token punctuation">{</span><span class="token comment">//&#x521B;&#x5EFA;&#x4E00;&#x4E2A;&#x751F;&#x6210;&#x5668;</span>
+            discription<span class="token punctuation">:</span><span class="token string">&apos;create a component&apos;</span><span class="token punctuation">,</span>
+            prompts<span class="token punctuation">:</span><span class="token punctuation">[</span><span class="token comment">//&#x7528;&#x6237;&#x4EA4;&#x4E92;&#x6307;&#x4EE4;</span>
+                <span class="token punctuation">{</span>
+                    type<span class="token punctuation">:</span><span class="token string">&apos;input&apos;</span><span class="token punctuation">,</span><span class="token comment">//&#x4EA4;&#x4E92;&#x7C7B;&#x578B;</span>
+                    name<span class="token punctuation">:</span><span class="token string">&apos;name&apos;</span><span class="token punctuation">,</span><span class="token comment">//&#x7528;&#x6237;&#x8F93;&#x5165;&#x6307;&#x4EE4;</span>
+                    message<span class="token punctuation">:</span><span class="token string">&apos;component name&apos;</span><span class="token punctuation">,</span>
+                    <span class="token keyword">default</span><span class="token punctuation">:</span><span class="token string">&apos;MyComponent&apos;</span>
+                <span class="token punctuation">}</span>
+            <span class="token punctuation">]</span><span class="token punctuation">,</span>
+            actions<span class="token punctuation">:</span><span class="token punctuation">[</span>
+                <span class="token punctuation">{</span>
+                    type<span class="token punctuation">:</span><span class="token string">&apos;add&apos;</span>  <span class="token comment">//&#x4EE3;&#x8868;&#x6DFB;&#x52A0;&#x6587;&#x4EF6;&#xFF0C;&#x5B98;&#x7F51;&#x8FD8;&#x6709;&#x66F4;&#x591A;&#x7C7B;&#x578B;</span>
+                    path<span class="token punctuation">:</span><span class="token string">&apos;src/components/{{name}}/{{name}}.js&apos;</span><span class="token punctuation">,</span>  <span class="token comment">//&#x751F;&#x6210;&#x6587;&#x4EF6;&#x8DEF;&#x5F84;&#xFF0C;&#x7528;&#x82B1;&#x62EC;&#x53F7;&#x53D6;&#x7528;&#x6237;&#x8F93;&#x5165;</span>
+                    templateFile<span class="token punctuation">:</span><span class="token string">&apos;plop-templates/component.hbs&apos;</span>  <span class="token comment">//&#x6A21;&#x677F;&#x6587;&#x4EF6;</span>
+                <span class="token punctuation">}</span>
+                <span class="token punctuation">{</span>
+                    type<span class="token punctuation">:</span><span class="token string">&apos;add&apos;</span>  <span class="token comment">//&#x4EE3;&#x8868;&#x6DFB;&#x52A0;&#x6587;&#x4EF6;&#xFF0C;&#x5B98;&#x7F51;&#x8FD8;&#x6709;&#x66F4;&#x591A;&#x7C7B;&#x578B;</span>
+                    path<span class="token punctuation">:</span><span class="token string">&apos;src/components/{{name}}/{{name}}.css&apos;</span><span class="token punctuation">,</span>  <span class="token comment">//&#x751F;&#x6210;&#x6587;&#x4EF6;&#x8DEF;&#x5F84;&#xFF0C;&#x7528;&#x82B1;&#x62EC;&#x53F7;&#x53D6;&#x7528;&#x6237;&#x8F93;&#x5165;</span>
+                    templateFile<span class="token punctuation">:</span><span class="token string">&apos;plop-templates/component.css.hbs&apos;</span>  <span class="token comment">//&#x6A21;&#x677F;&#x6587;&#x4EF6;</span>
+                <span class="token punctuation">}</span>
+                <span class="token punctuation">}</span>
+                <span class="token punctuation">{</span>
+                    type<span class="token punctuation">:</span><span class="token string">&apos;add&apos;</span>  <span class="token comment">//&#x4EE3;&#x8868;&#x6DFB;&#x52A0;&#x6587;&#x4EF6;&#xFF0C;&#x5B98;&#x7F51;&#x8FD8;&#x6709;&#x66F4;&#x591A;&#x7C7B;&#x578B;</span>
+                    path<span class="token punctuation">:</span><span class="token string">&apos;src/components/{{name}}/{{name}}.test.js&apos;</span><span class="token punctuation">,</span>  <span class="token comment">//&#x751F;&#x6210;&#x6587;&#x4EF6;&#x8DEF;&#x5F84;&#xFF0C;&#x7528;&#x82B1;&#x62EC;&#x53F7;&#x53D6;&#x7528;&#x6237;&#x8F93;&#x5165;</span>
+                    templateFile<span class="token punctuation">:</span><span class="token string">&apos;plop-templates/component.test.hbs&apos;</span>  <span class="token comment">//&#x6A21;&#x677F;&#x6587;&#x4EF6;&#x8DEF;&#x5F84;</span>
+                <span class="token punctuation">}</span>
+            <span class="token punctuation">]</span>
+        <span class="token punctuation">}</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+</pre><ul>
+<li>&#x5728;&#x9879;&#x76EE;&#x6839;&#x76EE;&#x5F55;&#x4E0B;&#x521B;&#x5EFA;plop-templates&#x6A21;&#x677F;&#x6587;&#x4EF6;&#x5939;&#x5B58;&#x653E;&#x6A21;&#x677F;&#x6587;&#x4EF6;&#xFF1A;&#x901A;&#x8FC7;handlebars&#x6A21;&#x677F;&#x5F15;&#x64CE;&#x7684;&#x65B9;&#x5F0F;&#x521B;&#x5EFA;&#x6A21;&#x677F;&#x6587;&#x4EF6;&#xFF0C;&#x5177;&#x4F53;&#x89C1;code&#x4E0B;&#xFF1A;react-plop</li>
+<li>yarn plop component &#x4F7F;&#x7528;plop&#x751F;&#x6210;&#x5668;&#x521B;&#x5EFA;&#x6587;&#x4EF6;</li>
+</ul>
+</li>
+</ol>
+</li>
+<li>
+<p>&#x811A;&#x624B;&#x67B6;&#x7684;&#x5DE5;&#x4F5C;&#x539F;&#x7406;&#xFF1A;&#x521B;&#x5EFA;node-cil&#x5E94;&#x7528;</p>
+<ol>
+<li>&#x65B0;&#x5EFA;node-cli&#x9879;&#x76EE;&#xFF1A;sample-scaffolding</li>
+<li>yarn init&#x521D;&#x59CB;&#x5316;</li>
+<li>&#x5728;package.json&#x4E2D;&#x589E;&#x51CF;&#x811A;&#x624B;&#x67B6;&#x5165;&#x53E3;&#x6587;&#x4EF6;&#x914D;&#x7F6E;: &quot;bin&quot;: &quot;cli.js&quot;,</li>
+<li>&#x65B0;&#x5EFA;cli.js&#x6587;&#x4EF6;&#xFF1A;&#x5FC5;&#x987B;&#x5305;&#x542B;&#x5934;&#xFF1A;#!/usr/bin/env node</li>
+<li>&#x8F93;&#x5165;&#x4EE5;&#x4E0B;&#x811A;&#x624B;&#x67B6;&#x4EE3;&#x7801;</li>
+</ol>
+<pre data-role="codeBlock" data-info="js" class="language-javascript">    <span class="token comment">//&#x6CE8;&#x610F;&#x5B89;&#x88C5;&#x9700;&#x8981;&#x7684;&#x4F9D;&#x8D56;</span>
+    <span class="token keyword">const</span> fs <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">&apos;fs&apos;</span><span class="token punctuation">)</span>
+    <span class="token keyword">const</span> path <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">&apos;path&apos;</span><span class="token punctuation">)</span>
+    <span class="token keyword">const</span> inquirer <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">&apos;inquirer&apos;</span><span class="token punctuation">)</span>
+    <span class="token keyword">const</span> ejs <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">&apos;ejs&apos;</span><span class="token punctuation">)</span>
+
+    inquirer<span class="token punctuation">.</span><span class="token function">prompt</span><span class="token punctuation">(</span><span class="token punctuation">[</span>
+    <span class="token punctuation">{</span>
+        type<span class="token punctuation">:</span> <span class="token string">&apos;input&apos;</span><span class="token punctuation">,</span>
+        name<span class="token punctuation">:</span> <span class="token string">&apos;name&apos;</span><span class="token punctuation">,</span>
+        message<span class="token punctuation">:</span> <span class="token string">&apos;Project name?&apos;</span>
+    <span class="token punctuation">}</span>
+    <span class="token punctuation">]</span><span class="token punctuation">)</span>
+    <span class="token punctuation">.</span><span class="token function">then</span><span class="token punctuation">(</span><span class="token parameter">anwsers</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+    <span class="token comment">// console.log(anwsers)</span>
+    <span class="token comment">// &#x6839;&#x636E;&#x7528;&#x6237;&#x56DE;&#x7B54;&#x7684;&#x7ED3;&#x679C;&#x751F;&#x6210;&#x6587;&#x4EF6;</span>
+
+    <span class="token comment">// &#x6A21;&#x677F;&#x76EE;&#x5F55;</span>
+    <span class="token keyword">const</span> tmplDir <span class="token operator">=</span> path<span class="token punctuation">.</span><span class="token function">join</span><span class="token punctuation">(</span>__dirname<span class="token punctuation">,</span> <span class="token string">&apos;templates&apos;</span><span class="token punctuation">)</span>
+    <span class="token comment">// &#x76EE;&#x6807;&#x76EE;&#x5F55;</span>
+    <span class="token keyword">const</span> destDir <span class="token operator">=</span> process<span class="token punctuation">.</span><span class="token function">cwd</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+
+    <span class="token comment">// &#x5C06;&#x6A21;&#x677F;&#x4E0B;&#x7684;&#x6587;&#x4EF6;&#x5168;&#x90E8;&#x8F6C;&#x6362;&#x5230;&#x76EE;&#x6807;&#x76EE;&#x5F55;</span>
+    fs<span class="token punctuation">.</span><span class="token function">readdir</span><span class="token punctuation">(</span>tmplDir<span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token parameter">err<span class="token punctuation">,</span> files</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>err<span class="token punctuation">)</span> <span class="token keyword">throw</span> err
+        files<span class="token punctuation">.</span><span class="token function">forEach</span><span class="token punctuation">(</span><span class="token parameter">file</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+        <span class="token comment">// &#x901A;&#x8FC7;&#x6A21;&#x677F;&#x5F15;&#x64CE;&#x6E32;&#x67D3;&#x6587;&#x4EF6;</span>
+        ejs<span class="token punctuation">.</span><span class="token function">renderFile</span><span class="token punctuation">(</span>path<span class="token punctuation">.</span><span class="token function">join</span><span class="token punctuation">(</span>tmplDir<span class="token punctuation">,</span> file<span class="token punctuation">)</span><span class="token punctuation">,</span> anwsers<span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token parameter">err<span class="token punctuation">,</span> result</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+            <span class="token keyword">if</span> <span class="token punctuation">(</span>err<span class="token punctuation">)</span> <span class="token keyword">throw</span> err
+
+            <span class="token comment">// &#x5C06;&#x7ED3;&#x679C;&#x5199;&#x5165;&#x76EE;&#x6807;&#x6587;&#x4EF6;&#x8DEF;&#x5F84;</span>
+            fs<span class="token punctuation">.</span><span class="token function">writeFileSync</span><span class="token punctuation">(</span>path<span class="token punctuation">.</span><span class="token function">join</span><span class="token punctuation">(</span>destDir<span class="token punctuation">,</span> file<span class="token punctuation">)</span><span class="token punctuation">,</span> result<span class="token punctuation">)</span>
+        <span class="token punctuation">}</span><span class="token punctuation">)</span>
+        <span class="token punctuation">}</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span><span class="token punctuation">)</span>
+</pre><ol start="6">
+<li>yarn link &#x5230;&#x5168;&#x5C40;</li>
+<li>&#x8FD0;&#x884C;sample-scaffolding&#xFF1B;&#x5982;&#x679C;&#x63D0;&#x793A;&#x627E;&#x4E0D;&#x5230;&#x547D;&#x4EE4;&#xFF0C;&#x8BF7;&#x67E5;&#x770B;yarn global bin &#x5C06;&#x6B64;&#x76EE;&#x5F55;&#x914D;&#x7F6E;&#x5230;&#x73AF;&#x5883;&#x53D8;&#x91CF;&#xFF0C;&#x56E0;&#x4E3A;sample-scaffolding&#x547D;&#x4EE4;&#x7A0B;&#x5E8F;&#x662F;&#x653E;&#x5230;&#x6B64;&#x8DEF;&#x5F84;bin&#x76EE;&#x5F55;&#x4E0B;&#x7684;</li>
+</ol>
+</li>
+</ul>
+<h5 class="mume-header" id="2grunt-%E7%9A%84%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8">2.Grunt &#x7684;&#x57FA;&#x672C;&#x4F7F;&#x7528;</h5>
+
+<ul>
+<li>
+<p>Grunt&#x4F7F;&#x7528;</p>
+<ol>
+<li>yarn init</li>
+<li>yarn add grunt</li>
+<li>code gruntfile.js   &#x7528;vscode&#x7EC8;&#x7AEF;&#x6DFB;&#x52A0;gruntfile&#x6587;&#x4EF6;</li>
+</ol>
+<pre data-role="codeBlock" data-info="js" class="language-javascript">    <span class="token comment">//Grunt&#x7684;&#x5165;&#x53E3;&#x6587;&#x4EF6;</span>
+    <span class="token comment">//&#x7528;&#x4E8E;&#x5B9A;&#x4E49;&#x4E00;&#x4E9B;&#x9700;&#x8981;Grunt&#x81EA;&#x52A8;&#x6267;&#x884C;&#x7684;&#x4EFB;&#x52A1;</span>
+    <span class="token comment">//&#x9700;&#x8981;&#x5BFC;&#x51FA;&#x4E00;&#x4E2A;&#x51FD;&#x6570;</span>
+    <span class="token comment">//&#x6B64;&#x51FD;&#x6570;&#x63A5;&#x6536;&#x4E00;&#x4E2A;grunt&#x7684;&#x5F62;&#x53C2;&#xFF0C;&#x5185;&#x90E8;&#x63D0;&#x4F9B;&#x4E00;&#x4E9B;&#x521B;&#x5EFA;&#x4EFB;&#x52A1;&#x65F6;&#x53EF;&#x4EE5;&#x7528;&#x5230;&#x7684;API</span>
+
+    module<span class="token punctuation">.</span><span class="token function-variable function">exports</span> <span class="token operator">=</span> <span class="token parameter">grunt</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+        grunt<span class="token punctuation">.</span><span class="token function">registerTask</span><span class="token punctuation">(</span><span class="token string">&apos;foo&apos;</span><span class="token punctuation">,</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">=&gt;</span><span class="token punctuation">{</span> <span class="token comment">//&#x521B;&#x5EFA;&#x4E00;&#x4E2A;&#x540D;&#x4E3A;foo&#x7684;&#x4EFB;&#x52A1;</span>
+            console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">&apos;hello grunt&apos;</span><span class="token punctuation">)</span>
+        <span class="token punctuation">}</span><span class="token punctuation">)</span>
+        grunt<span class="token punctuation">.</span><span class="token function">registerTask</span><span class="token punctuation">(</span><span class="token string">&apos;bar&apos;</span><span class="token punctuation">,</span><span class="token string">&apos;&#x4EFB;&#x52A1;&#x63CF;&#x8FF0;&apos;</span><span class="token punctuation">,</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">=&gt;</span><span class="token punctuation">{</span><span class="token comment">//&#x521B;&#x5EFA;&#x4E00;&#x4E2A;&#x5E26;&#x4EFB;&#x52A1;&#x63CF;&#x8FF0;&#x7684;bar&#x4EFB;&#x52A1;</span>
+            console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">&apos;bartask&apos;</span><span class="token punctuation">)</span>
+        <span class="token punctuation">}</span><span class="token punctuation">)</span>
+        grunt<span class="token punctuation">.</span><span class="token function">registerTask</span><span class="token punctuation">(</span><span class="token string">&apos;default&apos;</span><span class="token punctuation">,</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">=&gt;</span><span class="token punctuation">{</span><span class="token comment">//&#x521B;&#x5EFA;&#x4E00;&#x4E2A;&#x9ED8;&#x8BA4;&#x4EFB;&#x52A1;&#xFF0C;&#x8FD0;&#x884C;&#x65F6;&#x53EF;&#x4E0D;&#x5E26;&#x4EFB;&#x52A1;&#x540D;</span>
+            console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">&apos;default task&apos;</span><span class="token punctuation">)</span>
+        <span class="token punctuation">}</span><span class="token punctuation">)</span>
+        grunt<span class="token punctuation">.</span><span class="token function">registerTask</span><span class="token punctuation">(</span><span class="token string">&apos;default&apos;</span><span class="token punctuation">,</span><span class="token punctuation">[</span><span class="token string">&apos;foo&apos;</span><span class="token punctuation">,</span><span class="token string">&apos;bar&apos;</span><span class="token punctuation">]</span><span class="token punctuation">,</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">=&gt;</span><span class="token punctuation">{</span><span class="token comment">//&#x521B;&#x5EFA;&#x4E00;&#x4E2A;&#x9ED8;&#x8BA4;&#x4EFB;&#x52A1;&#xFF0C;&#x4F9D;&#x6B21;&#x8FD0;&#x884C;&#x6570;&#x7EC4;&#x4E2D;&#x7684;&#x4EFB;&#x52A1;</span>
+            console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">&apos;default task&apos;</span><span class="token punctuation">)</span>
+        <span class="token punctuation">}</span><span class="token punctuation">)</span>
+        <span class="token comment">//&#x521B;&#x5EFA;&#x4E00;&#x4E2A;&#x5F02;&#x6B65;&#x4EFB;&#x52A1;</span>
+         grunt<span class="token punctuation">.</span><span class="token function">registerTask</span><span class="token punctuation">(</span><span class="token string">&apos;async-task&apos;</span><span class="token punctuation">,</span><span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span><span class="token comment">//&#x4E0D;&#x80FD;&#x7528;&#x7BAD;&#x5934;&#x51FD;&#x6570;&#xFF0C;&#x4E0D;&#x7136;this&#x6307;&#x5411;&#x6709;&#x95EE;&#x9898;</span>
+            <span class="token keyword">const</span> done <span class="token operator">=</span> <span class="token keyword">this</span><span class="token punctuation">.</span><span class="token keyword">async</span><span class="token punctuation">(</span><span class="token punctuation">)</span>  
+            <span class="token function">setTimeout</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">=&gt;</span><span class="token punctuation">{</span>
+                console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">&apos;async task working&apos;</span><span class="token punctuation">)</span>
+                <span class="token function">done</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+            <span class="token punctuation">}</span><span class="token punctuation">,</span><span class="token number">1000</span><span class="token punctuation">)</span>
+         <span class="token punctuation">}</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+</pre><ol start="4">
+<li>yarn grunt &#x4EFB;&#x52A1;&#x540D; &#x8FD0;&#x884C;&#x4EFB;&#x52A1;  //&#x9ED8;&#x8BA4;&#x4EFB;&#x52A1;&#x53EF;&#x4E0D;&#x5E26;&#x4EFB;&#x52A1;&#x540D;</li>
+</ol>
+</li>
+<li>
+<p>&#x6807;&#x8BB0;&#x4EFB;&#x52A1;&#x5931;&#x8D25;</p>
+<ol>
+<li>&#x5B9A;&#x4E49;&#x540C;&#x6B65;&#x5931;&#x8D25;&#x4EFB;&#x52A1;&#x548C;&#x5F02;&#x6B65;&#x5931;&#x8D25;&#x4EFB;&#x52A1;</li>
+</ol>
+<pre data-role="codeBlock" data-info="js" class="language-javascript">    module<span class="token punctuation">.</span><span class="token function-variable function">exports</span> <span class="token operator">=</span> <span class="token parameter">grunt</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+        <span class="token comment">//&#x5B9A;&#x4E49;&#x4E00;&#x4E2A;&#x5931;&#x8D25;&#x4EFB;&#x52A1;</span>
+        grunt<span class="token punctuation">.</span><span class="token function">registerTask</span><span class="token punctuation">(</span><span class="token string">&apos;bad&apos;</span><span class="token punctuation">,</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">=&gt;</span><span class="token punctuation">{</span>
+            console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">&apos;bad working&apos;</span><span class="token punctuation">)</span>
+            <span class="token keyword">return</span> <span class="token boolean">false</span>
+        <span class="token punctuation">}</span><span class="token punctuation">)</span>
+        <span class="token comment">//&#x5B9A;&#x4E49;&#x4E00;&#x4E2A;&#x6210;&#x529F;&#x4EFB;&#x52A1;</span>
+        grunt<span class="token punctuation">.</span><span class="token function">registerTask</span><span class="token punctuation">(</span><span class="token string">&apos;success&apos;</span><span class="token punctuation">,</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">=&gt;</span><span class="token punctuation">{</span>
+            console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">&apos;success working&apos;</span><span class="token punctuation">)</span>
+        <span class="token punctuation">}</span><span class="token punctuation">)</span>
+        <span class="token comment">//&#x5B9A;&#x4E49;&#x4E00;&#x4E2A;&#x5F02;&#x6B65;&#x5931;&#x8D25;&#x4EFB;&#x52A1;</span>
+         grunt<span class="token punctuation">.</span><span class="token function">registerTask</span><span class="token punctuation">(</span><span class="token string">&apos;asyncbad&apos;</span><span class="token punctuation">,</span><span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+             <span class="token keyword">const</span> done <span class="token operator">=</span> <span class="token keyword">this</span><span class="token punctuation">.</span><span class="token keyword">async</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+             <span class="token function">setTimeout</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">=&gt;</span><span class="token punctuation">{</span>
+                 console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">&apos;555&apos;</span><span class="token punctuation">)</span>
+                 <span class="token function">done</span><span class="token punctuation">(</span><span class="token boolean">false</span><span class="token punctuation">)</span>
+             <span class="token punctuation">}</span><span class="token punctuation">,</span><span class="token number">1000</span><span class="token punctuation">)</span>
+         <span class="token punctuation">}</span><span class="token punctuation">)</span>
+         <span class="token comment">//&#x6CE8;&#x518C;&#x9ED8;&#x8BA4;&#x4EFB;&#x52A1;</span>
+         grunt<span class="token punctuation">.</span><span class="token function">registerTask</span><span class="token punctuation">(</span><span class="token string">&apos;default&apos;</span><span class="token punctuation">,</span><span class="token punctuation">[</span><span class="token string">&apos;bad&apos;</span><span class="token punctuation">,</span><span class="token string">&apos;success&apos;</span><span class="token punctuation">,</span><span class="token string">&apos;asyncbad&apos;</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+</pre><ol start="2">
+<li>&#x5931;&#x8D25;&#x4EFB;&#x52A1;&#x4E0D;&#x4F1A;&#x6267;&#x884C;,&#x4F46;&#x4E0D;&#x4F1A;&#x5F71;&#x54CD;&#x5176;&#x4ED6;&#x4EFB;&#x52A1;&#x7684;&#x6267;&#x884C;&#xFF0C;&#x5982;&#x679C;&#x8981;&#x5F3A;&#x5236;&#x6267;&#x884C;&#x5931;&#x8D25;&#x4EFB;&#x52A1;: yarn grunt default --force</li>
+</ol>
+</li>
+<li>
+<p>&#x914D;&#x7F6E;&#x9009;&#x9879;API</p>
+<pre data-role="codeBlock" data-info="js" class="language-javascript">    module<span class="token punctuation">.</span><span class="token function-variable function">exports</span> <span class="token operator">=</span> <span class="token parameter">grunt</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+        grunt<span class="token punctuation">.</span><span class="token function">initConfig</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+            foo<span class="token punctuation">:</span><span class="token punctuation">{</span>
+                bar<span class="token punctuation">:</span><span class="token number">123</span>
+            <span class="token punctuation">}</span>
+        <span class="token punctuation">}</span><span class="token punctuation">)</span>
+        grunt<span class="token punctuation">.</span><span class="token function">registerTask</span><span class="token punctuation">(</span><span class="token string">&apos;foo&apos;</span><span class="token punctuation">,</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">=&gt;</span><span class="token punctuation">{</span>
+            console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>grunt<span class="token punctuation">.</span><span class="token function">config</span><span class="token punctuation">(</span><span class="token string">&apos;foo.bar&apos;</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+        <span class="token punctuation">}</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+</pre></li>
+<li>
+<p>Grunt &#x591A;&#x76EE;&#x6807;&#x4EFB;&#x52A1;</p>
+<ol>
+<li>&#x793A;&#x4F8B;</li>
+</ol>
+<pre data-role="codeBlock" data-info="js" class="language-javascript">    grunt<span class="token punctuation">.</span><span class="token function">initConfig</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+        build<span class="token punctuation">:</span><span class="token punctuation">{</span>  <span class="token comment">//&#x4E0E;&#x4EFB;&#x52A1;&#x540D;&#x76F8;&#x540C;</span>
+            options<span class="token punctuation">:</span><span class="token punctuation">{</span>  <span class="token comment">//options&#x662F;&#x914D;&#x7F6E;&#x9879;&#xFF0C;&#x9664;options&#x4E4B;&#x5916;&#x7684;&#x5176;&#x4ED6;&#x5C5E;&#x6027;&#x90FD;&#x4F1A;&#x88AB;&#x5F53;&#x6210;&#x76EE;&#x6807;</span>
+                foo<span class="token punctuation">:</span> <span class="token string">&apos;bar&apos;</span>
+            <span class="token punctuation">}</span><span class="token punctuation">,</span>
+            css<span class="token punctuation">:</span><span class="token punctuation">{</span>
+                options<span class="token punctuation">:</span><span class="token punctuation">{</span>
+                    foo<span class="token punctuation">:</span><span class="token string">&apos;baz&apos;</span>
+                <span class="token punctuation">}</span>
+            <span class="token punctuation">}</span><span class="token punctuation">,</span>
+            js<span class="token punctuation">:</span><span class="token string">&apos;2&apos;</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span><span class="token punctuation">)</span>
+    module<span class="token punctuation">.</span><span class="token function-variable function">exports</span> <span class="token operator">=</span> <span class="token parameter">grunt</span> <span class="token operator">=&gt;</span><span class="token punctuation">{</span>
+        grunt<span class="token punctuation">.</span><span class="token function">registerMultiTask</span><span class="token punctuation">(</span><span class="token string">&apos;build&apos;</span><span class="token punctuation">,</span><span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+            console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function">options</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>  <span class="token comment">//&#x83B7;&#x53D6;&#x4EFB;&#x52A1;&#x914D;&#x7F6E;&#x9009;&#x9879;&#xFF08;&#x5982;&#x679C;&#x76EE;&#x6807;&#x4E0B;&#x8FD8;&#x6709;&#x4EFB;&#x52A1;&#x914D;&#x7F6E;&#xFF0C;&#x90A3;&#x4E48;&#x83B7;&#x53D6;&#x5F53;&#x524D;&#x76EE;&#x6807;&#x7684;options&#xFF09;</span>
+            console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">&apos;build task&apos;</span><span class="token punctuation">,</span><span class="token keyword">this</span><span class="token punctuation">.</span>target<span class="token punctuation">,</span><span class="token keyword">this</span><span class="token punctuation">.</span>data<span class="token punctuation">)</span><span class="token comment">//target&#x548C;data&#x8868;&#x793A;&#x76EE;&#x6807;&#x548C;&#x76EE;&#x6807;&#x503C;</span>
+        <span class="token punctuation">}</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span>options<span class="token punctuation">)</span>
+</pre><ol start="2">
+<li>&#x8FD0;&#x884C;&#xFF1A;yarn grunt build</li>
+<li>&#x8FD0;&#x884C;&#x6307;&#x5B9A;&#x76EE;&#x6807; yarn grunt build:css</li>
+</ol>
+</li>
+<li>
+<p>Grunt&#x63D2;&#x4EF6;&#x4F7F;&#x7528;</p>
+<ol>
+<li>grunt-contrib-clean&#x63D2;&#x4EF6;&#xFF1A;&#x6E05;&#x9664;&#x6587;&#x4EF6;</li>
+<li>yarn add grunt-contrib-clean</li>
+<li>&#x914D;&#x7F6E;&#x6587;&#x4EF6;</li>
+</ol>
+<pre data-role="codeBlock" data-info="js" class="language-javascript"><span class="token comment">//&#x8BE5;&#x63D2;&#x4EF6;&#x5B9E;&#x9645;&#x662F;&#x4E00;&#x4E2A;&#x591A;&#x76EE;&#x6807;&#x4EFB;&#x52A1;</span>
+module<span class="token punctuation">.</span><span class="token function-variable function">exports</span> <span class="token operator">=</span> <span class="token parameter">grunt</span> <span class="token operator">=&gt;</span><span class="token punctuation">{</span>
+    grunt<span class="token punctuation">.</span><span class="token function">initConfig</span><span class="token punctuation">(</span><span class="token punctuation">{</span><span class="token comment">//&#x4EFB;&#x52A1;&#x914D;&#x7F6E;</span>
+        clean<span class="token punctuation">:</span><span class="token punctuation">{</span>
+            temp<span class="token punctuation">:</span><span class="token string">&apos;temp/app.js&apos;</span><span class="token punctuation">,</span><span class="token comment">//&#x5220;&#x9664;&#x6307;&#x5B9A;&#x6587;&#x4EF6;</span>
+            temp<span class="token punctuation">:</span><span class="token string">&apos;temp/*.js&apos;</span><span class="token punctuation">,</span> <span class="token comment">//&#x5220;&#x9664;&#x6307;&#x5B9A;&#x7C7B;&#x578B;&#x6587;&#x4EF6;</span>
+            temp<span class="token punctuation">:</span><span class="token string">&apos;temp/**&apos;</span><span class="token punctuation">,</span>   <span class="token comment">//&#x5220;&#x9664;&#x6587;&#x4EF6;&#x76EE;&#x5F55;&#x4E0B;&#x6240;&#x6709;&#x6587;&#x4EF6;</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span><span class="token punctuation">)</span>
+    grunt<span class="token punctuation">.</span><span class="token function">loadNpmTasks</span><span class="token punctuation">(</span><span class="token string">&apos;grunt-contrib-clean&apos;</span><span class="token punctuation">)</span><span class="token operator">/</span><span class="token operator">/</span>&#x5BFC;&#x5165;&#x4EFB;&#x52A1;&#x63D2;&#x4EF6;
+<span class="token punctuation">}</span>
+</pre><ol start="4">
+<li>yarn grunt clean  &#x8FD0;&#x884C;</li>
+</ol>
+</li>
+<li>
+<p>Grunt&#x5E38;&#x7528;&#x63D2;&#x4EF6;&#x53CA;&#x603B;&#x7ED3;</p>
+<ol>
+<li>grunt-sass sass grunt-babel</li>
+<li>yarn add grunt-sass sass --dev |  yarn add grunt-babel @babel/core @babel/preset-env --dev | yarn add grunt-contrib-watch --dev</li>
+<li>yarn add load-grunt-tasks --dev &#x6A21;&#x5757;&#xFF0C;&#x51CF;&#x5C11;loadNpmTasks&#x7684;&#x5F15;&#x5165;&#x4EE3;&#x7801;</li>
+<li>&#x914D;&#x7F6E;&#x6587;&#x4EF6;</li>
+</ol>
+<pre data-role="codeBlock" data-info="js" class="language-javascript">    <span class="token keyword">const</span> loadGruntTasks <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">&apos;load-grunt-tasks&apos;</span><span class="token punctuation">)</span><span class="token comment">//&#x81EA;&#x52A8;&#x5F15;&#x5165;&#x6240;&#x9700;&#x7684;&#x6240;&#x6709;&#x63D2;&#x4EF6;</span>
+    <span class="token keyword">const</span> sass <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">&apos;sass&apos;</span><span class="token punctuation">)</span>
+    module<span class="token punctuation">.</span><span class="token function-variable function">exports</span> <span class="token operator">=</span> <span class="token parameter">grunt</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+    grunt<span class="token punctuation">.</span><span class="token function">initConfig</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+        sass<span class="token punctuation">:</span><span class="token punctuation">{</span>
+            options<span class="token punctuation">:</span><span class="token punctuation">{</span>
+                sourceMap<span class="token punctuation">:</span><span class="token boolean">true</span><span class="token punctuation">,</span> <span class="token comment">//&#x6E90;&#x4EE3;&#x7801;&#x6620;&#x5C04;</span>
+                implementation<span class="token punctuation">:</span>sass  <span class="token comment">//&#x6307;&#x5B9A;&#x9700;&#x8981;&#x7684;&#x6A21;&#x5757;&#x8FDB;&#x884C;&#x7F16;&#x8BD1;</span>
+            <span class="token punctuation">}</span><span class="token punctuation">,</span>
+            main<span class="token punctuation">:</span><span class="token punctuation">{</span>
+                files<span class="token punctuation">:</span><span class="token punctuation">{</span><span class="token comment">//sass&#x7684;&#x8F93;&#x5165;&#x8F93;&#x51FA;&#x6587;&#x4EF6;</span>
+                    <span class="token string">&apos;dist/css/main.css&apos;</span><span class="token punctuation">:</span><span class="token string">&apos;src/scss/main/scss&apos;</span>
+                <span class="token punctuation">}</span>
+            <span class="token punctuation">}</span>
+        <span class="token punctuation">}</span>&#xFF0C;
+        babel<span class="token punctuation">:</span><span class="token punctuation">{</span>
+            options<span class="token punctuation">:</span><span class="token punctuation">{</span>
+                sourceMap<span class="token punctuation">:</span><span class="token boolean">true</span><span class="token punctuation">,</span> <span class="token comment">//&#x6E90;&#x4EE3;&#x7801;&#x6620;&#x5C04;</span>
+                presets<span class="token punctuation">:</span><span class="token punctuation">[</span><span class="token string">&apos;@babel/preset-env&apos;</span><span class="token punctuation">]</span>   <span class="token comment">//&#x4F7F;&#x7528;babel&#x9884;&#x8BBE;&#x6A21;&#x5757;&#x8F6C;&#x6362;&#x65B0;&#x7279;&#x6027;&#xFF0C;env&#x8868;&#x793A;&#x6700;&#x65B0;&#x7684;es&#x7279;&#x6027;</span>
+            <span class="token punctuation">}</span><span class="token punctuation">,</span>
+            main<span class="token punctuation">:</span><span class="token punctuation">{</span>
+                files<span class="token punctuation">:</span><span class="token punctuation">{</span>
+                    <span class="token string">&apos;dist/js/app.js&apos;</span><span class="token punctuation">:</span><span class="token string">&apos;src/js/app.js&apos;</span>
+                <span class="token punctuation">}</span>
+            <span class="token punctuation">}</span>
+        <span class="token punctuation">}</span><span class="token punctuation">,</span>
+        watch<span class="token punctuation">:</span><span class="token punctuation">{</span><span class="token comment">//&#x76D1;&#x89C6;</span>
+            js<span class="token punctuation">:</span><span class="token punctuation">{</span>
+                files<span class="token punctuation">:</span><span class="token punctuation">[</span><span class="token string">&apos;src/js/*.js&apos;</span><span class="token punctuation">]</span><span class="token punctuation">,</span>  <span class="token comment">//&#x76D1;&#x89C6;&#x6240;&#x6709;js&#x6587;&#x4EF6;</span>
+                tasks<span class="token punctuation">:</span><span class="token punctuation">[</span><span class="token string">&apos;babel&apos;</span><span class="token punctuation">]</span>     <span class="token operator">/</span><span class="token operator">/</span>&#x6587;&#x4EF6;&#x6539;&#x53D8;&#x540E;&#x6267;&#x884C;&#x7684;&#x4EFB;&#x52A1;
+            <span class="token punctuation">}</span><span class="token punctuation">,</span>
+            css<span class="token punctuation">:</span><span class="token punctuation">{</span>
+                files<span class="token punctuation">:</span><span class="token punctuation">[</span><span class="token string">&apos;sec/scss/*.scss&apos;</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+                tasks<span class="token punctuation">:</span><span class="token punctuation">[</span><span class="token string">&apos;sass&apos;</span><span class="token punctuation">]</span>   <span class="token comment">//sass&#x6700;&#x65E9;&#x7684;&#x6269;&#x5C55;&#x540D;&#x5C31;&#x662F;sass,&#x8BED;&#x6CD5;&#x89C4;&#x8303;&#x4E0D;&#x88AB;&#x4EBA;&#x63A5;&#x53D7;&#xFF0C;&#x6240;&#x4EE5;&#x63A8;&#x51FA;&#x4E86;&#x65B0;&#x89C4;&#x8303;scss</span>
+            <span class="token punctuation">}</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span><span class="token punctuation">)</span>
+
+    <span class="token operator">/</span><span class="token operator">/</span>grunt<span class="token punctuation">.</span><span class="token function">loadNpmTasks</span><span class="token punctuation">(</span><span class="token string">&apos;grunt-sass&apos;</span><span class="token punctuation">)</span>
+    <span class="token function">loadGruntTasks</span><span class="token punctuation">(</span>grunt<span class="token punctuation">)</span>  <span class="token operator">/</span><span class="token operator">/</span>&#x5F15;&#x5165;&#x6240;&#x6709;&#x63D2;&#x4EF6;&#xFF0C;&#x4E0D;&#x7528;&#x5355;&#x4E2A;&#x5F15;&#x5165;
+
+    grunt<span class="token punctuation">.</span><span class="token function">registerTask</span><span class="token punctuation">(</span><span class="token string">&apos;default&apos;</span><span class="token punctuation">,</span><span class="token punctuation">[</span><span class="token string">&apos;sass&apos;</span><span class="token punctuation">,</span><span class="token string">&apos;babel&apos;</span><span class="token punctuation">,</span><span class="token string">&apos;watch&apos;</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+</pre><ol start="4">
+<li>yarn grunt:&#x6267;&#x884C;&#x4EFB;&#x52A1;&#x3002;&#x9ED8;&#x8BA4;&#x4EFB;&#x52A1;&#x4E0D;&#x8BB8;&#x6307;&#x5B9A;&#x540D;&#x5B57;</li>
+</ol>
+</li>
+</ul>
+<h5 class="mume-header" id="3gulp">3.Gulp</h5>
+
+<ul>
+<li>
+<p>&#x57FA;&#x672C;&#x4F7F;&#x7528;&#xFF1A;gulp&#x7684;&#x4EFB;&#x52A1;&#x90FD;&#x662F;&#x5F02;&#x6B65;&#x4EFB;&#x52A1;</p>
+<ol>
+<li>yarn init</li>
+<li>yarn gulp --dev &#x4F1A;&#x81EA;&#x52A8;&#x5B89;&#x88C5;gulp-cli&#xFF0C;&#x53EF;&#x4EE5;&#x4F7F;&#x7528;&#x8FD9;&#x4E2A;&#x547D;&#x4EE4;</li>
+<li>&#x521B;&#x5EFA;gulpfile.js&#x6587;&#x4EF6;</li>
+</ol>
+<pre data-role="codeBlock" data-info="js" class="language-javascript">    exports<span class="token punctuation">.</span><span class="token function-variable function">foo</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token parameter">done</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span><span class="token punctuation">{</span><span class="token comment">//&#x5BFC;&#x51FA;&#x6307;&#x5B9A;&#x4EFB;&#x52A1;</span>
+        console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">&apos;foo task working&apos;</span><span class="token punctuation">)</span>
+        <span class="token function">done</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token comment">//&#x6807;&#x8BC6;&#x4EFB;&#x52A1;&#x5B8C;&#x6210;</span>
+    <span class="token punctuation">}</span>  
+    exports<span class="token punctuation">.</span><span class="token function-variable function">default</span> <span class="token operator">=</span> <span class="token parameter">done</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span> <span class="token comment">//&#x6307;&#x5B9A;&#x9ED8;&#x8BA4;&#x4EFB;&#x52A1;</span>
+        console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">&apos;default task working&apos;</span><span class="token punctuation">)</span>
+        <span class="token function">done</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+
+    
+    <span class="token comment">//&#x4EE5;&#x4E0B;&#x662F;&#x8001;&#x7248;&#x672C;&#x6307;&#x5B9A;&#x4EFB;&#x52A1;&#x7684;&#x65B9;&#x5F0F;&#xFF0C;&#x5DF2;&#x7ECF;&#x4E0D;&#x63A8;&#x8350;&#x4F7F;&#x7528;</span>
+    gulp<span class="token punctuation">.</span><span class="token function">task</span><span class="token punctuation">(</span><span class="token string">&apos;bar&apos;</span><span class="token punctuation">,</span><span class="token parameter">done</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+        console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">&apos;bar working&apos;</span><span class="token punctuation">)</span>
+        <span class="token function">done</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span><span class="token punctuation">)</span>
+</pre><ol start="4">
+<li>yarn gulp foo//&#x8FD0;&#x884C;&#x6307;&#x5B9A;&#x4EFB;&#x52A1; |  yarn gulp//&#x8FD0;&#x884C;&#x9ED8;&#x8BA4;&#x4EFB;&#x52A1;</li>
+</ol>
+</li>
+<li>
+<p>&#x521B;&#x5EFA;&#x7EC4;&#x5408;&#x4EFB;&#x52A1;<br>
+1.&#x914D;&#x7F6E;</p>
+<pre data-role="codeBlock" data-info="js" class="language-javascript">    <span class="token keyword">const</span> <span class="token punctuation">{</span>series<span class="token punctuation">,</span>parallel<span class="token punctuation">}</span> <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">&apos;gulp&apos;</span><span class="token punctuation">)</span>
+
+    <span class="token keyword">const</span> <span class="token function-variable function">task1</span> <span class="token operator">=</span> <span class="token parameter">done</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+        <span class="token function">setTimeout</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">=&gt;</span><span class="token punctuation">{</span>
+            console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">&apos;task1 working&apos;</span><span class="token punctuation">)</span>
+            <span class="token function">done</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+        <span class="token punctuation">}</span><span class="token punctuation">,</span><span class="token number">1000</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">const</span> <span class="token function-variable function">task2</span> <span class="token operator">=</span> <span class="token parameter">done</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+        <span class="token function">setTimeout</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">=&gt;</span><span class="token punctuation">{</span>
+            console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">&apos;task2 working&apos;</span><span class="token punctuation">)</span>
+            <span class="token function">done</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+        <span class="token punctuation">}</span><span class="token punctuation">,</span><span class="token number">1000</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">const</span> <span class="token function-variable function">task3</span> <span class="token operator">=</span> <span class="token parameter">done</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+        <span class="token function">setTimeout</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">=&gt;</span><span class="token punctuation">{</span>
+            console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">&apos;task3 working&apos;</span><span class="token punctuation">)</span>
+            <span class="token function">done</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+        <span class="token punctuation">}</span><span class="token punctuation">,</span><span class="token number">1000</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+
+    exports<span class="token punctuation">.</span>foo <span class="token operator">=</span> <span class="token function">series</span><span class="token punctuation">(</span>task1<span class="token punctuation">,</span>task2<span class="token punctuation">,</span>task3<span class="token punctuation">)</span>  <span class="token comment">//&#x4E32;&#x884C;&#x4EFB;&#x52A1;&#xFF0C;&#x4F9D;&#x6B21;&#x6267;&#x884C;</span>
+    exports<span class="token punctuation">.</span>bar <span class="token operator">=</span> <span class="token function">parallel</span><span class="token punctuation">(</span>task1<span class="token punctuation">,</span>task2<span class="token punctuation">,</span>task3<span class="token punctuation">)</span>  <span class="token comment">//&#x5E76;&#x884C;&#x4EFB;&#x52A1;&#xFF0C;&#x540C;&#x6B65;&#x6267;&#x884C;</span>
+</pre></li>
+<li>
+<p>gulp&#x5F02;&#x6B65;&#x4EFB;&#x52A1;&#x7684;&#x4E09;&#x79CD;&#x65B9;&#x5F0F;</p>
+<pre data-role="codeBlock" data-info="js" class="language-javascript">    <span class="token comment">//1. &#x56DE;&#x8C03;&#x51FD;&#x6570;</span>
+    exports<span class="token punctuation">.</span><span class="token function-variable function">callback</span> <span class="token operator">=</span> <span class="token parameter">done</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+        console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">&apos;callback task&apos;</span><span class="token punctuation">)</span>
+        <span class="token function">done</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+    exports<span class="token punctuation">.</span><span class="token function-variable function">callback_error</span> <span class="token operator">=</span> <span class="token parameter">done</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span><span class="token comment">//&#x9519;&#x8BEF;&#x4F18;&#x5148;</span>
+        console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">&apos;callback task&apos;</span><span class="token punctuation">)</span>
+        <span class="token function">done</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">Error</span><span class="token punctuation">(</span><span class="token string">&apos;task failed!&apos;</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token comment">//2. promise</span>
+    exports<span class="token punctuation">.</span><span class="token function-variable function">promise</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span><span class="token punctuation">{</span>
+        console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">&apos;promise&apos;</span><span class="token punctuation">)</span>
+        <span class="token keyword">return</span> Promise<span class="token punctuation">.</span><span class="token function">resolve</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token comment">//&#x4E0D;&#x5FC5;&#x4F20;&#x53C2;&#xFF0C;&#x4F1A;&#x88AB;gulp&#x5FFD;&#x7565;</span>
+    <span class="token punctuation">}</span>
+    exports<span class="token punctuation">.</span><span class="token function-variable function">promise_error</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span><span class="token punctuation">{</span>
+        console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">&apos;promise error&apos;</span><span class="token punctuation">)</span>
+        <span class="token keyword">return</span> Promise<span class="token punctuation">.</span><span class="token function">reject</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">Error</span><span class="token punctuation">(</span><span class="token string">&apos;task failed&apos;</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token comment">//&#x4E0D;&#x5FC5;&#x4F20;&#x53C2;&#xFF0C;&#x4F1A;&#x88AB;gulp&#x5FFD;&#x7565;</span>
+    <span class="token punctuation">}</span>
+    <span class="token comment">//3. async/awiat</span>
+    <span class="token keyword">const</span> <span class="token function-variable function">timeout</span> <span class="token operator">=</span> <span class="token parameter">time</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> <span class="token keyword">new</span> <span class="token class-name">Promise</span><span class="token punctuation">(</span><span class="token parameter">resolve</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+            <span class="token function">setTimeout</span><span class="token punctuation">(</span>resolve<span class="token punctuation">,</span>time<span class="token punctuation">)</span>
+        <span class="token punctuation">}</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+    exports<span class="token punctuation">.</span><span class="token function-variable function">async</span> <span class="token operator">=</span> <span class="token keyword">async</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+        <span class="token keyword">await</span> <span class="token function">timeout</span><span class="token punctuation">(</span><span class="token number">1000</span><span class="token punctuation">)</span>
+        console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">&apos;async task&apos;</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token comment">//4 stream</span>
+    exports<span class="token punctuation">.</span><span class="token function-variable function">stream</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+        <span class="token keyword">const</span> readStream <span class="token operator">=</span> fs<span class="token punctuation">.</span><span class="token function">createReadStream</span><span class="token punctuation">(</span><span class="token string">&apos;package.json&apos;</span><span class="token punctuation">)</span>
+        <span class="token keyword">const</span> writeStream <span class="token operator">=</span> fs<span class="token punctuation">.</span><span class="token function">createWriteStream</span><span class="token punctuation">(</span><span class="token string">&apos;package.json&apos;</span><span class="token punctuation">)</span>
+        readSream<span class="token punctuation">.</span><span class="token function">pipe</span><span class="token punctuation">(</span>writeStream<span class="token punctuation">)</span>
+        <span class="token keyword">return</span> readSream
+    <span class="token punctuation">}</span>
+    <span class="token comment">//&#x7B49;&#x540C;&#x4E8E;</span>
+     exports<span class="token punctuation">.</span><span class="token function-variable function">stream</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token parameter">done</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+        <span class="token keyword">const</span> readStream <span class="token operator">=</span> fs<span class="token punctuation">.</span><span class="token function">createReadStream</span><span class="token punctuation">(</span><span class="token string">&apos;package.json&apos;</span><span class="token punctuation">)</span>
+        <span class="token keyword">const</span> writeStream <span class="token operator">=</span> fs<span class="token punctuation">.</span><span class="token function">createWriteStream</span><span class="token punctuation">(</span><span class="token string">&apos;package.json&apos;</span><span class="token punctuation">)</span>
+        readSream<span class="token punctuation">.</span><span class="token function">pipe</span><span class="token punctuation">(</span>writeStream<span class="token punctuation">)</span>
+        readSream<span class="token punctuation">.</span><span class="token function">on</span><span class="token punctuation">(</span><span class="token string">&apos;end&apos;</span><span class="token punctuation">,</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">=&gt;</span><span class="token punctuation">{</span>
+            <span class="token function">done</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+        <span class="token punctuation">}</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+</pre></li>
+<li>
+<p>&#x6784;&#x5EFA;&#x8FC7;&#x7A0B;&#x6838;&#x5FC3;&#x5DE5;&#x4F5C;&#x539F;&#x7406;&#xFF08;&#x57FA;&#x4E8E;&#x6D41;&#x7684;&#x6784;&#x5EFA;&#x7CFB;&#x7EDF;&#xFF09;</p>
+<pre data-role="codeBlock" data-info="js" class="language-javascript">    <span class="token keyword">const</span> fs <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">&apos;fs&apos;</span><span class="token punctuation">)</span>
+    <span class="token keyword">const</span> <span class="token punctuation">{</span> Transform <span class="token punctuation">}</span> <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">&apos;stream&apos;</span><span class="token punctuation">)</span>
+
+    exports<span class="token punctuation">.</span><span class="token function-variable function">default</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+        <span class="token comment">//&#x6587;&#x4EF6;&#x8BFB;&#x53D6;&#x6D41;</span>
+        <span class="token keyword">const</span> read <span class="token operator">=</span> fs<span class="token punctuation">.</span><span class="token function">createReadStream</span><span class="token punctuation">(</span><span class="token string">&apos;xxx.css&apos;</span><span class="token punctuation">)</span>
+        <span class="token comment">//&#x6587;&#x4EF6;&#x5199;&#x5165;&#x6D41;</span>
+        <span class="token keyword">const</span> write <span class="token operator">=</span> fs<span class="token punctuation">.</span><span class="token function">createWriteStream</span><span class="token punctuation">(</span><span class="token string">&apos;xxx.css&apos;</span><span class="token punctuation">)</span>
+        <span class="token comment">//&#x6587;&#x4EF6;&#x8F6C;&#x6362;&#x6D41;</span>
+        <span class="token keyword">const</span> transform <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Transform</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+            <span class="token function-variable function">transform</span><span class="token punctuation">:</span><span class="token punctuation">(</span><span class="token parameter">chunk<span class="token punctuation">,</span>encoding<span class="token punctuation">,</span>callback</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+                <span class="token comment">//&#x6838;&#x5FC3;&#x8F6C;&#x6362;&#x8FC7;&#x7A0B;&#x5B9E;&#x73B0;</span>
+                <span class="token comment">//chunk =&gt; &#x8BFB;&#x53D6;&#x6D41;&#x4E2D;&#x8BFB;&#x53D6;&#x5230;&#x7684;&#x5185;&#x5BB9;&#xFF08;Buffer&#xFF09;</span>
+                <span class="token keyword">const</span> input <span class="token operator">=</span> chunk<span class="token punctuation">.</span><span class="token function">toString</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+                <span class="token keyword">const</span> output <span class="token operator">=</span> input<span class="token punctuation">.</span><span class="token function">replace</span><span class="token punctuation">(</span><span class="token regex">/\s+/g</span><span class="token punctuation">,</span><span class="token string">&apos;&apos;</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">repalce</span><span class="token punctuation">(</span><span class="token regex">/\/\*.+?\*\//g</span><span class="token punctuation">,</span><span class="token string">&apos;&apos;</span><span class="token punctuation">)</span><span class="token comment">//&#x53BB;&#x9664;&#x7A7A;&#x767D;&#x5B57;&#x7B26;&#x548C;css&#x6CE8;&#x91CA;</span>
+                <span class="token function">callback</span><span class="token punctuation">(</span><span class="token keyword">null</span><span class="token punctuation">,</span>output<span class="token punctuation">)</span><span class="token comment">//&#x9519;&#x8BEF;&#x4F18;&#x5148;</span>
+            <span class="token punctuation">}</span>
+        <span class="token punctuation">}</span><span class="token punctuation">)</span>
+        <span class="token comment">//&#x628A;&#x8BFB;&#x53D6;&#x51FA;&#x6765;&#x7684;&#x6587;&#x4EF6;&#x6D41;&#x5BFC;&#x5165;</span>
+        read
+        <span class="token punctuation">.</span><span class="token function">pipe</span><span class="token punctuation">(</span>transfrom<span class="token punctuation">)</span> <span class="token comment">//&#x8F6C;&#x6362;</span>
+        <span class="token punctuation">.</span><span class="token function">pipe</span><span class="token punctuation">(</span>write<span class="token punctuation">)</span> <span class="token comment">//&#x5199;&#x5165;</span>
+        <span class="token keyword">return</span> read
+    <span class="token punctuation">}</span>
+</pre></li>
+<li>
+<p>Gulp&#x6587;&#x4EF6;&#x64CD;&#x4F5C;ApI + &#x63D2;&#x4EF6;&#x7684;&#x4F7F;&#x7528;</p>
+<pre data-role="codeBlock" data-info="js" class="language-javascript">    <span class="token keyword">const</span> <span class="token punctuation">{</span>src<span class="token punctuation">,</span>dest<span class="token punctuation">}</span> <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">&apos;gulp&apos;</span><span class="token punctuation">)</span>
+    <span class="token keyword">const</span> cleanCss <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">&apos;gulp-clean-css&apos;</span><span class="token punctuation">)</span>
+    <span class="token keyword">const</span> rename <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">&apos;gulp-rename&apos;</span><span class="token punctuation">)</span>
+
+    exports<span class="token punctuation">.</span><span class="token function-variable function">default</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> <span class="token function">src</span><span class="token punctuation">(</span><span class="token string">&apos;src/*.css&apos;</span><span class="token punctuation">)</span>  <span class="token comment">//&#x8BFB;&#x53D6;&#x6D41;</span>
+            <span class="token punctuation">.</span><span class="token function">pipe</span><span class="token punctuation">(</span>cleanCss<span class="token punctuation">)</span>     <span class="token operator">/</span><span class="token operator">/</span>&#x8F6C;&#x6362;&#x6D41;
+            <span class="token punctuation">.</span><span class="token function">pipe</span><span class="token punctuation">(</span><span class="token function">rename</span><span class="token punctuation">(</span><span class="token punctuation">{</span>extname<span class="token punctuation">:</span><span class="token string">&apos;.min.css&apos;</span><span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token operator">/</span><span class="token operator">/</span>&#x8F6C;&#x6362;&#x6D41;
+            <span class="token punctuation">.</span><span class="token function">pipe</span><span class="token punctuation">(</span><span class="token function">dest</span><span class="token punctuation">(</span><span class="token string">&apos;dist&apos;</span><span class="token punctuation">)</span><span class="token punctuation">)</span>  <span class="token operator">/</span><span class="token operator">/</span>&#x5199;&#x5165;&#x6D41;
+    <span class="token punctuation">}</span>
+</pre></li>
+<li>
+<p>Gulp&#x6848;&#x4F8B;&#x4E0A;-&#x6837;&#x5F0F;&#x7F16;&#x8BD1;-&#x811A;&#x672C;&#x7F16;&#x8BD1;-&#x9875;&#x9762;&#x6A21;&#x677F;&#x7F16;&#x8BD1;-&#x56FE;&#x7247;&#x8F6C;&#x6362;-&#x5B57;&#x4F53;&#x8F6C;&#x6362;-&#x9759;&#x6001;&#x6587;&#x4EF6;&#x590D;&#x5236;-&#x6587;&#x4EF6;&#x5220;&#x9664;-&#x81EA;&#x52A8;&#x52A0;&#x8F7D;&#x63D2;&#x4EF6;-&#x70ED;&#x66F4;&#x65B0;</p>
+<pre data-role="codeBlock" data-info="js" class="language-javascript">    <span class="token keyword">const</span> <span class="token punctuation">{</span>src<span class="token punctuation">,</span>dest<span class="token punctuation">,</span>parallel<span class="token punctuation">,</span>series<span class="token punctuation">}</span> <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">&apos;gulp&apos;</span><span class="token punctuation">)</span>
+    
+    <span class="token keyword">const</span> del <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">&apos;del&apos;</span><span class="token punctuation">)</span>
+
+    <span class="token keyword">const</span> browserSync <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">&apos;browser-sync&apos;</span><span class="token punctuation">)</span> <span class="token comment">//&#x5BFC;&#x5165;&#x670D;&#x52A1;&#x5668;&#x6A21;&#x5757;</span>
+
+    <span class="token keyword">const</span> loadPlugins <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">&apos;gulp-load-plugins&apos;</span><span class="token punctuation">)</span><span class="token comment">//&#x6B64;&#x63D2;&#x4EF6;&#x4F1A;&#x81EA;&#x52A8;&#x83B7;&#x53D6;&#x6240;&#x6709;gulp&#x63D2;&#x4EF6;&#xFF0C;</span>
+    <span class="token keyword">const</span> plugins <span class="token operator">=</span> <span class="token function">loadPlugins</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token comment">//&#x5BFC;&#x5165;&#x7684;&#x63D2;&#x4EF6;&#x4F1A;&#x6210;&#x4E3A;plugins&#x7684;&#x5C5E;&#x6027;&#xFF0C;&#x4FBF;&#x4E0D;&#x7528;&#x4E00;&#x4E00;&#x5BFC;&#x5165;&#xFF0C;&#x4F7F;&#x7528;&#x65F6;&#x4FBF;&#x53EF;plugins.&#x63D2;&#x4EF6;&#x540D;</span>
+    <span class="token comment">//const sass = require(&apos;gulp-sass&apos;) </span>
+    <span class="token comment">//const babel = require(&apos;gulp-babel&apos;)</span>
+    <span class="token comment">//const swig = require(&apos;gulp-swig&apos;)//&#x8F6C;&#x6362;html&#x6240;&#x7528;&#x63D2;&#x4EF6; &#x652F;&#x6301;&#x6A21;&#x677F;&#x8BED;&#x6CD5;</span>
+    <span class="token comment">//const imagemin = require(&apos;gulp-imagemin&apos;)</span>
+    
+    <span class="token keyword">const</span> bs <span class="token operator">=</span> browserSync<span class="token punctuation">.</span><span class="token function">create</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+
+    <span class="token keyword">const</span> data <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token comment">//&#x63D0;&#x4F9B;swig&#x63D2;&#x4EF6;&#x7684;&#x6A21;&#x677F;&#x6570;&#x636E;</span>
+        menus<span class="token punctuation">:</span> <span class="token punctuation">[</span>
+            <span class="token punctuation">{</span>
+                name<span class="token punctuation">:</span> <span class="token string">&apos;Home&apos;</span><span class="token punctuation">,</span>
+                icon<span class="token punctuation">:</span> <span class="token string">&apos;aperture&apos;</span><span class="token punctuation">,</span>
+                link<span class="token punctuation">:</span> <span class="token string">&apos;index.html&apos;</span>
+            <span class="token punctuation">}</span><span class="token punctuation">,</span>
+            <span class="token punctuation">{</span>
+                name<span class="token punctuation">:</span> <span class="token string">&apos;Features&apos;</span><span class="token punctuation">,</span>
+                link<span class="token punctuation">:</span> <span class="token string">&apos;features.html&apos;</span>
+            <span class="token punctuation">}</span><span class="token punctuation">,</span>
+            <span class="token punctuation">{</span>
+                name<span class="token punctuation">:</span> <span class="token string">&apos;About&apos;</span><span class="token punctuation">,</span>
+                link<span class="token punctuation">:</span> <span class="token string">&apos;about.html&apos;</span>
+            <span class="token punctuation">}</span><span class="token punctuation">,</span>
+            <span class="token punctuation">{</span>
+                name<span class="token punctuation">:</span> <span class="token string">&apos;Contact&apos;</span><span class="token punctuation">,</span>
+                link<span class="token punctuation">:</span> <span class="token string">&apos;#&apos;</span><span class="token punctuation">,</span>
+                children<span class="token punctuation">:</span> <span class="token punctuation">[</span>
+                    <span class="token punctuation">{</span>
+                    name<span class="token punctuation">:</span> <span class="token string">&apos;Twitter&apos;</span><span class="token punctuation">,</span>
+                    link<span class="token punctuation">:</span> <span class="token string">&apos;https://twitter.com/w_zce&apos;</span>
+                    <span class="token punctuation">}</span><span class="token punctuation">,</span>
+                    <span class="token punctuation">{</span>
+                    name<span class="token punctuation">:</span> <span class="token string">&apos;About&apos;</span><span class="token punctuation">,</span>
+                    link<span class="token punctuation">:</span> <span class="token string">&apos;https://weibo.com/zceme&apos;</span>
+                    <span class="token punctuation">}</span><span class="token punctuation">,</span>
+                    <span class="token punctuation">{</span>
+                    name<span class="token punctuation">:</span> <span class="token string">&apos;divider&apos;</span>
+                    <span class="token punctuation">}</span><span class="token punctuation">,</span>
+                    <span class="token punctuation">{</span>
+                    name<span class="token punctuation">:</span> <span class="token string">&apos;About&apos;</span><span class="token punctuation">,</span>
+                    link<span class="token punctuation">:</span> <span class="token string">&apos;https://github.com/zce&apos;</span>
+                    <span class="token punctuation">}</span>
+                <span class="token punctuation">]</span>
+            <span class="token punctuation">}</span>
+        <span class="token punctuation">]</span><span class="token punctuation">,</span>
+        pkg<span class="token punctuation">:</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">&apos;./package.json&apos;</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+        date<span class="token punctuation">:</span> <span class="token keyword">new</span> <span class="token class-name">Date</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">const</span> <span class="token function-variable function">clean</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span><span class="token comment">//&#x5220;&#x9664;&#x6587;&#x4EF6;</span>
+        <span class="token keyword">return</span> <span class="token function">del</span><span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token string">&apos;dist&apos;</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">const</span> <span class="token function-variable function">style</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span><span class="token comment">//css</span>
+        <span class="token keyword">return</span> <span class="token function">src</span><span class="token punctuation">(</span><span class="token string">&apos;src/assets/styles/*.scss&apos;</span><span class="token punctuation">,</span><span class="token punctuation">{</span>base<span class="token punctuation">:</span><span class="token string">&apos;src&apos;</span><span class="token punctuation">}</span><span class="token punctuation">)</span> <span class="token comment">//base&#x53EF;&#x4FDD;&#x8BC1;&#x62F7;&#x8D1D;&#x540E;&#x4ECD;&#x7136;&#x4FDD;&#x7559;&#x6587;&#x4EF6;&#x76EE;&#x5F55;&#x7ED3;&#x6784;</span>
+            <span class="token punctuation">.</span><span class="token function">pipe</span><span class="token punctuation">(</span>plugins<span class="token punctuation">.</span><span class="token function">sass</span><span class="token punctuation">(</span><span class="token punctuation">{</span>outputStyle<span class="token punctuation">:</span><span class="token string">&apos;expanded&apos;</span><span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token operator">/</span><span class="token operator">/</span>&#x4FDD;&#x8BC1;&#x6587;&#x4EF6;&#x8F93;&#x51FA;&#x540E;&#x5C3E;&#x82B1;&#x62EC;&#x53F7;&#x53E6;&#x8D77;&#x4E00;&#x884C;
+            <span class="token punctuation">.</span><span class="token function">pipe</span><span class="token punctuation">(</span><span class="token function">dest</span><span class="token punctuation">(</span><span class="token string">&apos;dist&apos;</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token operator">/</span><span class="token operator">/</span>gulp<span class="token operator">-</span>babel&#x53EA;&#x63D0;&#x4F9B;&#x8F6C;&#x6362;&#x901A;&#x9053;&#xFF0C;&#x771F;&#x6B63;&#x8F6C;&#x6362;&#x8FD8;&#x9700;@babel<span class="token operator">/</span>core&#x6838;&#x5FC3;&#x6A21;&#x5757;&#x548C;@babel<span class="token operator">/</span>preset<span class="token operator">-</span>env&#x8F6C;&#x5316;es&#x65B0;&#x7279;&#x6027;&#x9884;&#x8BBE;&#x6A21;&#x5757;
+    <span class="token keyword">const</span> <span class="token function-variable function">script</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span><span class="token operator">/</span><span class="token operator">/</span>js
+        <span class="token keyword">return</span> <span class="token function">src</span><span class="token punctuation">(</span><span class="token string">&apos;src/assets/scripts/*.js&apos;</span><span class="token punctuation">,</span><span class="token punctuation">{</span>base<span class="token punctuation">:</span><span class="token string">&apos;src&apos;</span><span class="token punctuation">}</span><span class="token punctuation">)</span> 
+            <span class="token punctuation">.</span><span class="token function">pipe</span><span class="token punctuation">(</span>plugins<span class="token punctuation">.</span><span class="token function">babel</span><span class="token punctuation">(</span><span class="token punctuation">{</span>presets<span class="token punctuation">:</span><span class="token punctuation">[</span><span class="token string">&apos;@babel/preset-env&apos;</span><span class="token punctuation">]</span><span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">)</span> 
+            <span class="token punctuation">.</span><span class="token function">pipe</span><span class="token punctuation">(</span><span class="token function">dest</span><span class="token punctuation">(</span><span class="token string">&apos;dist&apos;</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">const</span> <span class="token function-variable function">page</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> <span class="token function">src</span><span class="token punctuation">(</span><span class="token string">&apos;src/*.html&apos;</span><span class="token punctuation">,</span><span class="token punctuation">{</span>base<span class="token punctuation">:</span><span class="token string">&apos;src&apos;</span><span class="token punctuation">}</span><span class="token punctuation">)</span> <span class="token comment">//src/**/*.html&#xFF1A;&#x8868;&#x793A;src&#x4E0B;&#x7684;&#x6240;&#x6709;html</span>
+            <span class="token punctuation">.</span><span class="token function">pipe</span><span class="token punctuation">(</span>plugins<span class="token punctuation">.</span><span class="token function">swig</span><span class="token punctuation">(</span><span class="token punctuation">{</span>data<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">)</span>  <span class="token comment">//</span>
+            <span class="token punctuation">.</span><span class="token function">pipe</span><span class="token punctuation">(</span><span class="token function">dest</span><span class="token punctuation">(</span><span class="token string">&apos;dist&apos;</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">const</span> <span class="token function-variable function">image</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> <span class="token function">src</span><span class="token punctuation">(</span><span class="token string">&apos;src/assets/images/**&apos;</span><span class="token punctuation">,</span><span class="token punctuation">{</span>base<span class="token punctuation">:</span><span class="token string">&apos;src&apos;</span><span class="token punctuation">}</span><span class="token punctuation">)</span> 
+            <span class="token punctuation">.</span><span class="token function">pipe</span><span class="token punctuation">(</span>plugins<span class="token punctuation">.</span><span class="token function">imagemin</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>  
+            <span class="token punctuation">.</span><span class="token function">pipe</span><span class="token punctuation">(</span><span class="token function">dest</span><span class="token punctuation">(</span><span class="token string">&apos;dist&apos;</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">const</span> <span class="token function-variable function">font</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span><span class="token comment">//&#x5B57;&#x4F53;&#x4E0D;&#x4F1A;&#x88AB;imagemin&#x8F6C;&#x6362;</span>
+        <span class="token keyword">return</span> <span class="token function">src</span><span class="token punctuation">(</span><span class="token string">&apos;src/assets/fonts/**&apos;</span><span class="token punctuation">,</span><span class="token punctuation">{</span>base<span class="token punctuation">:</span><span class="token string">&apos;src&apos;</span><span class="token punctuation">}</span><span class="token punctuation">)</span> 
+            <span class="token punctuation">.</span><span class="token function">pipe</span><span class="token punctuation">(</span>plugins<span class="token punctuation">.</span><span class="token function">imagemin</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>  
+            <span class="token punctuation">.</span><span class="token function">pipe</span><span class="token punctuation">(</span><span class="token function">dest</span><span class="token punctuation">(</span><span class="token string">&apos;dist&apos;</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">const</span> <span class="token function-variable function">extra</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> <span class="token function">src</span><span class="token punctuation">(</span><span class="token string">&apos;public/**&apos;</span><span class="token punctuation">,</span><span class="token punctuation">{</span>base<span class="token punctuation">:</span><span class="token string">&apos;public&apos;</span><span class="token punctuation">}</span><span class="token punctuation">)</span>
+            <span class="token punctuation">.</span><span class="token function">pipe</span><span class="token punctuation">(</span><span class="token function">dest</span><span class="token punctuation">(</span><span class="token string">&apos;dist&apos;</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">const</span> <span class="token function-variable function">serve</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+        bs<span class="token punctuation">.</span><span class="token function">init</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+            notify<span class="token punctuation">:</span><span class="token boolean">false</span><span class="token punctuation">,</span> <span class="token comment">//&#x66F4;&#x65B0;&#x901A;&#x7EB8;</span>
+            port<span class="token punctuation">:</span><span class="token number">2080</span><span class="token punctuation">,</span>
+            open<span class="token punctuation">:</span><span class="token boolean">false</span><span class="token punctuation">,</span>  <span class="token operator">/</span><span class="token operator">/</span>&#x662F;&#x5426;&#x542F;&#x52A8;&#x65F6;&#x81EA;&#x52A8;&#x6253;&#x5F00;&#x6D4F;&#x89C8;&#x5668;
+            files<span class="token punctuation">:</span><span class="token string">&apos;dist/**&apos;</span><span class="token punctuation">,</span> <span class="token comment">//&#x76D1;&#x542C;&#x6587;&#x4EF6;&#x76EE;&#x5F55;&#xFF0C;&#x66F4;&#x6539;&#x540E;&#x81EA;&#x52A8;&#x66F4;&#x65B0;&#x670D;&#x52A1;&#x5668;&#xFF0C;&#x5237;&#x65B0;&#x9875;&#x9762;&#xFF08;&#x6682;&#x672A;&#x76D1;&#x542C;&#x6E90;&#x4EE3;&#x7801;&#xFF09;</span>
+            server<span class="token punctuation">:</span><span class="token punctuation">{</span>
+                baseDir<span class="token punctuation">:</span><span class="token string">&apos;dist&apos;</span><span class="token punctuation">,</span> <span class="token operator">/</span><span class="token operator">/</span>&#x670D;&#x52A1;&#x542F;&#x52A8;&#x9759;&#x6001;&#x76EE;&#x5F55;
+                routes<span class="token punctuation">:</span><span class="token punctuation">{</span>
+                    <span class="token string">&apos;/node_modules&apos;</span><span class="token punctuation">:</span><span class="token string">&apos;node_modules&apos;</span><span class="token operator">/</span><span class="token operator">/</span>&#x56E0;&#x4E3A;&#x6CA1;&#x6709;&#x5BF9;node_modules&#x4E0B;&#x5F15;&#x5165;&#x7684;&#x6587;&#x4EF6;&#x5904;&#x7406;&#xFF0C;&#x6682;&#x65F6;&#x505A;&#x4E00;&#x4E2A;&#x5F3A;&#x5236;&#x94FE;&#x63A5;
+                <span class="token punctuation">}</span>
+            <span class="token punctuation">}</span>
+        <span class="token punctuation">}</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">const</span> compile <span class="token operator">=</span> <span class="token function">parallel</span><span class="token punctuation">(</span>style<span class="token punctuation">,</span>script<span class="token punctuation">,</span>page<span class="token punctuation">,</span>image<span class="token punctuation">,</span>font<span class="token punctuation">)</span>
+
+    <span class="token keyword">const</span> build <span class="token operator">=</span> <span class="token function">series</span><span class="token punctuation">(</span>clean<span class="token punctuation">,</span><span class="token function">parallel</span><span class="token punctuation">(</span>compile<span class="token punctuation">,</span>extra<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token operator">/</span><span class="token operator">/</span>&#x5220;&#x9664;&#x6587;&#x4EF6;&#x540E;&#x518D;&#x542F;&#x52A8;&#x5176;&#x4ED6;&#x4EFB;&#x52A1;
+    module<span class="token punctuation">.</span>exports <span class="token operator">=</span> <span class="token punctuation">{</span>
+        <span class="token operator">/</span><span class="token operator">/</span>style<span class="token punctuation">,</span>
+        <span class="token operator">/</span><span class="token operator">/</span>script<span class="token punctuation">,</span>
+        <span class="token operator">/</span><span class="token operator">/</span>page
+        compile<span class="token punctuation">,</span>
+        build<span class="token punctuation">,</span>
+        serve
+    <span class="token punctuation">}</span>
+</pre></li>
+<li>
+<p>Gulp&#x6848;&#x4F8B;&#x4E0B;-&#x76D1;&#x89C6;&#x6E90;&#x4EE3;&#x7801;&#x53D8;&#x5316;&#x4EE5;&#x53CA;&#x6784;&#x5EFA;&#x4F18;&#x5316;</p>
+<ol>
+<li>&#x76D1;&#x89C6;&#x6E90;&#x4EE3;&#x7801;&#x53D8;&#x5316;-&gt;&#x6267;&#x884C;&#x8F6C;&#x6362;&#x6D41;&#x4EFB;&#x52A1;-&gt;&#x76D1;&#x89C6;&#x8F93;&#x51FA;&#x6D41;&#x4EE5;&#x66F4;&#x65B0;&#x6D4F;&#x89C8;&#x5668;</li>
+<li>&#x4F18;&#x5316;&#xFF1A;&#x5BF9;&#x4E8E;&#x4E0D;&#x9700;&#x8981;&#x6267;&#x884C;&#x8F6C;&#x6362;&#x6D41;&#x4EFB;&#x52A1;&#x7684;&#x6587;&#x4EF6;&#xFF0C;&#x5728;&#x672C;&#x5730;&#x8C03;&#x8BD5;&#x65F6;</li>
+</ol>
+<pre data-role="codeBlock" data-info="js" class="language-javascript">    <span class="token comment">//&#x57FA;&#x4E8E;&#x4E0A;&#x8282;&#x505A;&#x4F18;&#x5316;&#xFF0C;&#x4EE5;&#x4E0B;&#x53EA;&#x5199;&#x90E8;&#x5206;&#x4EE3;&#x7801;</span>
+    <span class="token keyword">const</span> <span class="token punctuation">{</span>src<span class="token punctuation">,</span>dest<span class="token punctuation">,</span>parallel<span class="token punctuation">,</span>series<span class="token punctuation">,</span>watch<span class="token punctuation">}</span> <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">&apos;gulp&apos;</span><span class="token punctuation">)</span><span class="token comment">//&#x6DFB;&#x52A0;&#x4E86;watch&#x6A21;&#x5757;</span>
+
+    <span class="token keyword">const</span> <span class="token function-variable function">script</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span><span class="token comment">//&#x6B64;&#x5904;&#x53EA;&#x5199;&#x4E00;&#x4E2A;&#x4F8B;&#x5B50;</span>
+        <span class="token keyword">return</span> <span class="token function">src</span><span class="token punctuation">(</span><span class="token string">&apos;src/assets/scripts/*.js&apos;</span><span class="token punctuation">,</span><span class="token punctuation">{</span>base<span class="token punctuation">:</span><span class="token string">&apos;src&apos;</span><span class="token punctuation">}</span><span class="token punctuation">)</span> 
+            <span class="token punctuation">.</span><span class="token function">pipe</span><span class="token punctuation">(</span>plugins<span class="token punctuation">.</span><span class="token function">babel</span><span class="token punctuation">(</span><span class="token punctuation">{</span>presets<span class="token punctuation">:</span><span class="token punctuation">[</span><span class="token string">&apos;@babel/preset-env&apos;</span><span class="token punctuation">]</span><span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">)</span> 
+            <span class="token punctuation">.</span><span class="token function">pipe</span><span class="token punctuation">(</span><span class="token function">dest</span><span class="token punctuation">(</span><span class="token string">&apos;dist&apos;</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+            <span class="token punctuation">.</span><span class="token function">pipe</span><span class="token punctuation">(</span>bs<span class="token punctuation">.</span><span class="token function">reload</span><span class="token punctuation">(</span><span class="token punctuation">{</span>stream<span class="token punctuation">:</span><span class="token boolean">true</span><span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token comment">//&#x5728;&#x4EE3;&#x7801;&#x66F4;&#x65B0;&#x540E;&#x4EE5;&#x6D41;&#x7684;&#x65B9;&#x5F0F;&#x91CD;&#x8F7D;&#x670D;&#x52A1;&#x5668;&#x4EE5;&#x8FBE;&#x5230;&#x70ED;&#x66F4;&#x65B0;&#x6548;&#x679C;&#xFF0C;&#x90A3;&#x4E48;&#x5728;&#x670D;&#x52A1;&#x5668;&#x521D;&#x59CB;&#x5316;&#x914D;&#x7F6E;&#x65F6;&#x4FBF;&#x53EF;&#x4E0D;&#x7528;&#x518D;&#x76D1;&#x89C6;&#x6587;&#x4EF6;&#x5939;&#x53D8;&#x5316;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">const</span> <span class="token function-variable function">serve</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+        <span class="token function">watch</span><span class="token punctuation">(</span><span class="token string">&apos;src/assets/styles/*.scss&apos;</span><span class="token punctuation">,</span>style<span class="token punctuation">)</span> <span class="token comment">//&#x76D1;&#x542C;&#x6587;&#x4EF6;&#x4FEE;&#x6539;&#x81EA;&#x52A8;&#x6267;&#x884C;&#x8F6C;&#x6362;&#x5DE5;&#x4F5C;&#x6D41;</span>
+        <span class="token function">watch</span><span class="token punctuation">(</span><span class="token string">&apos;src/assets/scripts/*.js&apos;</span><span class="token punctuation">,</span>script<span class="token punctuation">)</span> <span class="token comment">//&#x76D1;&#x542C;&#x6587;&#x4EF6;&#x4FEE;&#x6539;&#x81EA;&#x52A8;&#x6267;&#x884C;&#x8F6C;&#x6362;&#x5DE5;&#x4F5C;&#x6D41;</span>
+        <span class="token function">watch</span><span class="token punctuation">(</span><span class="token string">&apos;src/*.html&apos;</span><span class="token punctuation">,</span>page<span class="token punctuation">)</span> <span class="token comment">//&#x76D1;&#x542C;&#x6587;&#x4EF6;&#x4FEE;&#x6539;&#x81EA;&#x52A8;&#x6267;&#x884C;&#x8F6C;&#x6362;&#x5DE5;&#x4F5C;&#x6D41;</span>
+
+        <span class="token operator">/</span><span class="token operator">/</span>&#x4EE5;&#x4E0B;&#x4E09;&#x4E2A;&#x7684;&#x7F16;&#x8BD1;&#x5728;&#x5F00;&#x53D1;&#x9636;&#x6BB5;&#x610F;&#x4E49;&#x4E0D;&#x5927;&#xFF0C;&#x56E0;&#x4E3A;&#x90FD;&#x53EF;&#x76F4;&#x63A5;&#x5F15;&#x7528;&#xFF0C;&#x56E0;&#x6B64;&#x53EF;&#x8003;&#x8651;&#x4F18;&#x5316;&#xFF0C;&#x53EA;&#x5728;&#x53D1;&#x5E03;&#x4E0A;&#x7EBF;&#x524D;&#x8FDB;&#x884C;&#xFF0C;&#x5F00;&#x53D1;&#x9636;&#x6BB5;&#x4E0D;&#x7528;&#x3002;
+        <span class="token operator">/</span><span class="token operator">/</span><span class="token function">watch</span><span class="token punctuation">(</span><span class="token string">&apos;src/assets/images/**&apos;</span><span class="token punctuation">,</span>image<span class="token punctuation">)</span> <span class="token comment">//&#x76D1;&#x542C;&#x6587;&#x4EF6;&#x4FEE;&#x6539;&#x81EA;&#x52A8;&#x6267;&#x884C;&#x8F6C;&#x6362;&#x5DE5;&#x4F5C;&#x6D41;</span>
+        <span class="token operator">/</span><span class="token operator">/</span><span class="token function">watch</span><span class="token punctuation">(</span><span class="token string">&apos;src/assets/fonts/**&apos;</span><span class="token punctuation">,</span>font<span class="token punctuation">)</span> <span class="token comment">//&#x76D1;&#x542C;&#x6587;&#x4EF6;&#x4FEE;&#x6539;&#x81EA;&#x52A8;&#x6267;&#x884C;&#x8F6C;&#x6362;&#x5DE5;&#x4F5C;&#x6D41;</span>
+        <span class="token operator">/</span><span class="token operator">/</span><span class="token function">watch</span><span class="token punctuation">(</span><span class="token string">&apos;public/**&apos;</span><span class="token punctuation">,</span>extra<span class="token punctuation">)</span> <span class="token comment">//&#x76D1;&#x542C;&#x6587;&#x4EF6;&#x4FEE;&#x6539;&#x81EA;&#x52A8;&#x6267;&#x884C;&#x8F6C;&#x6362;&#x5DE5;&#x4F5C;&#x6D41;</span>
+
+        <span class="token operator">/</span><span class="token operator">/</span>&#x867D;&#x7136;&#x4E0D;&#x53BB;&#x6784;&#x5EFA;&#xFF0C;&#x4F46;&#x4ECD;&#x9700;&#x76D1;&#x89C6;&#x53D8;&#x5316;&#x4EE5;&#x89E6;&#x53D1;&#x70ED;&#x66F4;&#x65B0;
+        <span class="token function">watch</span><span class="token punctuation">(</span><span class="token punctuation">[</span>
+            <span class="token string">&apos;src/assets/images/**&apos;</span><span class="token punctuation">,</span>
+            <span class="token string">&apos;src/assets/fonts/**&apos;</span><span class="token punctuation">,</span>
+            <span class="token string">&apos;public/**&apos;</span>
+        <span class="token punctuation">]</span><span class="token punctuation">,</span>bs<span class="token punctuation">.</span>reload<span class="token punctuation">)</span> <span class="token comment">//bs.reload&#x89E6;&#x53D1;&#x670D;&#x52A1;&#x5668;&#x66F4;&#x65B0;&#x9875;&#x9762;</span>
+        
+        bs<span class="token punctuation">.</span><span class="token function">init</span><span class="token punctuation">(</span><span class="token punctuation">{</span>zhi
+            notify<span class="token punctuation">:</span><span class="token boolean">false</span><span class="token punctuation">,</span> 
+            port<span class="token punctuation">:</span><span class="token number">2080</span><span class="token punctuation">,</span>
+            <span class="token operator">/</span><span class="token operator">/</span>open<span class="token punctuation">:</span><span class="token boolean">false</span><span class="token punctuation">,</span>  
+            files<span class="token punctuation">:</span><span class="token string">&apos;dist/**&apos;</span><span class="token punctuation">,</span> <span class="token comment">//&#x76D1;&#x89C6;dist&#x6587;&#x4EF6;&#x53D8;&#x5316;&#x540E;&#x5C31;&#x4F1A;&#x540C;&#x6B65;&#x5230;&#x6D4F;&#x89C8;&#x5668;</span>
+            server<span class="token punctuation">:</span><span class="token punctuation">{</span>
+                <span class="token operator">/</span><span class="token operator">/</span>baseDir<span class="token punctuation">:</span><span class="token string">&apos;dist&apos;</span><span class="token punctuation">,</span> 
+                baseDir<span class="token punctuation">:</span><span class="token punctuation">[</span><span class="token string">&apos;dist&apos;</span><span class="token punctuation">,</span><span class="token string">&apos;src&apos;</span><span class="token punctuation">,</span><span class="token string">&apos;public&apos;</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token operator">/</span><span class="token operator">/</span>&#x4EE5;&#x4FBF;&#x4E0E;&#x5F00;&#x53D1;&#x9636;&#x6BB5;&#x76F4;&#x63A5;&#x53BB;&#x83B7;&#x53D6;&#x6E90;&#x4EE3;&#x7801;&#x4E2D;&#x7684;&#x56FE;&#x7247;&#x5B57;&#x4F53;&#x7B49;&#x9759;&#x6001;&#x8D44;&#x6E90;&#xFF0C;&#x56E0;&#x4E3A;&#x4ED6;&#x4EEC;&#x672A;&#x505A;&#x7C7B;&#x578B;&#x6539;&#x53D8;&#xFF0C;&#x5728;&#x5F00;&#x53D1;&#x9636;&#x6BB5;&#x907F;&#x514D;&#x8FD0;&#x884C;&#x8F6C;&#x6362;&#x5DE5;&#x4F5C;&#x6D41;&#xFF0C;&#x4EE5;&#x6B64;&#x51CF;&#x5C11;&#x5F00;&#x53D1;&#x9636;&#x6BB5;&#x7684;&#x8FD0;&#x884C;&#x5F00;&#x9500;&#xFF0C;
+                routes<span class="token punctuation">:</span><span class="token punctuation">{</span>
+                    <span class="token string">&apos;/node_modules&apos;</span><span class="token punctuation">:</span><span class="token string">&apos;node_modules&apos;</span>
+                <span class="token punctuation">}</span>
+            <span class="token punctuation">}</span>
+        <span class="token punctuation">}</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">const</span> compile <span class="token operator">=</span> <span class="token function">parallel</span><span class="token punctuation">(</span>style<span class="token punctuation">,</span>script<span class="token punctuation">,</span>page<span class="token punctuation">)</span>
+
+    <span class="token operator">/</span><span class="token operator">/</span>&#x4E0A;&#x7EBF;&#x4E4B;&#x524D;&#x6267;&#x884C;&#x7684;&#x4EFB;&#x52A1;
+    <span class="token keyword">const</span> build <span class="token operator">=</span> <span class="token function">series</span><span class="token punctuation">(</span>clean<span class="token punctuation">,</span><span class="token function">parallel</span><span class="token punctuation">(</span>compile<span class="token punctuation">,</span>image<span class="token punctuation">,</span>font<span class="token punctuation">,</span>extra<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token operator">/</span><span class="token operator">/</span>&#x5220;&#x9664;&#x6587;&#x4EF6;&#x540E;&#x518D;&#x542F;&#x52A8;&#x5176;&#x4ED6;&#x4EFB;&#x52A1;
+
+    <span class="token operator">/</span><span class="token operator">/</span>&#x751F;&#x6210;&#x73AF;&#x5883;&#x6267;&#x884C;&#x7684;&#x4EFB;&#x52A1;&#x3010;&#x751F;&#x4EA7;&#x73AF;&#x5883;&#x4E0D;&#x9700;&#x5BF9;&#x7C7B;&#x578B;&#x4E0D;&#x53D8;&#x7684;&#x6587;&#x4EF6;&#x6267;&#x884C;&#x8F6C;&#x5316;&#xFF0C;&#x5728;&#x8FD0;&#x884C;&#x670D;&#x52A1;&#x5668;&#x65F6;&#x76F4;&#x63A5;&#x628A;&#x8DEF;&#x5F84;&#x6620;&#x5C04;&#x5230;&#x6E90;&#x4EE3;&#x7801;&#x8DEF;&#x5F84;&#x3011;
+    <span class="token keyword">const</span> develop <span class="token operator">=</span> <span class="token function">series</span><span class="token punctuation">(</span>compile<span class="token punctuation">,</span>serve<span class="token punctuation">)</span>
+</pre></li>
+<li>
+<p>Gulp&#x6848;&#x4F8B;-useref:&#x5904;&#x7406;&#x5916;&#x90E8;&#x5F15;&#x5165;&#x6A21;&#x5757;&#x4E0B;&#x7684;&#x6587;&#x4EF6;&#x4F9D;&#x8D56;</p>
+<pre data-role="codeBlock" data-info="js" class="language-javascript">    <span class="token comment">//&#x4F7F;&#x7528;gulp-useref&#x5904;&#x7406;&#x5F15;&#x5165;&#x4F9D;&#x8D56;</span>
+    <span class="token comment">//&#x5FC5;&#x987B;compile&#x5F62;&#x6210;&#x6784;&#x5EFA;&#x6CE8;&#x91CA;&#x4E4B;&#x540E;&#x624D;&#x80FD;&#x6267;&#x884C;useref</span>
+    <span class="token comment">//&#x4F7F;&#x7528;gulp-if:&#x6587;&#x4EF6;&#x7C7B;&#x578B;&#x5224;&#x65AD;|gulp-htmlmin&#xFF1A;html&#x538B;&#x7F29;|gulp-uglify:js&#x538B;&#x7F29;| gulp-clean-css&#xFF1A;css&#x538B;&#x7F29; &#x7B49;4&#x4E2A;&#x63D2;&#x4EF6;&#x538B;&#x7F29;</span>
+    <span class="token keyword">const</span> <span class="token function-variable function">useref</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span><span class="token comment">//&#x5FC5;&#x987B;compile&#x5F62;&#x6210;&#x6784;&#x5EFA;&#x6CE8;&#x91CA;&#x4E4B;&#x540E;&#x624D;&#x80FD;&#x6267;&#x884C;&#xFF0C;&#x5426;&#x5219;&#x65E0;&#x6CD5;&#x6267;&#x884C;&#xFF0C;&#x56E0;&#x4E3A;&#x5B83;&#x53EA;&#x8BC6;&#x522B;&#x6784;&#x5EFA;&#x6CE8;&#x91CA;</span>
+        <span class="token keyword">return</span> <span class="token function">src</span><span class="token punctuation">(</span><span class="token string">&apos;dist/*.html&apos;</span><span class="token punctuation">,</span><span class="token punctuation">{</span>base<span class="token punctuation">:</span><span class="token string">&apos;dist&apos;</span><span class="token punctuation">}</span><span class="token punctuation">)</span>
+            <span class="token punctuation">.</span><span class="token function">pipe</span><span class="token punctuation">(</span>plugins<span class="token punctuation">.</span><span class="token function">useref</span><span class="token punctuation">(</span><span class="token punctuation">{</span>searchPath<span class="token punctuation">:</span><span class="token punctuation">[</span><span class="token string">&apos;dist&apos;</span><span class="token punctuation">,</span><span class="token string">&apos;.&apos;</span><span class="token punctuation">]</span><span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token comment">//&#x67E5;&#x627E;dist&#x548C;&#x5F53;&#x524D;&#x9879;&#x76EE;&#x6839;&#x76EE;&#x5F55;&#x4E0B;&#x7684;&#x6784;&#x5EFA;&#x6CE8;&#x91CA;&#x505A;&#x8F6C;&#x5316;</span>
+            <span class="token operator">/</span><span class="token operator">/</span>html js css
+            <span class="token punctuation">.</span><span class="token function">pipe</span><span class="token punctuation">(</span>plugins<span class="token punctuation">.</span><span class="token keyword">if</span><span class="token punctuation">(</span><span class="token regex">/\.js$/</span><span class="token punctuation">,</span>plugins<span class="token punctuation">.</span><span class="token function">uglify</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+            <span class="token punctuation">.</span><span class="token function">pipe</span><span class="token punctuation">(</span>plugins<span class="token punctuation">.</span><span class="token keyword">if</span><span class="token punctuation">(</span><span class="token regex">/\.css$/</span><span class="token punctuation">,</span>plugins<span class="token punctuation">.</span><span class="token function">cleanCss</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+            <span class="token punctuation">.</span><span class="token function">pipe</span><span class="token punctuation">(</span>plugins<span class="token punctuation">.</span><span class="token keyword">if</span><span class="token punctuation">(</span><span class="token regex">/\.html$/</span><span class="token punctuation">,</span>plugins<span class="token punctuation">.</span><span class="token function">htmlmin</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+                collapseWhitespace<span class="token punctuation">:</span><span class="token boolean">true</span><span class="token punctuation">,</span>  <span class="token operator">/</span><span class="token operator">/</span>&#x9ED8;&#x8BA4;&#x4E0D;&#x5904;&#x7406;&#x6362;&#x884C;&#x7B26;&#xFF0C;&#x914D;&#x7F6E;&#x540E;&#x4F1A;&#x53BB;&#x9664;&#x6240;&#x6709;&#x7A7A;&#x767D;&#x5B57;&#x7B26;
+                minifyCSS<span class="token punctuation">:</span><span class="token boolean">true</span><span class="token punctuation">,</span> <span class="token operator">/</span><span class="token operator">/</span>&#x5BF9;style&#x6807;&#x7B7E;&#x5185;&#x6837;&#x5F0F;&#x505A;&#x538B;&#x7F29;
+                minifyJS<span class="token punctuation">:</span><span class="token boolean">true</span>   <span class="token operator">/</span><span class="token operator">/</span>&#x5BF9;script&#x6807;&#x7B7E;&#x5185;&#x811A;&#x672C;&#x505A;&#x538B;&#x7F29;
+                <span class="token operator">/</span><span class="token operator">/</span>&#x8FD8;&#x53EF;&#x5220;&#x9664;&#x6CE8;&#x91CA;&#x548C;&#x7A7A;&#x5C5E;&#x6027;&#xFF0C;&#x6839;&#x636E;&#x6587;&#x6863;&#x914D;&#x7F6E;
+            <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+            <span class="token punctuation">.</span><span class="token function">pipe</span><span class="token punctuation">(</span><span class="token function">dest</span><span class="token punctuation">(</span><span class="token string">&apos;release&apos;</span><span class="token punctuation">)</span><span class="token punctuation">)</span>  <span class="token operator">/</span><span class="token operator">/</span>&#x66F4;&#x6539;&#x6587;&#x4EF6;&#x76EE;&#x5F55;&#x907F;&#x514D;&#x51B2;&#x7A81;&#x3010;&#x4F46;&#x6253;&#x7834;&#x4E86;&#x76EE;&#x5F55;&#x7ED3;&#x6784;&#xFF0C;&#x4E0B;&#x8282;&#x5904;&#x7406;&#x3011;
+    <span class="token punctuation">}</span>
+</pre></li>
+<li>
+<p>Gulp&#x6848;&#x4F8B;-&#x6848;&#x4F8B;&#x603B;&#x7ED3;&#xFF1A;&#x8BBE;&#x7F6E;&#x4E2D;&#x8F6C;&#x76EE;&#x5F55;&#x548C;&#x4FEE;&#x6B63;&#x6700;&#x7EC8;&#x76EE;&#x5F55;&#xFF0C;&#x6307;&#x5B9A;&#x9700;&#x8981;&#x66B4;&#x9732;&#x7684;&#x6A21;&#x5757;-&gt;&#x6700;&#x7EC8;&#x5728;package.json&#x4E2D;scripts&#x5C5E;&#x6027;&#x4E0B;&#x914D;&#x7F6E;&#x6240;&#x5BFC;&#x51FA;&#x7684;&#x547D;&#x4EE4;</p>
+<pre data-role="codeBlock" data-info="js" class="language-javascript">    <span class="token keyword">const</span> <span class="token punctuation">{</span>src<span class="token punctuation">,</span>dest<span class="token punctuation">,</span>parallel<span class="token punctuation">,</span>series<span class="token punctuation">,</span>watch<span class="token punctuation">}</span> <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">&apos;gulp&apos;</span><span class="token punctuation">)</span>
+    
+    <span class="token keyword">const</span> del <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">&apos;del&apos;</span><span class="token punctuation">)</span>
+
+    <span class="token keyword">const</span> browserSync <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">&apos;browser-sync&apos;</span><span class="token punctuation">)</span> 
+
+    <span class="token keyword">const</span> loadPlugins <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">&apos;gulp-load-plugins&apos;</span><span class="token punctuation">)</span>
+    <span class="token keyword">const</span> plugins <span class="token operator">=</span> <span class="token function">loadPlugins</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    
+    <span class="token keyword">const</span> bs <span class="token operator">=</span> browserSync<span class="token punctuation">.</span><span class="token function">create</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+
+    <span class="token keyword">const</span> data <span class="token operator">=</span> <span class="token punctuation">{</span>
+        
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">const</span> <span class="token function-variable function">clean</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> <span class="token function">del</span><span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token string">&apos;dist&apos;</span><span class="token punctuation">,</span><span class="token string">&apos;temp&apos;</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token comment">//&#x6DFB;&#x52A0;&#x4E34;&#x65F6;&#x76EE;&#x5F55;&#xFF0C;&#x4F5C;&#x4E3A;useref&#x7684;&#x4E2D;&#x8F6C;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">const</span> <span class="token function-variable function">style</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> <span class="token function">src</span><span class="token punctuation">(</span><span class="token string">&apos;src/assets/styles/*.scss&apos;</span><span class="token punctuation">,</span><span class="token punctuation">{</span>base<span class="token punctuation">:</span><span class="token string">&apos;src&apos;</span><span class="token punctuation">}</span><span class="token punctuation">)</span> 
+            <span class="token punctuation">.</span><span class="token function">pipe</span><span class="token punctuation">(</span>plugins<span class="token punctuation">.</span><span class="token function">sass</span><span class="token punctuation">(</span><span class="token punctuation">{</span>outputStyle<span class="token punctuation">:</span><span class="token string">&apos;expanded&apos;</span><span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">)</span> 
+            <span class="token punctuation">.</span><span class="token function">pipe</span><span class="token punctuation">(</span><span class="token function">dest</span><span class="token punctuation">(</span><span class="token string">&apos;temp&apos;</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token comment">//&#x4E34;&#x65F6;&#x76EE;&#x5F55;</span>
+            <span class="token punctuation">.</span><span class="token function">pipe</span><span class="token punctuation">(</span>bs<span class="token punctuation">.</span><span class="token function">reload</span><span class="token punctuation">(</span><span class="token punctuation">{</span>stream<span class="token punctuation">:</span><span class="token boolean">true</span><span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">const</span> <span class="token function-variable function">script</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> <span class="token function">src</span><span class="token punctuation">(</span><span class="token string">&apos;src/assets/scripts/*.js&apos;</span><span class="token punctuation">,</span><span class="token punctuation">{</span>base<span class="token punctuation">:</span><span class="token string">&apos;src&apos;</span><span class="token punctuation">}</span><span class="token punctuation">)</span> 
+            <span class="token punctuation">.</span><span class="token function">pipe</span><span class="token punctuation">(</span>plugins<span class="token punctuation">.</span><span class="token function">babel</span><span class="token punctuation">(</span><span class="token punctuation">{</span>presets<span class="token punctuation">:</span><span class="token punctuation">[</span><span class="token string">&apos;@babel/preset-env&apos;</span><span class="token punctuation">]</span><span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">)</span> 
+            <span class="token punctuation">.</span><span class="token function">pipe</span><span class="token punctuation">(</span><span class="token function">dest</span><span class="token punctuation">(</span><span class="token string">&apos;temp&apos;</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token comment">//&#x4E34;&#x65F6;&#x76EE;&#x5F55;</span>
+            <span class="token punctuation">.</span><span class="token function">pipe</span><span class="token punctuation">(</span>bs<span class="token punctuation">.</span><span class="token function">reload</span><span class="token punctuation">(</span><span class="token punctuation">{</span>stream<span class="token punctuation">:</span><span class="token boolean">true</span><span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">const</span> <span class="token function-variable function">page</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> <span class="token function">src</span><span class="token punctuation">(</span><span class="token string">&apos;src/*.html&apos;</span><span class="token punctuation">,</span><span class="token punctuation">{</span>base<span class="token punctuation">:</span><span class="token string">&apos;src&apos;</span><span class="token punctuation">}</span><span class="token punctuation">)</span> 
+            <span class="token punctuation">.</span><span class="token function">pipe</span><span class="token punctuation">(</span>plugins<span class="token punctuation">.</span><span class="token function">swig</span><span class="token punctuation">(</span><span class="token punctuation">{</span>data<span class="token punctuation">,</span>defaults<span class="token punctuation">:</span> <span class="token punctuation">{</span> cache<span class="token punctuation">:</span> <span class="token boolean">false</span> <span class="token punctuation">}</span><span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token comment">//&#x9632;&#x6B62;&#x56E0;&#x7F13;&#x5B58;&#x65E0;&#x6CD5;&#x5237;&#x65B0;&#x6CD5;&#x70ED;&#x66F4;&#x65B0;</span>
+            <span class="token punctuation">.</span><span class="token function">pipe</span><span class="token punctuation">(</span><span class="token function">dest</span><span class="token punctuation">(</span><span class="token string">&apos;temp&apos;</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token operator">/</span><span class="token operator">/</span>&#x4E34;&#x65F6;&#x76EE;&#x5F55;
+            <span class="token punctuation">.</span><span class="token function">pipe</span><span class="token punctuation">(</span>bs<span class="token punctuation">.</span><span class="token function">reload</span><span class="token punctuation">(</span><span class="token punctuation">{</span>stream<span class="token punctuation">:</span><span class="token boolean">true</span><span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">const</span> <span class="token function-variable function">image</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> <span class="token function">src</span><span class="token punctuation">(</span><span class="token string">&apos;src/assets/images/**&apos;</span><span class="token punctuation">,</span><span class="token punctuation">{</span>base<span class="token punctuation">:</span><span class="token string">&apos;src&apos;</span><span class="token punctuation">}</span><span class="token punctuation">)</span> 
+            <span class="token punctuation">.</span><span class="token function">pipe</span><span class="token punctuation">(</span>plugins<span class="token punctuation">.</span><span class="token function">imagemin</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>  
+            <span class="token punctuation">.</span><span class="token function">pipe</span><span class="token punctuation">(</span><span class="token function">dest</span><span class="token punctuation">(</span><span class="token string">&apos;dist&apos;</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">const</span> <span class="token function-variable function">font</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> <span class="token function">src</span><span class="token punctuation">(</span><span class="token string">&apos;src/assets/fonts/**&apos;</span><span class="token punctuation">,</span><span class="token punctuation">{</span>base<span class="token punctuation">:</span><span class="token string">&apos;src&apos;</span><span class="token punctuation">}</span><span class="token punctuation">)</span> 
+            <span class="token punctuation">.</span><span class="token function">pipe</span><span class="token punctuation">(</span>plugins<span class="token punctuation">.</span><span class="token function">imagemin</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>  
+            <span class="token punctuation">.</span><span class="token function">pipe</span><span class="token punctuation">(</span><span class="token function">dest</span><span class="token punctuation">(</span><span class="token string">&apos;dist&apos;</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">const</span> <span class="token function-variable function">extra</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> <span class="token function">src</span><span class="token punctuation">(</span><span class="token string">&apos;public/**&apos;</span><span class="token punctuation">,</span><span class="token punctuation">{</span>base<span class="token punctuation">:</span><span class="token string">&apos;public&apos;</span><span class="token punctuation">}</span><span class="token punctuation">)</span>
+            <span class="token punctuation">.</span><span class="token function">pipe</span><span class="token punctuation">(</span><span class="token function">dest</span><span class="token punctuation">(</span><span class="token string">&apos;dist&apos;</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">const</span> <span class="token function-variable function">serve</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+        <span class="token function">watch</span><span class="token punctuation">(</span><span class="token string">&apos;src/assets/styles/*.scss&apos;</span><span class="token punctuation">,</span>style<span class="token punctuation">)</span> 
+        <span class="token function">watch</span><span class="token punctuation">(</span><span class="token string">&apos;src/assets/scripts/*.js&apos;</span><span class="token punctuation">,</span>script<span class="token punctuation">)</span>
+        <span class="token function">watch</span><span class="token punctuation">(</span><span class="token string">&apos;src/*.html&apos;</span><span class="token punctuation">,</span>page<span class="token punctuation">)</span>
+        <span class="token function">watch</span><span class="token punctuation">(</span><span class="token punctuation">[</span>
+            <span class="token string">&apos;src/assets/images/**&apos;</span><span class="token punctuation">,</span>
+            <span class="token string">&apos;src/assets/fonts/**&apos;</span><span class="token punctuation">,</span>
+            <span class="token string">&apos;public/**&apos;</span>
+        <span class="token punctuation">]</span><span class="token punctuation">,</span>bs<span class="token punctuation">.</span>reload<span class="token punctuation">)</span>
+        bs<span class="token punctuation">.</span><span class="token function">init</span><span class="token punctuation">(</span><span class="token punctuation">{</span>zhi
+            notify<span class="token punctuation">:</span><span class="token boolean">false</span><span class="token punctuation">,</span> 
+            port<span class="token punctuation">:</span><span class="token number">2080</span><span class="token punctuation">,</span>
+            server<span class="token punctuation">:</span><span class="token punctuation">{</span>
+                baseDir<span class="token punctuation">:</span><span class="token punctuation">[</span><span class="token string">&apos;temp&apos;</span><span class="token punctuation">,</span><span class="token string">&apos;src&apos;</span><span class="token punctuation">,</span><span class="token string">&apos;public&apos;</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token comment">//&#x4E34;&#x65F6;&#x76EE;&#x5F55;</span>
+                routes<span class="token punctuation">:</span><span class="token punctuation">{</span><span class="token operator">/</span><span class="token operator">/</span>&#x5F00;&#x53D1;&#x73AF;&#x5883;&#x8BFB;&#x53D6;&#x4F9D;&#x8D56;&#x91CC;&#x7684;&#x6837;&#x5F0F;
+                    <span class="token string">&apos;/node_modules&apos;</span><span class="token punctuation">:</span><span class="token string">&apos;node_modules&apos;</span>
+                <span class="token punctuation">}</span>
+            <span class="token punctuation">}</span>
+        <span class="token punctuation">}</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">const</span> <span class="token function-variable function">useref</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> <span class="token function">src</span><span class="token punctuation">(</span><span class="token string">&apos;temp/*.html&apos;</span><span class="token punctuation">,</span><span class="token punctuation">{</span>base<span class="token punctuation">:</span><span class="token string">&apos;temp&apos;</span><span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token comment">//&#x4E34;&#x65F6;&#x76EE;&#x5F55;</span>
+            <span class="token punctuation">.</span><span class="token function">pipe</span><span class="token punctuation">(</span>plugins<span class="token punctuation">.</span><span class="token function">useref</span><span class="token punctuation">(</span><span class="token punctuation">{</span>searchPath<span class="token punctuation">:</span><span class="token punctuation">[</span><span class="token string">&apos;temp&apos;</span><span class="token punctuation">,</span><span class="token string">&apos;.&apos;</span><span class="token punctuation">]</span><span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token operator">/</span><span class="token operator">/</span>&#x4E34;&#x65F6;&#x76EE;&#x5F55;
+            <span class="token operator">/</span><span class="token operator">/</span>html js css
+            <span class="token punctuation">.</span><span class="token function">pipe</span><span class="token punctuation">(</span>plugins<span class="token punctuation">.</span><span class="token keyword">if</span><span class="token punctuation">(</span><span class="token regex">/\.js$/</span><span class="token punctuation">,</span>plugins<span class="token punctuation">.</span><span class="token function">uglify</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+            <span class="token punctuation">.</span><span class="token function">pipe</span><span class="token punctuation">(</span>plugins<span class="token punctuation">.</span><span class="token keyword">if</span><span class="token punctuation">(</span><span class="token regex">/\.css$/</span><span class="token punctuation">,</span>plugins<span class="token punctuation">.</span><span class="token function">cleanCss</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+            <span class="token punctuation">.</span><span class="token function">pipe</span><span class="token punctuation">(</span>plugins<span class="token punctuation">.</span><span class="token keyword">if</span><span class="token punctuation">(</span><span class="token regex">/\.html$/</span><span class="token punctuation">,</span>plugins<span class="token punctuation">.</span><span class="token function">htmlmin</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+                collapseWhitespace<span class="token punctuation">:</span><span class="token boolean">true</span><span class="token punctuation">,</span>  
+                minifyCSS<span class="token punctuation">:</span><span class="token boolean">true</span><span class="token punctuation">,</span> 
+                minifyJS<span class="token punctuation">:</span><span class="token boolean">true</span>
+            <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+            <span class="token punctuation">.</span><span class="token function">pipe</span><span class="token punctuation">(</span><span class="token function">dest</span><span class="token punctuation">(</span><span class="token string">&apos;dist&apos;</span><span class="token punctuation">)</span><span class="token punctuation">)</span>  <span class="token operator">/</span><span class="token operator">/</span>&#x6539;&#x56DE;&#x539F;&#x76EE;&#x5F55;<span class="token punctuation">,</span>&#x53E6;&#x8BBE;&#x4E2D;&#x8F6C;&#x76EE;&#x5F55;
+    <span class="token punctuation">}</span>
+    <span class="token keyword">const</span> compile <span class="token operator">=</span> <span class="token function">parallel</span><span class="token punctuation">(</span>style<span class="token punctuation">,</span>script<span class="token punctuation">,</span>page<span class="token punctuation">)</span>
+
+    <span class="token operator">/</span><span class="token operator">/</span>&#x4E0A;&#x7EBF;&#x4E4B;&#x524D;&#x6267;&#x884C;&#x7684;&#x4EFB;&#x52A1;
+    <span class="token keyword">const</span> build <span class="token operator">=</span> <span class="token function">series</span><span class="token punctuation">(</span>clean<span class="token punctuation">,</span>
+        <span class="token function">parallel</span><span class="token punctuation">(</span>
+            <span class="token function">series</span><span class="token punctuation">(</span>compile<span class="token punctuation">,</span>useref<span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token operator">/</span><span class="token operator">/</span>&#x5FC5;&#x987B;&#x9650;compile&#x751F;&#x6210;&#x6784;&#x5EFA;&#x6CE8;&#x91CA;&#x624D;&#x80FD;useref
+            image<span class="token punctuation">,</span>
+            font<span class="token punctuation">,</span>
+            extra
+        <span class="token punctuation">)</span>
+    <span class="token punctuation">)</span>
+
+    <span class="token operator">/</span><span class="token operator">/</span>&#x751F;&#x6210;&#x73AF;&#x5883;&#x6267;&#x884C;&#x7684;&#x4EFB;&#x52A1;&#x3010;&#x751F;&#x4EA7;&#x73AF;&#x5883;&#x4E0D;&#x9700;&#x5BF9;&#x7C7B;&#x578B;&#x4E0D;&#x53D8;&#x7684;&#x6587;&#x4EF6;&#x6267;&#x884C;&#x8F6C;&#x5316;&#xFF0C;&#x5728;&#x8FD0;&#x884C;&#x670D;&#x52A1;&#x5668;&#x65F6;&#x76F4;&#x63A5;&#x628A;&#x8DEF;&#x5F84;&#x6620;&#x5C04;&#x5230;&#x6E90;&#x4EE3;&#x7801;&#x8DEF;&#x5F84;&#x3011;
+    <span class="token keyword">const</span> develop <span class="token operator">=</span> <span class="token function">series</span><span class="token punctuation">(</span>compile<span class="token punctuation">,</span>serve<span class="token punctuation">)</span>
+
+    module<span class="token punctuation">.</span>exports <span class="token operator">=</span> <span class="token punctuation">{</span>
+        clean<span class="token punctuation">,</span>
+        build<span class="token punctuation">,</span>
+        develop
+    <span class="token punctuation">}</span> 
+</pre></li>
+<li>
+<p>&#x5C01;&#x88C5;&#x53EF;&#x590D;&#x7528;&#x5DE5;&#x4F5C;&#x6D41;&#xFF08;&#x53D1;&#x5E03;&#x6210;&#x4F9D;&#x8D56;&#x5305;&#xFF09;</p>
+<ol>
+<li>&#x589E;&#x52A0;&#x53EF;&#x914D;&#x7F6E;&#x9009;&#x9879;&#x548C;&#x5229;&#x7528;&#x811A;&#x624B;&#x67B6;&#x5C01;&#x88C5;&#x5DE5;&#x4F5C;&#x6D41;</li>
+<li>&#x5177;&#x4F53;&#x67E5;&#x770B;&#x9879;&#x76EE;&#x4EE3;&#x7801;</li>
+</ol>
+</li>
+<li>
+<p>FIS:fis3-&gt;&#x8D44;&#x6E90;&#x5B9A;&#x4F4D;&#x4E0E;&#x538B;&#x7F29;&#xFF0C;&#x505A;&#x4E86;&#x89E3;</p>
+<ol>
+<li>&#x4E0D;&#x9700;&#x8981;&#x6211;&#x4EEC;&#x5B9A;&#x4E49;&#x4EFB;&#x52A1;&#xFF0C;&#x4ED6;&#x4E5F;&#x4E00;&#x4E9B;&#x5185;&#x7F6E;&#x7684;&#x4EFB;&#x52A1;&#xFF0C;&#x5F00;&#x53D1;&#x8005;&#x6839;&#x636E;&#x914D;&#x7F6E;&#x8C03;&#x7528;&#x8FD9;&#x4E9B;&#x4EFB;&#x52A1;</li>
+<li>&#x63D0;&#x4F9B;&#x4E86;&#x8C03;&#x8BD5;&#x7684;web-server</li>
+<li>&#x4F7F;&#x7528;&#xFF1A;
+<ul>
+<li>yarn global add fis3</li>
+<li>&#x65B0;&#x5EFA;&#x914D;&#x7F6E;&#x6587;&#x4EF6;&#xFF1A;fis-conf.js</li>
+</ul>
+<pre data-role="codeBlock" data-info="js" class="language-javascript">    fis<span class="token punctuation">.</span><span class="token function">match</span><span class="token punctuation">(</span><span class="token string">&apos;*&apos;</span><span class="token punctuation">.</span><span class="token punctuation">{</span>js<span class="token punctuation">,</span>scss<span class="token punctuation">,</span>png<span class="token punctuation">}</span><span class="token punctuation">,</span><span class="token punctuation">{</span>
+        release<span class="token punctuation">:</span> <span class="token string">&apos;assets/$0&apos;</span>
+    <span class="token punctuation">}</span><span class="token punctuation">)</span>
+
+    fis<span class="token punctuation">.</span><span class="token function">match</span><span class="token punctuation">(</span><span class="token string">&apos;**/*.scss&apos;</span><span class="token punctuation">,</span><span class="token punctuation">{</span>
+        rExt<span class="token punctuation">:</span><span class="token string">&apos;.css&apos;</span><span class="token punctuation">,</span>
+        parser<span class="token punctuation">:</span>fis<span class="token punctuation">.</span><span class="token function">plugin</span><span class="token punctuation">(</span><span class="token string">&apos;node-sass&apos;</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token comment">//&#x6B64;&#x63D2;&#x4EF6;&#x672A;&#x5185;&#x7F6E;&#xFF0C;&#x9700;&#x8981;&#x989D;&#x5916;&#x5B89;&#x88C5;</span>
+        optimizer<span class="token punctuation">:</span>fis<span class="token punctuation">.</span><span class="token function">plugin</span><span class="token punctuation">(</span><span class="token string">&apos;clean-css&apos;</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span><span class="token punctuation">)</span>
+
+    fis<span class="token punctuation">.</span><span class="token function">match</span><span class="token punctuation">(</span><span class="token string">&apos;**/*.js&apos;</span><span class="token punctuation">,</span><span class="token punctuation">{</span>
+        parser<span class="token punctuation">:</span> fis<span class="token punctuation">.</span><span class="token function">plugin</span><span class="token punctuation">(</span><span class="token string">&apos;babel-6.x&apos;</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span><span class="token punctuation">)</span>
+</pre></li>
+</ol>
+</li>
+</ul>
+
+      </div>
+      
+      
+    
+    
+    
+    
+    
+    
+    
+    
+  
+    </body></html>
